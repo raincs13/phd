@@ -130,13 +130,10 @@ public class ChartColor extends Color {
     /**
      * Creates a Color with an opaque sRGB with red, green and blue values in
      * range 0-255.
-     *
-     * @param r  the red component in range 0x00-0xFF.
-     * @param g  the green component in range 0x00-0xFF.
-     * @param b  the blue component in range 0x00-0xFF.
+     * @param parameterObject TODO
      */
-    public ChartColor(int r, int g, int b) {
-        super(r, g, b);
+    public ChartColor(ChartColorParameter parameterObject) {
+        super(parameterObject.getR(), parameterObject.getG(), parameterObject.getB());
     }
 
     /**
