@@ -1470,23 +1470,15 @@ public abstract class ChartFactory {
      * {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}
      * for the domain axis, a {@link DateAxis} as the range axis, and a
      * {@link GanttRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param dateAxisLabel  the label for the date axis
-     *                       (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObject TODO
      *
      * @return A Gantt chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createGanttChart(String title,
-            String categoryAxisLabel, String dateAxisLabel,
-            IntervalCategoryDataset dataset) {
-        return createGanttChart(title, categoryAxisLabel, dateAxisLabel,
-                dataset, true, true, false);
+    public static JFreeChart createGanttChart(CreateGanttChartParameter parameterObject) {
+        return createGanttChart(parameterObject.getTitle(), parameterObject.getCategoryAxisLabel(), parameterObject.getDateAxisLabel(),
+                parameterObject.getDataset(), true, true, false);
     }
     
     /**
