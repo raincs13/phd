@@ -55,7 +55,7 @@ import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.TestUtilities;
+//import org.jfree.chart.TestUtilities;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.junit.Test;
@@ -123,14 +123,14 @@ public class SubCategoryAxisTest {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
-    @Test
+/*    @Test
     public void testSerialization() {
         SubCategoryAxis a1 = new SubCategoryAxis("Test Axis");
         a1.addSubCategory("SubCategoryA");
         SubCategoryAxis a2 = (SubCategoryAxis) TestUtilities.serialised(a1);
         assertEquals(a1, a2);
     }
-
+*/
     /**
      * A check for the NullPointerException in bug 2275695.
      */

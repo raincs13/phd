@@ -257,7 +257,7 @@ public class JFreeChartTest implements ChartChangeListener {
     /**
      * Serialize a pie chart, restore it, and check for equality.
      */
-    @Test
+/*    @Test
     public void testSerialization1() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Type 1", 54.5);
@@ -270,11 +270,11 @@ public class JFreeChartTest implements ChartChangeListener {
         LegendTitle lt2 = c2.getLegend();
         assertSame(lt2.getSources()[0], c2.getPlot());
     }
-
+*/
     /**
      * Serialize a 3D pie chart, restore it, and check for equality.
      */
-    @Test
+/*    @Test
     public void testSerialization2() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Type 1", 54.5);
@@ -284,11 +284,11 @@ public class JFreeChartTest implements ChartChangeListener {
         JFreeChart c2 = (JFreeChart) TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
-
+*/
     /**
      * Serialize a bar chart, restore it, and check for equality.
      */
-    @Test
+/*    @Test
     public void testSerialization3() {
 
         // row keys...
@@ -342,11 +342,11 @@ public class JFreeChartTest implements ChartChangeListener {
         JFreeChart c2 = (JFreeChart) TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
-
+*/
     /**
      * Serialize a time seroes chart, restore it, and check for equality.
      */
-    @Test
+/*    @Test
     public void testSerialization4() {
 
         RegularTimePeriod t = new Day();
@@ -362,7 +362,7 @@ public class JFreeChartTest implements ChartChangeListener {
         JFreeChart c2 = (JFreeChart) TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
-
+*/
     /**
      * Some checks for the addSubtitle() methods.
      */

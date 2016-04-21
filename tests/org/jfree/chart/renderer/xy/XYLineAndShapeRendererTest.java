@@ -54,7 +54,7 @@ import java.awt.geom.Rectangle2D;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.TestUtilities;
+//import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -229,18 +229,18 @@ public class XYLineAndShapeRendererTest {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
-    @Test
+ /*   @Test
     public void testSerialization() {
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
         XYLineAndShapeRenderer r2 = (XYLineAndShapeRenderer) 
                 TestUtilities.serialised(r1);
         assertEquals(r1, r2);
     }
-
+*/
     /**
      * Check that the renderer is calculating the domain bounds correctly.
      */
-    @Test
+/*    @Test
     public void testFindDomainBounds() {
         XYSeriesCollection dataset
                 = RendererXYPackageUtils.createTestXYSeriesCollection();
@@ -256,11 +256,11 @@ public class XYLineAndShapeRendererTest {
         assertTrue(bounds.contains(2.0));
         assertFalse(bounds.contains(2.10));
     }
-
+*/
     /**
      * Check that the renderer is calculating the range bounds correctly.
      */
-    @Test
+/*    @Test
     public void testFindRangeBounds() {
         TableXYDataset dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
@@ -276,7 +276,7 @@ public class XYLineAndShapeRendererTest {
         assertTrue(bounds.contains(5.0));
         assertFalse(bounds.contains(6.0));
     }
-
+*/
     /**
      * A check for the datasetIndex and seriesIndex fields in the LegendItem
      * returned by the getLegendItem() method.
