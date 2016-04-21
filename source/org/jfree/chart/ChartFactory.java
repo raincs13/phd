@@ -2432,22 +2432,20 @@ public abstract class ChartFactory {
     /**
      * Creates and returns a default instance of a box and whisker chart
      * based on data from a {@link BoxAndWhiskerCategoryDataset}.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject TODO
      * @param categoryAxisLabel  a label for the category axis
      *     (<code>null</code> permitted).
      * @param valueAxisLabel  a label for the value axis (<code>null</code>
      *     permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      *
      * @return A box and whisker chart.
      *
      * @since 1.0.4
      */
-    public static JFreeChart createBoxAndWhiskerChart(String title,
+    public static JFreeChart createBoxAndWhiskerChart(CreateBoxAndWhiskerChartParameter parameterObject,
             String categoryAxisLabel, String valueAxisLabel,
-            BoxAndWhiskerCategoryDataset dataset, boolean legend) {
+            BoxAndWhiskerCategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -2458,8 +2456,8 @@ public abstract class ChartFactory {
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject.getTitle(), JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject.isLegend());
         currentTheme.apply(chart);
         return chart;
     }
