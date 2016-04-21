@@ -1009,23 +1009,15 @@ public abstract class ChartFactory {
      * method uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} as
      * the range axis, and a {@link BarRenderer3D} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObject TODO
      *
      * @return A bar chart with a 3D effect.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createBarChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-        return createBarChart3D(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createBarChart3D(CreateBarChart3DParameter parameterObject) {
+        return createBarChart3D(parameterObject.getTitle(), parameterObject.getCategoryAxisLabel(), parameterObject.getValueAxisLabel(),
+                parameterObject.getDataset(), PlotOrientation.VERTICAL, true, true, false);
     }
     
     /**
