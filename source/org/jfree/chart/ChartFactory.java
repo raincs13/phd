@@ -2319,19 +2319,14 @@ public abstract class ChartFactory {
      * an {@link XYPlot}, with a {@link NumberAxis} for the domain axis,
      * a {@link NumberAxis} for the range axis, and an {@link XYBubbleRenderer}
      * to draw the data items.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObject TODO
      *
      * @return A bubble chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createBubbleChart(String title, String xAxisLabel,
-            String yAxisLabel, XYZDataset dataset) {
-        return createBubbleChart(title, xAxisLabel, yAxisLabel, dataset,
+    public static JFreeChart createBubbleChart(CreateBubbleChartParameter parameterObject) {
+        return createBubbleChart(parameterObject.getTitle(), parameterObject.getxAxisLabel(), parameterObject.getyAxisLabel(), parameterObject.getDataset(),
                 PlotOrientation.VERTICAL, true, true, false);
     }
     
