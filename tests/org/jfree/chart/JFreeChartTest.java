@@ -337,8 +337,7 @@ public class JFreeChartTest implements ChartChangeListener {
         dataset.addValue(3.0, series3, category8);
 
         // create the chart...
-        JFreeChart c1 = ChartFactory.createBarChart("Vertical Bar Chart",
-                "Category", "Value", dataset);
+        JFreeChart c1 = ChartFactory.createBarChart(new CreateBarChartParameter("Vertical Bar Chart", "Category", "Value", dataset));
         JFreeChart c2 = (JFreeChart) TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }

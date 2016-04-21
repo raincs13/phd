@@ -844,22 +844,14 @@ public abstract class ChartFactory {
      * plot, with a {@link CategoryAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link BarRenderer} as the
      * renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis
-     *                        (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObject TODO
      *
      * @return A bar chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createBarChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-        return createBarChart(title, categoryAxisLabel, valueAxisLabel, dataset,
+    public static JFreeChart createBarChart(CreateBarChartParameter parameterObject) {
+        return createBarChart(parameterObject.getTitle(), parameterObject.getCategoryAxisLabel(), parameterObject.getValueAxisLabel(), parameterObject.getDataset(),
                 PlotOrientation.VERTICAL, true, true, false);
     }
  
