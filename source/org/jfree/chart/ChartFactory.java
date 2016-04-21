@@ -1612,17 +1612,15 @@ public abstract class ChartFactory {
      * angles in degrees).  The chart object returned by this method uses a
      * {@link PolarPlot} instance as the plot, with a {@link NumberAxis} for
      * the radial axis.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject TODO
      * @param dataset  the dataset (<code>null</code> permitted).
-     * @param legend  legend required?
      * @param tooltips  tooltips required?
      * @param urls  URLs required?
      *
      * @return A chart.
      */
-    public static JFreeChart createPolarChart(String title, XYDataset dataset,
-            boolean legend, boolean tooltips, boolean urls) {
+    public static JFreeChart createPolarChart(CreatePolarChartParameter parameterObject, XYDataset dataset,
+            boolean tooltips, boolean urls) {
 
         PolarPlot plot = new PolarPlot();
         plot.setDataset(dataset);
@@ -1633,7 +1631,7 @@ public abstract class ChartFactory {
         plot.setAxis(rangeAxis);
         plot.setRenderer(new DefaultPolarItemRenderer());
         JFreeChart chart = new JFreeChart(
-                title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+                parameterObject.getTitle(), JFreeChart.DEFAULT_TITLE_FONT, plot, parameterObject.isLegend());
         currentTheme.apply(chart);
         return chart;
 
