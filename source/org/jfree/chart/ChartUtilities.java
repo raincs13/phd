@@ -382,8 +382,7 @@ public abstract class ChartUtilities {
             JFreeChart chart, int width, int height) throws IOException {
 
         // defer argument checking...
-        ChartUtilities.writeChartAsJPEG(out, quality, chart, width, height,
-                null);
+        ChartUtilities.writeChartAsJPEG(new WriteChartAsJPEGParameter2(out, quality), chart, new WriteChartAsJPEGParameter1(width, height, null));
 
     }
 
@@ -418,25 +417,21 @@ public abstract class ChartUtilities {
      * you to pass in a {@link ChartRenderingInfo} object, to collect
      * information about the chart dimensions/entities.  You will need this
      * info if you want to create an HTML image map.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param quality  the output quality (0.0f to 1.0f).
+     * @param parameterObject2 TODO
      * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
+     * @param parameterObject TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeChartAsJPEG(OutputStream out, float quality,
-            JFreeChart chart, int width, int height, ChartRenderingInfo info)
+    public static void writeChartAsJPEG(WriteChartAsJPEGParameter2 parameterObject2, JFreeChart chart,
+            WriteChartAsJPEGParameter1 parameterObject)
             throws IOException {
 
-        ParamChecks.nullNotPermitted(out, "out");
+        ParamChecks.nullNotPermitted(parameterObject2.getOut(), "out");
         ParamChecks.nullNotPermitted(chart, "chart");
-        BufferedImage image = chart.createBufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB, info);
-        EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out, quality);
+        BufferedImage image = chart.createBufferedImage(parameterObject.getWidth(), parameterObject.getHeight(),
+                BufferedImage.TYPE_INT_RGB, parameterObject.getInfo());
+        EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, parameterObject2.getOut(), parameterObject2.getQuality());
 
     }
 
@@ -530,7 +525,7 @@ public abstract class ChartUtilities {
         OutputStream out = new BufferedOutputStream(new FileOutputStream(
                 file));
         try {
-            writeChartAsJPEG(out, quality, chart, width, height, info);
+            writeChartAsJPEG(new WriteChartAsJPEGParameter2(out, quality), chart, new WriteChartAsJPEGParameter1(width, height, info));
         }
         finally {
             out.close();
