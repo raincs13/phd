@@ -2676,10 +2676,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public void doEditChartProperties() {
 
         ChartEditor editor = ChartEditorManager.getChartEditor(this.chart);
-        int result = JOptionPane.showConfirmDialog(this, editor,
+        if (JOptionPane.showConfirmDialog(this, editor,
                 localizationResources.getString("Chart_Properties"),
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
             editor.updateChart(this.chart);
         }
 
