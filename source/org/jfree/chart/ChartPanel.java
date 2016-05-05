@@ -1883,9 +1883,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @return A point within the rectangle.
      */
     private Point2D getPointInRectangle(int x, int y, Rectangle2D area) {
-        double xx = Math.max(area.getMinX(), Math.min(x, area.getMaxX()));
-        double yy = Math.max(area.getMinY(), Math.min(y, area.getMaxY()));
-        return new Point2D.Double(xx, yy);
+        return new Point2D.Double(Math.max(area.getMinX(), Math.min(x, area.getMaxX())), Math.max(area.getMinY(), Math.min(y, area.getMaxY())));
     }
 
     /**
