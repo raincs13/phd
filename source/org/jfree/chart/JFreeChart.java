@@ -613,18 +613,28 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @see #getTitle()
      */
     public void setTitle(String text) {
-        if (text != null) {
+        title(text);
+		if (text != null) {
             if (this.title == null) {
                 setTitle(new TextTitle(text, JFreeChart.DEFAULT_TITLE_FONT));
             }
             else {
-                this.title.setText(text);
             }
         }
         else {
             setTitle((TextTitle) null);
         }
     }
+
+	private void title(String text) {
+		if (text != null) {
+			if (this.title == null) {
+			} else {
+				this.title.setText(text);
+			}
+		} else {
+		}
+	}
 
     /**
      * Adds a legend to the plot and sends a {@link ChartChangeEvent} to all
