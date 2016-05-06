@@ -1306,17 +1306,15 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         ParamChecks.nullNotPermitted(area, "area");
         Rectangle2D titleArea;
         RectangleEdge position = t.getPosition();
-        double ww = area.getWidth();
-        if (ww <= 0.0) {
+        if (area.getWidth() <= 0.0) {
             return null;
         }
-        double hh = area.getHeight();
-        if (hh <= 0.0) {
+        if (area.getHeight() <= 0.0) {
             return null;
         }
-        RectangleConstraint constraint = new RectangleConstraint(ww,
-                new Range(0.0, ww), LengthConstraintType.RANGE, hh,
-                new Range(0.0, hh), LengthConstraintType.RANGE);
+        RectangleConstraint constraint = new RectangleConstraint(area.getWidth(),
+                new Range(0.0, area.getWidth()), LengthConstraintType.RANGE, area.getHeight(),
+                new Range(0.0, area.getHeight()), LengthConstraintType.RANGE);
         Object retValue = null;
         BlockParams p = new BlockParams();
         p.setGenerateEntities(entities);
