@@ -1685,21 +1685,25 @@ public abstract class ChartFactory {
             boolean legend, boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
-        NumberAxis xAxis = new NumberAxis(xAxisLabel);
-        xAxis.setAutoRangeIncludesZero(false);
-        NumberAxis yAxis = new NumberAxis(yAxisLabel);
-        yAxis.setAutoRangeIncludesZero(false);
-
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
-
-        XYToolTipGenerator toolTipGenerator = toolTipGenerator(tooltips);
-		XYItemRenderer renderer = renderer(orientation, urls, plot, toolTipGenerator);
+        XYPlot plot = plot(xAxisLabel, yAxisLabel, dataset, orientation, tooltips, urls);
 		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYPlot plot(String xAxisLabel, String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
+			boolean tooltips, boolean urls) {
+		NumberAxis xAxis = new NumberAxis(xAxisLabel);
+		xAxis.setAutoRangeIncludesZero(false);
+		NumberAxis yAxis = new NumberAxis(yAxisLabel);
+		yAxis.setAutoRangeIncludesZero(false);
+		XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
+		XYToolTipGenerator toolTipGenerator = toolTipGenerator(tooltips);
+		XYItemRenderer renderer = renderer(orientation, urls, plot, toolTipGenerator);
+		return plot;
+	}
 
 	private static XYToolTipGenerator toolTipGenerator(boolean tooltips) {
 		XYToolTipGenerator toolTipGenerator = null;
