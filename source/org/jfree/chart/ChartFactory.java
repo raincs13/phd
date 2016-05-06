@@ -1692,27 +1692,36 @@ public abstract class ChartFactory {
 
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
 
-        XYToolTipGenerator toolTipGenerator = null;
-        if (tooltips) {
-            toolTipGenerator = new StandardXYToolTipGenerator();
-        }
-
-        XYURLGenerator urlGenerator = null;
-        if (urls) {
-            urlGenerator = new StandardXYURLGenerator();
-        }
-        XYItemRenderer renderer = new XYLineAndShapeRenderer(false, true);
-        renderer.setBaseToolTipGenerator(toolTipGenerator);
-        renderer.setURLGenerator(urlGenerator);
-        plot.setRenderer(renderer);
-        plot.setOrientation(orientation);
-
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        XYToolTipGenerator toolTipGenerator = toolTipGenerator(tooltips);
+		XYItemRenderer renderer = renderer(orientation, urls, plot, toolTipGenerator);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYToolTipGenerator toolTipGenerator(boolean tooltips) {
+		XYToolTipGenerator toolTipGenerator = null;
+		if (tooltips) {
+			toolTipGenerator = new StandardXYToolTipGenerator();
+		}
+		return toolTipGenerator;
+	}
+
+	private static XYItemRenderer renderer(PlotOrientation orientation, boolean urls, XYPlot plot,
+			XYToolTipGenerator toolTipGenerator) {
+		XYURLGenerator urlGenerator = null;
+		if (urls) {
+			urlGenerator = new StandardXYURLGenerator();
+		}
+		XYItemRenderer renderer = new XYLineAndShapeRenderer(false, true);
+		renderer.setBaseToolTipGenerator(toolTipGenerator);
+		renderer.setURLGenerator(urlGenerator);
+		plot.setRenderer(renderer);
+		plot.setOrientation(orientation);
+		return renderer;
+	}
 
     /**
      * Creates and returns a default instance of an XY bar chart.
