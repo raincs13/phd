@@ -2720,14 +2720,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (option == JFileChooser.APPROVE_OPTION) {
             String filename = fileChooser.getSelectedFile().getPath();
             if (isEnforceFileExtensions()) {
-                if (!filename.endsWith(".png")) {
-                    filename = filename + ".png";
-                }
+                filename = filename(filename);
             }
             ChartUtilities.saveChartAsPNG(new File(filename), this.chart,
                     getWidth(), getHeight());
         }
     }
+
+	private String filename(String filename) {
+		if (!filename.endsWith(".png")) {
+			filename = filename + ".png";
+		}
+		return filename;
+	}
     
     /**
      * Saves the chart in SVG format (a filechooser will be displayed so that
