@@ -681,8 +681,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             boolean save, boolean print, boolean zoom, boolean tooltips) {
 
         this(chart, new ChartPanelParameter(width, height), minimumDrawWidth, minimumDrawHeight, maximumDrawWidth,
-                maximumDrawHeight, useBuffer, properties, true,
-                save, print, zoom, tooltips);
+                maximumDrawHeight, useBuffer, new ChartPanelParameter2(properties, true, save, print, zoom), tooltips);
     }
 
     /**
@@ -697,24 +696,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param useBuffer  a flag that indicates whether to use the off-screen
      *                   buffer to improve performance (at the expense of
      *                   memory).
-     * @param properties  a flag indicating whether or not the chart property
-     *                    editor should be available via the popup menu.
-     * @param copy  a flag indicating whether or not a copy option should be
-     *              available via the popup menu.
-     * @param save  a flag indicating whether or not save options should be
-     *              available via the popup menu.
-     * @param print  a flag indicating whether or not the print option
-     *               should be available via the popup menu.
-     * @param zoom  a flag indicating whether or not zoom options should be
-     *              added to the popup menu.
+     * @param parameterObject2 TODO
      * @param tooltips  a flag indicating whether or not tooltips should be
      *                  enabled for the chart.
      * @since 1.0.13
      */
     public ChartPanel(JFreeChart chart, ChartPanelParameter parameterObject, int minimumDrawWidth,
            int minimumDrawHeight, int maximumDrawWidth, int maximumDrawHeight,
-           boolean useBuffer, boolean properties, boolean copy,
-           boolean save, boolean print, boolean zoom, boolean tooltips) {
+           boolean useBuffer, ChartPanelParameter2 parameterObject2, boolean tooltips) {
 
         setChart(chart);
         this.chartMouseListeners = new EventListenerList();
@@ -730,8 +719,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         // set up popup menu...
         this.popup = null;
-        if (checkstatus(properties,copy,save,print,zoom)) {
-            this.popup = createPopupMenu(properties, copy, save, print, zoom);
+        if (checkstatus(parameterObject2.isProperties(),parameterObject2.isCopy(),parameterObject2.isSave(),parameterObject2.isPrint(),parameterObject2.isZoom())) {
+            this.popup = createPopupMenu(parameterObject2.isProperties(), parameterObject2.isCopy(), parameterObject2.isSave(), parameterObject2.isPrint(), parameterObject2.isZoom());
         }
 
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
