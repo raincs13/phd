@@ -374,8 +374,7 @@ public abstract class ChartFactory {
      * <p>
      * Written by <a href="mailto:opensource@objectlab.co.uk">Benoit
      * Xhenseval</a>.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject TODO
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param previousDataset  the dataset for the last run, this will be used
      *                         to compare each key in the dataset
@@ -384,7 +383,6 @@ public abstract class ChartFactory {
      *                               required to reach top scale.
      * @param greenForIncrease  an increase since previousDataset will be
      *                          displayed in green (decrease red) if true.
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param locale  the locale (<code>null</code> not permitted).
      * @param subTitle displays a subtitle with colour scheme if true
@@ -395,10 +393,10 @@ public abstract class ChartFactory {
      *
      * @since 1.0.7
      */
-    public static JFreeChart createPieChart(String title, PieDataset dataset,
+    public static JFreeChart createPieChart(CreatePieChartParameter parameterObject, PieDataset dataset,
             PieDataset previousDataset, int percentDiffForMaxScale,
-            boolean greenForIncrease, boolean legend, boolean tooltips,
-            Locale locale, boolean subTitle, boolean showDifference) {
+            boolean greenForIncrease, boolean tooltips, Locale locale,
+            boolean subTitle, boolean showDifference) {
 
         PiePlot plot = new PiePlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
@@ -409,12 +407,8 @@ public abstract class ChartFactory {
         }
 
         List keys = dataset.getKeys();
-        DefaultPieDataset series = null;
-        if (showDifference) {
-            series = new DefaultPieDataset();
-        }
+        DefaultPieDataset series = series(showDifference);
 
-        double colorPerPercent = 255.0 / percentDiffForMaxScale;
         for (Iterator it = keys.iterator(); it.hasNext();) {
             Comparable key = (Comparable) it.next();
             Number newValue = dataset.getValue(key);
@@ -433,15 +427,10 @@ public abstract class ChartFactory {
                 }
             }
             else {
-                double percentChange = (newValue.doubleValue()
-                        / oldValue.doubleValue() - 1.0) * 100.0;
                 double shade
-                    = (Math.abs(percentChange) >= percentDiffForMaxScale ? 255
-                    : Math.abs(percentChange) * colorPerPercent);
-                if (greenForIncrease
-                        && newValue.doubleValue() > oldValue.doubleValue()
-                        || !greenForIncrease && newValue.doubleValue()
-                        < oldValue.doubleValue()) {
+                    = (Math.abs(calPercentChange(newValue,oldValue)) >= percentDiffForMaxScale ? 255
+                    : Math.abs(calPercentChange(newValue,oldValue)) * calcolorPerPercent(percentDiffForMaxScale));
+                if (checkStatus(greenForIncrease, newValue,  oldValue)) {
                     plot.setSectionPaint(key, new Color(0, (int) shade, 0));
                 }
                 else {
@@ -449,9 +438,9 @@ public abstract class ChartFactory {
                 }
                 if (showDifference) {
                     assert series != null; // suppresses compiler warning
-                    series.setValue(key + " (" + (percentChange >= 0 ? "+" : "")
+                    series.setValue(key + " (" + (calPercentChange(newValue,oldValue) >= 0 ? "+" : "")
                             + NumberFormat.getPercentInstance().format(
-                            percentChange / 100.0) + ")", newValue);
+                            		calPercentChange(newValue,oldValue) / 100.0) + ")", newValue);
                 }
             }
         }
@@ -460,8 +449,8 @@ public abstract class ChartFactory {
             plot.setDataset(series);
         }
 
-        JFreeChart chart =  new JFreeChart(title,
-                JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+        JFreeChart chart =  new JFreeChart(parameterObject.getTitle(),
+                JFreeChart.DEFAULT_TITLE_FONT, plot, parameterObject.isLegend());
 
         if (subTitle) {
             TextTitle subtitle = new TextTitle("Bright " + (greenForIncrease 
@@ -474,6 +463,32 @@ public abstract class ChartFactory {
         currentTheme.apply(chart);
         return chart;
     }
+    
+    public static boolean checkStatus(boolean greenForIncrease, Number newValue,  Number oldValue){
+    	if (greenForIncrease && newValue.doubleValue() > oldValue.doubleValue()
+                || !greenForIncrease && newValue.doubleValue()
+                < oldValue.doubleValue()) {
+    		return true;
+    	}else{
+    		return false;
+    	}
+    }
+
+    public static double calcolorPerPercent(int percentDiffForMaxScale){
+    	return 255.0 / percentDiffForMaxScale;
+    }
+    
+    public static double calPercentChange( Number newValue,  Number oldValue){
+    	return (newValue.doubleValue() / oldValue.doubleValue() - 1.0) * 100.0;
+    }
+    
+	private static DefaultPieDataset series(boolean showDifference) {
+		DefaultPieDataset series = null;
+		if (showDifference) {
+			series = new DefaultPieDataset();
+		}
+		return series;
+	}
 
     /**
      * Creates a pie chart with default settings that compares 2 datasets.
