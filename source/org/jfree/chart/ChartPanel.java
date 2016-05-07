@@ -680,17 +680,16 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             int maximumDrawHeight, boolean useBuffer, boolean properties,
             boolean save, boolean print, boolean zoom, boolean tooltips) {
 
-        this(chart, width, height, minimumDrawWidth, minimumDrawHeight,
-                maximumDrawWidth, maximumDrawHeight, useBuffer, properties,
-                true, save, print, zoom, tooltips);
+        this(chart, new ChartPanelParameter(width, height), minimumDrawWidth, minimumDrawHeight, maximumDrawWidth,
+                maximumDrawHeight, useBuffer, properties, true,
+                save, print, zoom, tooltips);
     }
 
     /**
      * Constructs a JFreeChart panel.
      *
      * @param chart  the chart.
-     * @param width  the preferred width of the panel.
-     * @param height  the preferred height of the panel.
+     * @param parameterObject TODO
      * @param minimumDrawWidth  the minimum drawing width.
      * @param minimumDrawHeight  the minimum drawing height.
      * @param maximumDrawWidth  the maximum drawing width.
@@ -710,19 +709,17 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *              added to the popup menu.
      * @param tooltips  a flag indicating whether or not tooltips should be
      *                  enabled for the chart.
-     *
      * @since 1.0.13
      */
-    public ChartPanel(JFreeChart chart, int width, int height,
-           int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-           int maximumDrawHeight, boolean useBuffer, boolean properties,
-           boolean copy, boolean save, boolean print, boolean zoom,
-           boolean tooltips) {
+    public ChartPanel(JFreeChart chart, ChartPanelParameter parameterObject, int minimumDrawWidth,
+           int minimumDrawHeight, int maximumDrawWidth, int maximumDrawHeight,
+           boolean useBuffer, boolean properties, boolean copy,
+           boolean save, boolean print, boolean zoom, boolean tooltips) {
 
         setChart(chart);
         this.chartMouseListeners = new EventListenerList();
         this.info = new ChartRenderingInfo();
-        setPreferredSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(parameterObject.getWidth(), parameterObject.getHeight()));
         this.useBuffer = useBuffer;
         this.refreshBuffer = false;
         this.minimumDrawWidth = minimumDrawWidth;
@@ -733,7 +730,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         // set up popup menu...
         this.popup = null;
-        if (properties || copy || save || print || zoom) {
+        if (checkstatus(properties,copy,save,print,zoom)) {
             this.popup = createPopupMenu(properties, copy, save, print, zoom);
         }
 
@@ -760,12 +757,21 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.panMask = InputEvent.CTRL_MASK;
         // for MacOSX we can't use the CTRL key for mouse drags, see:
         // http://developer.apple.com/qa/qa2004/qa1362.html
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.startsWith("mac os x")) {
+        if (System.getProperty("os.name").toLowerCase().startsWith("mac os x")) {
             this.panMask = InputEvent.ALT_MASK;
         }
 
         this.overlays = new java.util.ArrayList();
+    }
+    
+    public boolean checkstatus(boolean properties, boolean copy,
+            boolean save, boolean print, boolean zoom){
+    	 if (properties || copy || save || print || zoom) {
+    		 return true;
+    	 } else{
+    		 return false;
+    	 }
+    	
     }
 
     /**
