@@ -111,20 +111,34 @@ class MouseWheelHandler implements MouseWheelListener, Serializable {
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        JFreeChart chart = this.chartPanel.getChart();
+        PiePlot pp = pp(e);
+		Zoomable zoomable = zoomable(e);
+		JFreeChart chart = this.chartPanel.getChart();
         if (chart == null) {
             return;
         }
-        Plot plot = chart.getPlot();
-        if (plot instanceof Zoomable) {
-            Zoomable zoomable = (Zoomable) plot;
-            handleZoomable(zoomable, e);
-        }
-        else if (plot instanceof PiePlot) {
-            PiePlot pp = (PiePlot) plot;
-            pp.handleMouseWheelRotation(e.getWheelRotation());
-        }
     }
+
+	private Zoomable zoomable(MouseWheelEvent e) {
+		Zoomable zoomable = null;
+		JFreeChart chart = this.chartPanel.getChart();
+		Plot plot = chart.getPlot();
+		if (plot instanceof Zoomable) {
+			handleZoomable(zoomable, e);
+		}
+		return zoomable;
+	}
+
+	private PiePlot pp(MouseWheelEvent e) {
+		PiePlot pp = null;
+		JFreeChart chart = this.chartPanel.getChart();
+		Plot plot = chart.getPlot();
+		if (plot instanceof Zoomable) {
+		} else if (plot instanceof PiePlot) {
+			pp.handleMouseWheelRotation(e.getWheelRotation());
+		}
+		return pp;
+	}
 
     /**
      * Handle the case where a plot implements the {@link Zoomable} interface.
