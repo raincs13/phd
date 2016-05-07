@@ -506,9 +506,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @return A string.
      */
     private String characterIteratorToString(CharacterIterator iterator) {
-        int endIndex = iterator.getEndIndex();
-        int beginIndex = iterator.getBeginIndex();
-        int count = endIndex - beginIndex;
+        int count = iterator.getEndIndex() - iterator.getBeginIndex();
         if (count <= 0) {
             return "";
         }
