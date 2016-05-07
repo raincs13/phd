@@ -1638,12 +1638,17 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     protected void applyToXYAnnotation(XYAnnotation annotation) {
         ParamChecks.nullNotPermitted(annotation, "annotation");
-        if (annotation instanceof XYTextAnnotation) {
-            XYTextAnnotation xyta = (XYTextAnnotation) annotation;
-            xyta.setFont(this.smallFont);
-            xyta.setPaint(this.itemLabelPaint);
-        }
+        XYTextAnnotation xyta = xyta(annotation);
     }
+
+	private XYTextAnnotation xyta(XYAnnotation annotation) {
+		XYTextAnnotation xyta = null;
+		if (annotation instanceof XYTextAnnotation) {
+			xyta.setFont(this.smallFont);
+			xyta.setPaint(this.itemLabelPaint);
+		}
+		return xyta;
+	}
 
     /**
      * Tests this theme for equality with an arbitrary object.
