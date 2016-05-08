@@ -2992,16 +2992,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (pageIndex != 0) {
             return NO_SUCH_PAGE;
         }
-        Graphics2D g2 = (Graphics2D) g;
-        double x = pf.getImageableX();
-        double y = pf.getImageableY();
-        double w = pf.getImageableWidth();
-        double h = pf.getImageableHeight();
-        this.chart.draw(g2, new Rectangle2D.Double(x, y, w, h), this.anchor,
-                null);
-        return PAGE_EXISTS;
+        chart(g, pf);
+		return PAGE_EXISTS;
 
     }
+
+	private void chart(Graphics g, PageFormat pf) {
+		Graphics2D g2 = (Graphics2D) g;
+		double x = pf.getImageableX();
+		double y = pf.getImageableY();
+		double w = pf.getImageableWidth();
+		double h = pf.getImageableHeight();
+		this.chart.draw(g2, new Rectangle2D.Double(x, y, w, h), this.anchor, null);
+	}
 
     /**
      * Adds a listener to the list of objects listening for chart mouse events.
