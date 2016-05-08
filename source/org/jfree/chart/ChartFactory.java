@@ -516,18 +516,8 @@ public abstract class ChartFactory {
             boolean greenForIncrease, boolean tooltips, boolean urls, 
             boolean subTitle, boolean showDifference) {
 
-        PiePlot plot = new PiePlot(dataset);
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator());
-        plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
-
-        if (tooltips) {
-            plot.setToolTipGenerator(new StandardPieToolTipGenerator());
-        }
-        if (urls) {
-            plot.setURLGenerator(new StandardPieURLGenerator());
-        }
-
-        List keys = dataset.getKeys();
+        PiePlot plot = plot(dataset, tooltips, urls, showDifference);
+		List keys = dataset.getKeys();
         DefaultPieDataset series = series(showDifference);
 		
         for (Iterator it = keys.iterator(); it.hasNext();) {
@@ -566,10 +556,6 @@ public abstract class ChartFactory {
             }
         }
 
-        if (showDifference) {
-            plot.setDataset(series);
-        }
-
         JFreeChart chart =  new JFreeChart(parameterObject.getTitle(),
                 JFreeChart.DEFAULT_TITLE_FONT, plot, parameterObject.isLegend());
 
@@ -584,6 +570,23 @@ public abstract class ChartFactory {
         currentTheme.apply(chart);
         return chart;
     }
+
+	private static PiePlot plot(PieDataset dataset, boolean tooltips, boolean urls, boolean showDifference) {
+		PiePlot plot = new PiePlot(dataset);
+		plot.setLabelGenerator(new StandardPieSectionLabelGenerator());
+		plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
+		if (tooltips) {
+			plot.setToolTipGenerator(new StandardPieToolTipGenerator());
+		}
+		if (urls) {
+			plot.setURLGenerator(new StandardPieURLGenerator());
+		}
+		DefaultPieDataset series = series(showDifference);
+		if (showDifference) {
+			plot.setDataset(series);
+		}
+		return plot;
+	}
     
     public static boolean status( boolean greenForIncrease, Number newValue,  Number oldValue){
     	if (greenForIncrease
