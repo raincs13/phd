@@ -1866,7 +1866,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             }
             if (e.isPopupTrigger()) {
                 if (this.popup != null) {
-                    displayPopupMenu(e.getX(), e.getY());
+                    displayPopupMenu(new DisplayPopupMenuParameter(e.getX(), e.getY()));
                 }
             }
         }
@@ -2082,7 +2082,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         else if (e.isPopupTrigger()) {
             if (this.popup != null) {
-                displayPopupMenu(e.getX(), e.getY());
+                displayPopupMenu(new DisplayPopupMenuParameter(e.getX(), e.getY()));
             }
         }
 
@@ -3229,11 +3229,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * The idea is to modify the zooming options depending on the type of chart
      * being displayed by the panel.
-     *
-     * @param x  horizontal position of the popup.
-     * @param y  vertical position of the popup.
+     * @param parameterObject TODO
      */
-    protected void displayPopupMenu(int x, int y) {
+    protected void displayPopupMenu(DisplayPopupMenuParameter parameterObject) {
 
         if (this.popup == null) {
             return;
@@ -3284,7 +3282,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     && isRangeZoomable);
         }
 
-        this.popup.show(this, x, y);
+        this.popup.show(this, parameterObject.getX(), parameterObject.getY());
 
     }
 
