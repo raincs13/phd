@@ -565,19 +565,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public ChartPanel(JFreeChart chart) {
 
         this(
-            chart,
-            DEFAULT_WIDTH,
-            DEFAULT_HEIGHT,
-            DEFAULT_MINIMUM_DRAW_WIDTH,
-            DEFAULT_MINIMUM_DRAW_HEIGHT,
-            DEFAULT_MAXIMUM_DRAW_WIDTH,
-            DEFAULT_MAXIMUM_DRAW_HEIGHT,
-            DEFAULT_BUFFER_USED,
-            true,  // properties
-            true,  // save
-            true,  // print
-            true,  // zoom
-            true   // tooltips
+            new ChartPanelParameter13(chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH, DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH, DEFAULT_MAXIMUM_DRAW_HEIGHT, DEFAULT_BUFFER_USED, true,
+					true, true, true, true   // tooltips
+)
         );
 
     }
@@ -600,14 +590,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     public ChartPanel(JFreeChart chart, boolean useBuffer) {
 
-        this(chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH,
-                DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH,
-                DEFAULT_MAXIMUM_DRAW_HEIGHT, useBuffer,
-                true,  // properties
-                true,  // save
-                true,  // print
-                true,  // zoom
-                true   // tooltips
+        this(new ChartPanelParameter13(chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH, DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH, DEFAULT_MAXIMUM_DRAW_HEIGHT, useBuffer, true, true,
+				true, true, true   // tooltips
+)
                 );
 
     }
@@ -634,55 +619,21 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                       boolean zoom,
                       boolean tooltips) {
 
-        this(chart,
-             DEFAULT_WIDTH,
-             DEFAULT_HEIGHT,
-             DEFAULT_MINIMUM_DRAW_WIDTH,
-             DEFAULT_MINIMUM_DRAW_HEIGHT,
-             DEFAULT_MAXIMUM_DRAW_WIDTH,
-             DEFAULT_MAXIMUM_DRAW_HEIGHT,
-             DEFAULT_BUFFER_USED,
-             properties,
-             save,
-             print,
-             zoom,
-             tooltips
+        this(new ChartPanelParameter13(chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH, DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH, DEFAULT_MAXIMUM_DRAW_HEIGHT, DEFAULT_BUFFER_USED, properties,
+				save, print, zoom, tooltips)
              );
 
     }
 
     /**
      * Constructs a JFreeChart panel.
-     *
-     * @param chart  the chart.
-     * @param width  the preferred width of the panel.
-     * @param height  the preferred height of the panel.
-     * @param minimumDrawWidth  the minimum drawing width.
-     * @param minimumDrawHeight  the minimum drawing height.
-     * @param maximumDrawWidth  the maximum drawing width.
-     * @param maximumDrawHeight  the maximum drawing height.
-     * @param useBuffer  a flag that indicates whether to use the off-screen
-     *                   buffer to improve performance (at the expense of
-     *                   memory).
-     * @param properties  a flag indicating whether or not the chart property
-     *                    editor should be available via the popup menu.
-     * @param save  a flag indicating whether or not save options should be
-     *              available via the popup menu.
-     * @param print  a flag indicating whether or not the print option
-     *               should be available via the popup menu.
-     * @param zoom  a flag indicating whether or not zoom options should be
-     *              added to the popup menu.
-     * @param tooltips  a flag indicating whether or not tooltips should be
-     *                  enabled for the chart.
+     * @param parameterObjectChartPanel13 TODO
      */
-    public ChartPanel(JFreeChart chart, int width, int height,
-            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-            int maximumDrawHeight, boolean useBuffer, boolean properties,
-            boolean save, boolean print, boolean zoom, boolean tooltips) {
+    public ChartPanel(ChartPanelParameter13 parameterObjectChartPanel13) {
 
-        this(chart, width, height, minimumDrawWidth, minimumDrawHeight,
-                maximumDrawWidth, maximumDrawHeight, useBuffer, properties,
-                true, save, print, zoom, tooltips);
+        this(parameterObjectChartPanel13.chart, parameterObjectChartPanel13.width, parameterObjectChartPanel13.height, parameterObjectChartPanel13.minimumDrawWidth, parameterObjectChartPanel13.minimumDrawHeight,
+                parameterObjectChartPanel13.maximumDrawWidth, parameterObjectChartPanel13.maximumDrawHeight, parameterObjectChartPanel13.useBuffer, parameterObjectChartPanel13.properties,
+                true, parameterObjectChartPanel13.save, parameterObjectChartPanel13.print, parameterObjectChartPanel13.zoom, parameterObjectChartPanel13.tooltips);
     }
 
     /**
