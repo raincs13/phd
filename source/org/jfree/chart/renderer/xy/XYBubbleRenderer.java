@@ -71,6 +71,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.plot.CrosshairState;
@@ -313,8 +314,7 @@ public class XYBubbleRenderer extends AbstractXYItemRenderer
                 Paint paint = lookupSeriesPaint(series);
                 Paint outlinePaint = lookupSeriesOutlinePaint(series);
                 Stroke outlineStroke = lookupSeriesOutlineStroke(series);
-                result = new LegendItem(label, description, toolTipText,
-                        urlText, shape, paint, outlineStroke, outlinePaint);
+                result = new LegendItem(new LegendItemParameter8(label, description, toolTipText, urlText, shape, paint, outlineStroke, outlinePaint));
                 result.setLabelFont(lookupLegendTextFont(series));
                 Paint labelPaint = lookupLegendTextPaint(series);
                 if (labelPaint != null) {

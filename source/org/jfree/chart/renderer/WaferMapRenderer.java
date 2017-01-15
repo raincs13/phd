@@ -57,6 +57,7 @@ import java.util.Set;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.WaferMapPlot;
 import org.jfree.data.general.WaferMapDataset;
@@ -306,8 +307,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                     Paint outlinePaint = Color.black;
                     Stroke outlineStroke = DEFAULT_STROKE;
 
-                    result.add(new LegendItem(label, description, null,
-                            null, shape, paint, outlineStroke, outlinePaint));
+                    result.add(new LegendItem(new LegendItemParameter8(label, description, null, null, shape, paint, outlineStroke, outlinePaint)));
 
                 }
             }
@@ -330,9 +330,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                         Paint outlinePaint = Color.black;
                         Stroke outlineStroke = DEFAULT_STROKE;
 
-                        result.add(new LegendItem(label, description,
-                                null, null, shape, paint, outlineStroke,
-                                outlinePaint));
+                        result.add(new LegendItem(new LegendItemParameter8(label, description, null, null, shape, paint, outlineStroke, outlinePaint)));
                     }
                 } // end foreach map entry
             } // end else

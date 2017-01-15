@@ -98,6 +98,7 @@ import java.util.List;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -1082,8 +1083,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
             Paint paint = getSeriesPaint(series);
             Paint outlinePaint = getSeriesOutlinePaint(series);
             Stroke stroke = getSeriesOutlineStroke(series);
-            LegendItem item = new LegendItem(label, description,
-                    null, null, shape, paint, stroke, outlinePaint);
+            LegendItem item = new LegendItem(new LegendItemParameter8(label, description, null, null, shape, paint, stroke, outlinePaint));
             item.setDataset(getDataset());
             item.setSeriesKey(key);
             item.setSeriesIndex(series);

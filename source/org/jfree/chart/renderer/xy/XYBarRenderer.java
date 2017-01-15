@@ -117,6 +117,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -757,8 +758,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
         if (this.drawBarOutline) {
-            result = new LegendItem(label, description, toolTipText,
-                    urlText, shape, paint, outlineStroke, outlinePaint);
+            result = new LegendItem(new LegendItemParameter8(label, description, toolTipText, urlText, shape, paint, outlineStroke, outlinePaint));
         }
         else {
             result = new LegendItem(label, description, toolTipText, urlText, 

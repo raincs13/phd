@@ -127,6 +127,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -1215,8 +1216,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
 
-        LegendItem item = new LegendItem(label, description, toolTipText,
-                urlText, shape, paint, outlineStroke, outlinePaint);
+        LegendItem item = new LegendItem(new LegendItemParameter8(label, description, toolTipText, urlText, shape, paint, outlineStroke, outlinePaint));
         item.setLabelFont(lookupLegendTextFont(series));
         Paint labelPaint = lookupLegendTextPaint(series);
         if (labelPaint != null) {

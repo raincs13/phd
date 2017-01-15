@@ -83,6 +83,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
@@ -189,8 +190,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
 
-        LegendItem result = new LegendItem(label, description, toolTipText,
-                urlText, shape, paint, outlineStroke, outlinePaint);
+        LegendItem result = new LegendItem(new LegendItemParameter8(label, description, toolTipText, urlText, shape, paint, outlineStroke, outlinePaint));
         result.setLabelFont(lookupLegendTextFont(series));
         Paint labelPaint = lookupLegendTextPaint(series);
         if (labelPaint != null) {

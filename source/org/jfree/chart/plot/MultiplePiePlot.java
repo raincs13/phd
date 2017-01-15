@@ -80,6 +80,7 @@ import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemParameter8;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.util.ParamChecks;
@@ -573,9 +574,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             String label = key.toString();  // TODO: use a generator here
             String description = label;
             Paint paint = (Paint) this.sectionPaints.get(key);
-            LegendItem item = new LegendItem(label, description, null,
-                    null, getLegendItemShape(), paint,
-                    Plot.DEFAULT_OUTLINE_STROKE, paint);
+            LegendItem item = new LegendItem(new LegendItemParameter8(label, description, null, null, getLegendItemShape(), paint, Plot.DEFAULT_OUTLINE_STROKE, paint));
             item.setSeriesKey(key);
             item.setSeriesIndex(section);
             item.setDataset(getDataset());
@@ -583,10 +582,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             section++;
         }
         if (this.limit > 0.0) {
-            LegendItem a = new LegendItem(this.aggregatedItemsKey.toString(),
-                    this.aggregatedItemsKey.toString(), null, null,
-                    getLegendItemShape(), this.aggregatedItemsPaint,
-                    Plot.DEFAULT_OUTLINE_STROKE, this.aggregatedItemsPaint);
+            LegendItem a = new LegendItem(new LegendItemParameter8(this.aggregatedItemsKey.toString(), this.aggregatedItemsKey.toString(), null, null, getLegendItemShape(), this.aggregatedItemsPaint, Plot.DEFAULT_OUTLINE_STROKE,
+					this.aggregatedItemsPaint));
             result.add(a);
         }
         return result;

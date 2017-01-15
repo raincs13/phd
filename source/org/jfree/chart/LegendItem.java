@@ -255,28 +255,14 @@ public class LegendItem implements Cloneable, Serializable {
 
     /**
      * Creates a legend item with a filled and outlined shape.
-     *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param description  the description (<code>null</code> permitted).
-     * @param toolTipText  the tool tip text (<code>null</code> permitted).
-     * @param urlText  the URL text (<code>null</code> permitted).
-     * @param shape  the shape (<code>null</code> not permitted).
-     * @param fillPaint  the paint used to fill the shape (<code>null</code>
-     *                   not permitted).
-     * @param outlineStroke  the outline stroke (<code>null</code> not
-     *                       permitted).
-     * @param outlinePaint  the outline paint (<code>null</code> not
-     *                      permitted).
+     * @param parameterObjectLegendItem8 TODO
      */
-    public LegendItem(String label, String description,
-                      String toolTipText, String urlText,
-                      Shape shape, Paint fillPaint,
-                      Stroke outlineStroke, Paint outlinePaint) {
+    public LegendItem(LegendItemParameter8 parameterObjectLegendItem8) {
 
-        this(label, description, toolTipText, urlText,
-                /* shape visible = */ true, shape,
-                /* shape filled = */ true, fillPaint,
-                /* shape outlined = */ true, outlinePaint, outlineStroke,
+        this(parameterObjectLegendItem8.label, parameterObjectLegendItem8.description, parameterObjectLegendItem8.toolTipText, parameterObjectLegendItem8.urlText,
+                /* shape visible = */ true, parameterObjectLegendItem8.shape,
+                /* shape filled = */ true, parameterObjectLegendItem8.fillPaint,
+                /* shape outlined = */ true, parameterObjectLegendItem8.outlinePaint, parameterObjectLegendItem8.outlineStroke,
                 /* line visible */ false, UNUSED_SHAPE, UNUSED_STROKE,
                 Color.black);
 
