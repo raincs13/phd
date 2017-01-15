@@ -1373,11 +1373,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     public void removeOverlay(Overlay overlay) {
         ParamChecks.nullNotPermitted(overlay, "overlay");
-        boolean removed = this.overlays.remove(overlay);
-        if (removed) {
+        if (getstatusOverlay(overlay)) {
             overlay.removeChangeListener(this);
             repaint();
         }
+    }
+    
+    public boolean getstatusOverlay(Overlay overlay){
+    	return this.overlays.remove(overlay);
     }
 
     /**
