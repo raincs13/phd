@@ -53,6 +53,7 @@ import static org.junit.Assert.fail;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
+import org.jfree.chart.CreateBufferedImageParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.CategoryAxis;
@@ -149,8 +150,7 @@ public class StatisticalBarRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");
@@ -173,8 +173,7 @@ public class StatisticalBarRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");
@@ -198,8 +197,7 @@ public class StatisticalBarRendererTest {
                     new StatisticalBarRenderer());
             plot.setOrientation(PlotOrientation.HORIZONTAL);
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");
@@ -222,8 +220,7 @@ public class StatisticalBarRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");
@@ -247,8 +244,7 @@ public class StatisticalBarRendererTest {
                     new StatisticalBarRenderer());
             plot.setOrientation(PlotOrientation.HORIZONTAL);
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");

@@ -49,6 +49,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import org.jfree.chart.CreateBufferedImageParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.NumberAxis;
@@ -169,8 +170,7 @@ public class XYStepAreaRendererTest {
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new XYStepAreaRenderer());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");

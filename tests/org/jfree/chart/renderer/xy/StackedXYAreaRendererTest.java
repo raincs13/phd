@@ -56,6 +56,7 @@ import java.awt.GradientPaint;
 import java.awt.Stroke;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateBufferedImageParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.NumberAxis;
@@ -187,8 +188,7 @@ public class StackedXYAreaRendererTest {
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new StackedXYAreaRenderer());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");
@@ -222,8 +222,7 @@ public class StackedXYAreaRendererTest {
                     new NumberAxis("X"), new NumberAxis("Y"),
                     renderer);
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");

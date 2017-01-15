@@ -51,6 +51,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
 
+import org.jfree.chart.CreateBufferedImageParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.NumberAxis;
@@ -192,8 +193,7 @@ public class XYBoxAnnotationTest {
             plot.addAnnotation(new XYBoxAnnotation(10.0, 12.0, 3.0, 4.0,
                     new BasicStroke(1.2f), Color.red, Color.blue));
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be triggered.");

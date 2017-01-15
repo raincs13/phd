@@ -181,7 +181,7 @@ public abstract class ChartUtilities {
 
         ParamChecks.nullNotPermitted(chart, "chart");
         BufferedImage bufferedImage
-                = chart.createBufferedImage(width, height, info);
+                = chart.createBufferedImage(new CreateBufferedImageParameter3(width, height, info));
         EncoderUtil.writeBufferedImage(bufferedImage, ImageFormat.PNG, out);
     }
 

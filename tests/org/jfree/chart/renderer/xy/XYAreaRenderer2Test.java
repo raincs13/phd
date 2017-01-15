@@ -50,6 +50,7 @@ import static org.junit.Assert.fail;
 
 import java.awt.Rectangle;
 
+import org.jfree.chart.CreateBufferedImageParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.TestUtilities;
@@ -162,8 +163,7 @@ public class XYAreaRenderer2Test {
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new XYAreaRenderer2());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");

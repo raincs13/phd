@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.CreateBufferedImageParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.TestUtilities;
@@ -186,8 +187,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, null));
         }
         catch (NullPointerException e) {
             fail("No exception should be thrown.");
@@ -351,8 +351,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
@@ -379,8 +378,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
@@ -407,8 +405,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
@@ -435,8 +432,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
@@ -463,8 +459,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
@@ -490,8 +485,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
         }
         catch (Exception e) {
             fail("No exception should be thrown.");
@@ -516,8 +510,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
@@ -544,8 +537,7 @@ public class BoxAndWhiskerRendererTest {
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
             JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
+            /* BufferedImage image = */ chart.createBufferedImage(new CreateBufferedImageParameter3(300, 200, info));
             success = true;
         }
         catch (Exception e) {
