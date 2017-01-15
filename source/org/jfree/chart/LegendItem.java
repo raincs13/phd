@@ -284,24 +284,15 @@ public class LegendItem implements Cloneable, Serializable {
 
     /**
      * Creates a legend item using a line.
-     *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param description  the description (<code>null</code> permitted).
-     * @param toolTipText  the tool tip text (<code>null</code> permitted).
-     * @param urlText  the URL text (<code>null</code> permitted).
-     * @param line  the line (<code>null</code> not permitted).
-     * @param lineStroke  the line stroke (<code>null</code> not permitted).
-     * @param linePaint  the line paint (<code>null</code> not permitted).
+     * @param parameterObjectLegendItem7 TODO
      */
-    public LegendItem(String label, String description,
-                      String toolTipText, String urlText,
-                      Shape line, Stroke lineStroke, Paint linePaint) {
+    public LegendItem(LegendItemParameter7 parameterObjectLegendItem7) {
 
-        this(label, description, toolTipText, urlText,
+        this(parameterObjectLegendItem7.label, parameterObjectLegendItem7.description, parameterObjectLegendItem7.toolTipText, parameterObjectLegendItem7.urlText,
                 /* shape visible = */ false, UNUSED_SHAPE,
                 /* shape filled = */ false, Color.black,
                 /* shape outlined = */ false, Color.black, UNUSED_STROKE,
-                /* line visible = */ true, line, lineStroke, linePaint);
+                /* line visible = */ true, parameterObjectLegendItem7.line, parameterObjectLegendItem7.lineStroke, parameterObjectLegendItem7.linePaint);
     }
 
     /**

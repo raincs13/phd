@@ -97,6 +97,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemParameter7;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
@@ -1139,8 +1140,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                     Paint paint = lookupSeriesPaint(series);
                     Stroke stroke = lookupSeriesStroke(series);
                     Shape line = getLegendLine();
-                    result = new LegendItem(label, description,
-                            toolTipText, urlText, line, stroke, paint);
+                    result = new LegendItem(new LegendItemParameter7(label, description, toolTipText, urlText, line, stroke, paint));
                     result.setLabelFont(lookupLegendTextFont(series));
                     Paint labelPaint = lookupLegendTextPaint(series);
                     if (labelPaint != null) {
