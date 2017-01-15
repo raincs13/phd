@@ -92,6 +92,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.jfree.chart.ClipPath;
+import org.jfree.chart.DrawParameter;
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.ColorBar;
@@ -727,8 +728,7 @@ public class ContourPlot extends Plot implements ContourValuePlot,
             ColorBar zAxis = getColorBar();
 
             if (this.clipPath != null) {
-                GeneralPath clipper = getClipPath().draw(g2, dataArea,
-                        this.domainAxis, this.rangeAxis);
+                GeneralPath clipper = getClipPath().draw(g2, new DrawParameter(dataArea, this.domainAxis, this.rangeAxis));
                 if (this.clipPath.isClip()) {
                     g2.clip(clipper);
                 }
@@ -763,7 +763,7 @@ public class ContourPlot extends Plot implements ContourValuePlot,
 
         }
         else if (this.clipPath != null) {
-            getClipPath().draw(g2, dataArea, this.domainAxis, this.rangeAxis);
+            getClipPath().draw(g2, new DrawParameter(dataArea, this.domainAxis, this.rangeAxis));
         }
 
     }

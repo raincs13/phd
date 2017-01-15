@@ -181,18 +181,14 @@ public class ClipPath implements Cloneable {
      * Draws the clip path.
      *
      * @param g2  current graphics2D.
-     * @param dataArea  the dataArea that the plot is being draw in.
-     * @param horizontalAxis  the horizontal axis.
-     * @param verticalAxis  the vertical axis.
-     *
+     * @param parameterObjectDraw TODO
      * @return The GeneralPath defining the outline
      */
     public GeneralPath draw(Graphics2D g2,
-                            Rectangle2D dataArea,
-                            ValueAxis horizontalAxis, ValueAxis verticalAxis) {
+                            DrawParameter parameterObjectDraw) {
 
         GeneralPath generalPath = generateClipPath(
-            dataArea, horizontalAxis, verticalAxis
+            parameterObjectDraw.dataArea, parameterObjectDraw.horizontalAxis, parameterObjectDraw.verticalAxis
         );
         if (this.fillPath || this.drawPath) {
             Composite saveComposite = g2.getComposite();
@@ -222,6 +218,8 @@ public class ClipPath implements Cloneable {
         return generalPath;
 
     }
+    
+    
 
     /**
      * Generates the clip path.
