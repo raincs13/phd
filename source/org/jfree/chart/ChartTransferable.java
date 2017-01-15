@@ -111,20 +111,16 @@ public class ChartTransferable implements Transferable {
      * @param height  the chart height.
      */
     public ChartTransferable(JFreeChart chart, int width, int height) {
-        this(chart, width, height, true);
+        this(new ChartTransferableParameter(chart, width, height), true);
     }
 
     /**
      * Creates a new chart selection.
-     *
-     * @param chart  the chart.
-     * @param width  the chart width.
-     * @param height  the chart height.
+     * @param parameterObject TODO
      * @param cloneData  clone the dataset(s)?
      */
-    public ChartTransferable(JFreeChart chart, int width, int height,
-            boolean cloneData) {
-        this(chart, width, height, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE,
+    public ChartTransferable(ChartTransferableParameter parameterObject, boolean cloneData) {
+        this(parameterObject.chart, parameterObject.width, parameterObject.height, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE,
                 true);
     }
 
