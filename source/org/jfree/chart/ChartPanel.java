@@ -3044,17 +3044,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Creates a popup menu for the panel.
-     *
-     * @param properties  include a menu item for the chart property editor.
-     * @param save  include a menu item for saving the chart.
-     * @param print  include a menu item for printing the chart.
-     * @param zoom  include menu items for zooming.
+     * @param parameterObjectPopUpMenu TODO
      *
      * @return The popup menu.
      */
-    protected JPopupMenu createPopupMenu(boolean properties, boolean save,
-            boolean print, boolean zoom) {
-        return createPopupMenu(properties, false, save, print, zoom);
+    protected JPopupMenu createPopupMenu(CreatePopupMenuParameter parameterObjectPopUpMenu) {
+        return createPopupMenu(parameterObjectPopUpMenu.properties, false, parameterObjectPopUpMenu.save, parameterObjectPopUpMenu.print, parameterObjectPopUpMenu.zoom);
     }
 
     /**

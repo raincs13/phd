@@ -133,25 +133,19 @@ public class PolarChartPanel extends ChartPanel {
     /**
      * Creates a popup menu for the panel.
      *
-     * @param properties  include a menu item for the chart property editor.
-     * @param save  include a menu item for saving the chart.
-     * @param print  include a menu item for printing the chart.
-     * @param zoom  include menu items for zooming.
-     *
      * @return The popup menu.
      */
     @Override
-    protected JPopupMenu createPopupMenu(boolean properties, boolean save,
-            boolean print, boolean zoom) {
+    protected JPopupMenu createPopupMenu(CreatePopupMenuParameter parameterObjectPopUpMenu) {
 
-       JPopupMenu result = super.createPopupMenu(properties, save, print, zoom);
+       JPopupMenu result = super.createPopupMenu(parameterObjectPopUpMenu);
        int zoomInIndex = getPopupMenuItem(result,
                localizationResources.getString("Zoom_In"));
        int zoomOutIndex = getPopupMenuItem(result,
                localizationResources.getString("Zoom_Out"));
        int autoIndex = getPopupMenuItem(result,
                localizationResources.getString("Auto_Range"));
-       if (zoom) {
+       if (parameterObjectPopUpMenu.zoom) {
            JMenuItem zoomIn = new JMenuItem(
                    localizationResources.getString("Zoom_In"));
            zoomIn.setActionCommand(POLAR_ZOOM_IN_ACTION_COMMAND);
