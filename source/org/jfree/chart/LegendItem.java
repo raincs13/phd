@@ -366,22 +366,13 @@ public class LegendItem implements Cloneable, Serializable {
     /**
      * Creates a legend item with a filled shape.  The shape is not outlined,
      * and no line is visible.
-     *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param description  the description (<code>null</code> permitted).
-     * @param toolTipText  the tool tip text (<code>null</code> permitted).
-     * @param urlText  the URL text (<code>null</code> permitted).
-     * @param shape  the shape (<code>null</code> not permitted).
-     * @param fillPaint  the paint used to fill the shape (<code>null</code>
-     *                   not permitted).
+     * @param parameterObjectLegandItem6 TODO
      */
-    public LegendItem(AttributedString label, String description,
-                      String toolTipText, String urlText,
-                      Shape shape, Paint fillPaint) {
+    public LegendItem(LegendItemParameter6 parameterObjectLegandItem6) {
 
-        this(label, description, toolTipText, urlText,
-                /* shape visible = */ true, shape,
-                /* shape filled = */ true, fillPaint,
+        this(parameterObjectLegandItem6.label, parameterObjectLegandItem6.description, parameterObjectLegandItem6.toolTipText, parameterObjectLegandItem6.urlText,
+                /* shape visible = */ true, parameterObjectLegandItem6.shape,
+                /* shape filled = */ true, parameterObjectLegandItem6.fillPaint,
                 /* shape outlined = */ false, Color.black, UNUSED_STROKE,
                 /* line visible = */ false, UNUSED_SHAPE, UNUSED_STROKE,
                 Color.black);
