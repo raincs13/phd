@@ -108,7 +108,7 @@ public class PolarChartPanel extends ChartPanel {
      * @param useBuffer  buffered?
      */
     public PolarChartPanel(JFreeChart chart, boolean useBuffer) {
-        super(chart, useBuffer);
+        super(new ChartPanelParameter(chart, useBuffer));
         checkChart(chart);
         setMinimumDrawWidth(200);
         setMinimumDrawHeight(200);

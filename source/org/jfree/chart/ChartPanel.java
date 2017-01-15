@@ -592,17 +592,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * flag to false, note that the mouse zooming rectangle will (in that case)
      * be drawn using XOR, and there is a SEVERE performance problem with that
      * on JRE6 on Windows.
-     *
-     * @param chart  the chart.
-     * @param useBuffer  a flag controlling whether or not an off-screen buffer
-     *                   is used (read the warning above before setting this
-     *                   to <code>false</code>).
+     * @param parameterObjectChartPanel2 TODO
      */
-    public ChartPanel(JFreeChart chart, boolean useBuffer) {
+    public ChartPanel(ChartPanelParameter parameterObjectChartPanel2) {
 
-        this(chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH,
+        this(parameterObjectChartPanel2.chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH,
                 DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH,
-                DEFAULT_MAXIMUM_DRAW_HEIGHT, useBuffer,
+                DEFAULT_MAXIMUM_DRAW_HEIGHT, parameterObjectChartPanel2.useBuffer,
                 true,  // properties
                 true,  // save
                 true,  // print
