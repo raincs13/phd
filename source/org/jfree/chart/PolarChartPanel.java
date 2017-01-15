@@ -98,18 +98,16 @@ public class PolarChartPanel extends ChartPanel {
      * @param chart  the chart.
      */
     public PolarChartPanel(JFreeChart chart) {
-        this(chart, true);
+        this(new PolarChartPanelParameter(chart, true));
     }
 
     /**
      * Creates a new panel.
-     *
-     * @param chart  the chart.
-     * @param useBuffer  buffered?
+     * @param parameterObjectPolarChartPanel TODO
      */
-    public PolarChartPanel(JFreeChart chart, boolean useBuffer) {
-        super(chart, useBuffer);
-        checkChart(chart);
+    public PolarChartPanel(PolarChartPanelParameter parameterObjectPolarChartPanel) {
+        super(parameterObjectPolarChartPanel.chart, parameterObjectPolarChartPanel.useBuffer);
+        checkChart(parameterObjectPolarChartPanel.chart);
         setMinimumDrawWidth(200);
         setMinimumDrawHeight(200);
         setMaximumDrawWidth(2000);
