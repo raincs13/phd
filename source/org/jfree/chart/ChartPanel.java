@@ -2799,7 +2799,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *     by reflection.
      */
     private String generateSVG(int width, int height) {
-        Graphics2D g2 = createSVGGraphics2D(width, height);
+        Graphics2D g2 = createSVGGraphics2D(new CreateSVGGraphics2DParameter(width, height));
         if (g2 == null) {
             throw new IllegalStateException("JFreeSVG library is not present.");
         }
@@ -2826,11 +2826,11 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         return svg;
     }
 
-    private Graphics2D createSVGGraphics2D(int w, int h) {
+    private Graphics2D createSVGGraphics2D(CreateSVGGraphics2DParameter parameterObjectSVGGraphics2D) {
         try {
             Class svgGraphics2d = Class.forName("org.jfree.graphics2d.svg.SVGGraphics2D");
             Constructor ctor = svgGraphics2d.getConstructor(int.class, int.class);
-            return (Graphics2D) ctor.newInstance(w, h);
+            return (Graphics2D) ctor.newInstance(parameterObjectSVGGraphics2D.w, parameterObjectSVGGraphics2D.h);
         } catch (ClassNotFoundException ex) {
             return null;
         } catch (NoSuchMethodException ex) {
@@ -3107,7 +3107,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             pngItem.addActionListener(this);
             saveSubMenu.add(pngItem);
             
-            if (createSVGGraphics2D(10, 10) != null) {
+            if (createSVGGraphics2D(new CreateSVGGraphics2DParameter(10, 10)) != null) {
                 JMenuItem svgItem = new JMenuItem("SVG...");
                 svgItem.setActionCommand("SAVE_AS_SVG");
                 svgItem.addActionListener(this);
