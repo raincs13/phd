@@ -71,6 +71,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemParameter2;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
@@ -427,11 +428,11 @@ public class XYPlotTest {
         assertTrue(plot1.equals(plot2));
 
         LegendItemCollection lic1 = new LegendItemCollection();
-        lic1.add(new LegendItem("XYZ", Color.red));
+        lic1.add(new LegendItem(new LegendItemParameter2("XYZ", Color.red)));
         plot1.setFixedLegendItems(lic1);
         assertFalse(plot1.equals(plot2));
         LegendItemCollection lic2 = new LegendItemCollection();
-        lic2.add(new LegendItem("XYZ", Color.red));
+        lic2.add(new LegendItem(new LegendItemParameter2("XYZ", Color.red)));
         plot2.setFixedLegendItems(lic2);
         assertTrue(plot1.equals(plot2));
     }

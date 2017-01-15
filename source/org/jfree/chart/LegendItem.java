@@ -211,21 +211,19 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.10
      */
     public LegendItem(String label) {
-        this(label, Color.black);
+        this(new LegendItemParameter2(label, Color.black));
     }
 
     /**
      * Creates a legend item with the specified label and fill paint.  The
      * remaining attributes take default values.
-     *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param parameterObjectLegendItem2 TODO
      *
      * @since 1.0.12
      */
-    public LegendItem(String label, Paint paint) {
-        this(label, null, null, null, new Rectangle2D.Double(-4.0, -4.0, 8.0,
-                8.0), paint);
+    public LegendItem(LegendItemParameter2 parameterObjectLegendItem2) {
+        this(parameterObjectLegendItem2.label, null, null, null, new Rectangle2D.Double(-4.0, -4.0, 8.0,
+                8.0), parameterObjectLegendItem2.paint);
     }
 
     /**

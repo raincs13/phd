@@ -145,6 +145,7 @@ import java.util.List;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemParameter2;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.ValueAxis;
@@ -844,7 +845,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
         Shape shape = lookupLegendShape(series);
         Paint paint = lookupSeriesPaint(series);
-        LegendItem item = new LegendItem(label, paint);
+        LegendItem item = new LegendItem(new LegendItemParameter2(label, paint));
         item.setToolTipText(toolTipText);
         item.setURLText(urlText);
         item.setLabelFont(lookupLegendTextFont(series));
