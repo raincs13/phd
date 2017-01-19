@@ -709,24 +709,14 @@ public abstract class ChartUtilities {
      * Creates an HTML image map.  This method maps directly to
      * {@link ImageMapUtilities#getImageMap(String, ChartRenderingInfo,
      * ToolTipTagFragmentGenerator, URLTagFragmentGenerator)}.
-     *
-     * @param name  the map name (<code>null</code> not permitted).
-     * @param info  the chart rendering info (<code>null</code> not permitted).
-     * @param toolTipTagFragmentGenerator  a generator for the HTML fragment
-     *     that will contain the tooltip text (<code>null</code> not permitted
-     *     if <code>info</code> contains tooltip information).
-     * @param urlTagFragmentGenerator  a generator for the HTML fragment that
-     *     will contain the URL reference (<code>null</code> not permitted if
-     *     <code>info</code> contains URLs).
+     * @param parameterObjectImageMap4 TODO
      *
      * @return The map tag.
      */
-    public static String getImageMap(String name, ChartRenderingInfo info,
-            ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
-            URLTagFragmentGenerator urlTagFragmentGenerator) {
+    public static String getImageMap(GetImageMapParameter4 parameterObjectImageMap4) {
 
-        return ImageMapUtilities.getImageMap(name, info,
-                toolTipTagFragmentGenerator, urlTagFragmentGenerator);
+        return ImageMapUtilities.getImageMap(parameterObjectImageMap4.name, parameterObjectImageMap4.info,
+                parameterObjectImageMap4.toolTipTagFragmentGenerator, parameterObjectImageMap4.urlTagFragmentGenerator);
 
     }
 
