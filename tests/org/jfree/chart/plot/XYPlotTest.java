@@ -68,6 +68,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateBufferedImageParameter2;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
@@ -693,7 +694,7 @@ public class XYPlotTest {
         JFreeChart chart2 = (JFreeChart) TestUtilities.serialised(chart);
         assertEquals(chart, chart2);
         try {
-            chart2.createBufferedImage(300, 200);
+            chart2.createBufferedImage(new CreateBufferedImageParameter2(300, 200));
         }
         catch (Exception e) {
             fail("No exception should be thrown.");
@@ -718,7 +719,7 @@ public class XYPlotTest {
         JFreeChart chart2 = (JFreeChart) TestUtilities.serialised(chart);
         assertEquals(chart, chart2);
         try {
-            chart2.createBufferedImage(300, 200);
+            chart2.createBufferedImage(new CreateBufferedImageParameter2(300, 200));
         }
         catch (Exception e) {
             fail("No exception should be thrown.");
