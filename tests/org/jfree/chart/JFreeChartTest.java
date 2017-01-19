@@ -372,7 +372,7 @@ public class JFreeChartTest implements ChartChangeListener {
         JFreeChart chart = ChartFactory.createPieChart("title", dataset);
 
         TextTitle t0 = new TextTitle("T0");
-        chart.addSubtitle(0, t0);
+        chart.addSubtitle(new AddSubtitleParameter2(0, t0));
         assertEquals(t0, chart.getSubtitle(0));
 
         TextTitle t1 = new TextTitle("T1");
@@ -388,7 +388,7 @@ public class JFreeChartTest implements ChartChangeListener {
         }
 
         try {
-            chart.addSubtitle(-1, t0);
+            chart.addSubtitle(new AddSubtitleParameter2(-1, t0));
             fail("Should have thrown an IllegalArgumentException on index out of range");
         }
         catch (IllegalArgumentException e) {
@@ -396,7 +396,7 @@ public class JFreeChartTest implements ChartChangeListener {
         }
 
         try {
-            chart.addSubtitle(4, t0);
+            chart.addSubtitle(new AddSubtitleParameter2(4, t0));
             fail("Should have thrown an IllegalArgumentException on index out of range");
         }
         catch (IllegalArgumentException e) {

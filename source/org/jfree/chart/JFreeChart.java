@@ -768,20 +768,18 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     /**
      * Adds a subtitle at a particular position in the subtitle list, and sends
      * a {@link ChartChangeEvent} to all registered listeners.
-     *
-     * @param index  the index (in the range 0 to {@link #getSubtitleCount()}).
-     * @param subtitle  the subtitle to add (<code>null</code> not permitted).
+     * @param parameterObjectAddSubtitle2 TODO
      *
      * @since 1.0.6
      */
-    public void addSubtitle(int index, Title subtitle) {
-        if (index < 0 || index > getSubtitleCount()) {
+    public void addSubtitle(AddSubtitleParameter2 parameterObjectAddSubtitle2) {
+        if (parameterObjectAddSubtitle2.index < 0 || parameterObjectAddSubtitle2.index > getSubtitleCount()) {
             throw new IllegalArgumentException(
                     "The 'index' argument is out of range.");
         }
-        ParamChecks.nullNotPermitted(subtitle, "subtitle");
-        this.subtitles.add(index, subtitle);
-        subtitle.addChangeListener(this);
+        ParamChecks.nullNotPermitted(parameterObjectAddSubtitle2.subtitle, "subtitle");
+        this.subtitles.add(parameterObjectAddSubtitle2.index, parameterObjectAddSubtitle2.subtitle);
+        parameterObjectAddSubtitle2.subtitle.addChangeListener(this);
         fireChartChanged();
     }
 
