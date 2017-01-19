@@ -693,14 +693,12 @@ public abstract class ChartUtilities {
      * {@link ImageMapUtilities#getImageMap(String, ChartRenderingInfo,
      * ToolTipTagFragmentGenerator, URLTagFragmentGenerator)}, using default
      * generators.
-     *
-     * @param name  the map name (<code>null</code> not permitted).
-     * @param info  the chart rendering info (<code>null</code> not permitted).
+     * @param parameterObjectGetImageMap2 TODO
      *
      * @return The map tag.
      */
-    public static String getImageMap(String name, ChartRenderingInfo info) {
-        return ImageMapUtilities.getImageMap(name, info,
+    public static String getImageMap(GetImageMapParameter2 parameterObjectGetImageMap2) {
+        return ImageMapUtilities.getImageMap(parameterObjectGetImageMap2.name, parameterObjectGetImageMap2.info,
                 new StandardToolTipTagFragmentGenerator(),
                 new StandardURLTagFragmentGenerator());
     }
