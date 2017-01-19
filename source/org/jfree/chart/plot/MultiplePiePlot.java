@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.DrawParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
@@ -476,7 +477,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             if (info != null) {
                 subinfo = new ChartRenderingInfo();
             }
-            this.pieChart.draw(g2, rect, subinfo);
+            this.pieChart.draw(new DrawParameter3(g2, rect, subinfo));
             if (info != null) {
                 assert subinfo != null;
                 info.getOwner().getEntityCollection().addAll(

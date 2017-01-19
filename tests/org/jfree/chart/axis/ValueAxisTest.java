@@ -55,6 +55,7 @@ import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.DrawParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -246,7 +247,7 @@ public class ValueAxisTest {
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         ChartRenderingInfo info = new ChartRenderingInfo();
-        chart.draw(g2, new Rectangle2D.Double(0, 0, 500, 300), info);
+        chart.draw(new DrawParameter3(g2, new Rectangle2D.Double(0, 0, 500, 300), info));
         g2.dispose();
         Rectangle2D rect = info.getPlotInfo().getDataArea();
         double x = rect.getMinX();

@@ -1127,13 +1127,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     /**
      * Draws the chart on a Java 2D graphics device (such as the screen or a
      * printer).  This method is the focus of the entire JFreeChart library.
-     *
-     * @param g2  the graphics device.
-     * @param area  the area within which the chart should be drawn.
-     * @param info  records info about the drawing (null means collect no info).
+     * @param parameterObjectDraw3 TODO
      */
-    public void draw(Graphics2D g2, Rectangle2D area, ChartRenderingInfo info) {
-        draw(g2, area, null, info);
+    public void draw(DrawParameter3 parameterObjectDraw3) {
+        draw(parameterObjectDraw3.g2, parameterObjectDraw3.area, null, parameterObjectDraw3.info);
     }
 
     /**
