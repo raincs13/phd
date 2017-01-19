@@ -363,12 +363,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * Note that the {@link ChartFactory} class contains a range
      * of static methods that will return ready-made charts, and often this
      * is a more convenient way to create charts than using this constructor.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param plot  the plot (<code>null</code> not permitted).
+     * @param parameterObjectJFreeChart2 TODO
      */
-    public JFreeChart(String title, Plot plot) {
-        this(title, JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+    public JFreeChart(JFreeChartParameter2 parameterObjectJFreeChart2) {
+        this(parameterObjectJFreeChart2.title, JFreeChart.DEFAULT_TITLE_FONT, parameterObjectJFreeChart2.plot, true);
     }
 
     /**
