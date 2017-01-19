@@ -460,20 +460,14 @@ public abstract class ChartUtilities {
 
     /**
      * Saves a chart to a file in JPEG format.
-     *
-     * @param file  the file (<code>null</code> not permitted).
-     * @param quality  the JPEG quality setting.
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
+     * @param parameterObjectChartAsJPEG5 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void saveChartAsJPEG(File file, float quality,
-            JFreeChart chart, int width, int height) throws IOException {
+    public static void saveChartAsJPEG(SaveChartAsJPEGParameter5 parameterObjectChartAsJPEG5) throws IOException {
 
         // defer argument checking...
-        saveChartAsJPEG(file, quality, chart, width, height, null);
+        saveChartAsJPEG(parameterObjectChartAsJPEG5.file, parameterObjectChartAsJPEG5.quality, parameterObjectChartAsJPEG5.chart, parameterObjectChartAsJPEG5.width, parameterObjectChartAsJPEG5.height, null);
 
     }
 
