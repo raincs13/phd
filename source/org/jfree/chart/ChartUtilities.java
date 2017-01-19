@@ -270,19 +270,14 @@ public abstract class ChartUtilities {
 
     /**
      * Saves a chart to the specified file in PNG format.
-     *
-     * @param file  the file name (<code>null</code> not permitted).
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
+     * @param parameterObjectChartAsPNG4 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void saveChartAsPNG(File file, JFreeChart chart,
-            int width, int height) throws IOException {
+    public static void saveChartAsPNG(SaveChartAsPNGParameter4 parameterObjectChartAsPNG4) throws IOException {
 
         // defer argument checking...
-        saveChartAsPNG(file, chart, width, height, null);
+        saveChartAsPNG(parameterObjectChartAsPNG4.file, parameterObjectChartAsPNG4.chart, parameterObjectChartAsPNG4.width, parameterObjectChartAsPNG4.height, null);
 
     }
 

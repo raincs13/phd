@@ -2724,8 +2724,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     filename = filename + ".png";
                 }
             }
-            ChartUtilities.saveChartAsPNG(new File(filename), this.chart,
-                    getWidth(), getHeight());
+            ChartUtilities.saveChartAsPNG(new SaveChartAsPNGParameter4(new File(filename), this.chart, getWidth(), getHeight()));
         }
     }
     
