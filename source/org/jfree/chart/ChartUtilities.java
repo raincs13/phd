@@ -369,20 +369,14 @@ public abstract class ChartUtilities {
     /**
      * Writes a chart to an output stream in JPEG format.  Please note that
      * JPEG is a poor format for chart images, use PNG if possible.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param quality  the quality setting.
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
+     * @param parameterObjectChartAsJPEG5 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeChartAsJPEG(OutputStream out, float quality,
-            JFreeChart chart, int width, int height) throws IOException {
+    public static void writeChartAsJPEG(WriteChartAsJPEGParameter5 parameterObjectChartAsJPEG5) throws IOException {
 
         // defer argument checking...
-        ChartUtilities.writeChartAsJPEG(out, quality, chart, width, height,
+        ChartUtilities.writeChartAsJPEG(parameterObjectChartAsJPEG5.out, parameterObjectChartAsJPEG5.quality, parameterObjectChartAsJPEG5.chart, parameterObjectChartAsJPEG5.width, parameterObjectChartAsJPEG5.height,
                 null);
 
     }
