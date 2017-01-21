@@ -635,21 +635,15 @@ public abstract class ChartUtilities {
 
     /**
      * Writes an image map to an output stream.
-     *
-     * @param writer  the writer (<code>null</code> not permitted).
-     * @param name  the map name (<code>null</code> not permitted).
-     * @param info  the chart rendering info (<code>null</code> not permitted).
-     * @param useOverLibForToolTips  whether to use OverLIB for tooltips
-     *                               (http://www.bosrup.com/web/overlib/).
+     * @param parameterObjectImageMap4 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeImageMap(PrintWriter writer, String name,
-            ChartRenderingInfo info, boolean useOverLibForToolTips)
+    public static void writeImageMap(WriteImageMapParameter4 parameterObjectImageMap4)
             throws IOException {
 
         ToolTipTagFragmentGenerator toolTipTagFragmentGenerator;
-        if (useOverLibForToolTips) {
+        if (parameterObjectImageMap4.useOverLibForToolTips) {
             toolTipTagFragmentGenerator
                     = new OverLIBToolTipTagFragmentGenerator();
         }
@@ -657,7 +651,7 @@ public abstract class ChartUtilities {
             toolTipTagFragmentGenerator
                     = new StandardToolTipTagFragmentGenerator();
         }
-        ImageMapUtilities.writeImageMap(writer, name, info,
+        ImageMapUtilities.writeImageMap(parameterObjectImageMap4.writer, parameterObjectImageMap4.name, parameterObjectImageMap4.info,
                 toolTipTagFragmentGenerator,
                 new StandardURLTagFragmentGenerator());
 
