@@ -123,19 +123,14 @@ public abstract class ChartUtilities {
 
     /**
      * Writes a chart to an output stream in PNG format.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
+     * @param parameterObjectChartAsPNG4 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeChartAsPNG(OutputStream out, JFreeChart chart,
-            int width, int height) throws IOException {
+    public static void writeChartAsPNG(WriteChartAsPNGParameter4 parameterObjectChartAsPNG4) throws IOException {
 
         // defer argument checking...
-        writeChartAsPNG(out, chart, width, height, null);
+        writeChartAsPNG(new WriteChartAsPNGParameter5(parameterObjectChartAsPNG4.out, parameterObjectChartAsPNG4.chart, parameterObjectChartAsPNG4.width, parameterObjectChartAsPNG4.height, null));
 
     }
 
@@ -166,23 +161,17 @@ public abstract class ChartUtilities {
      * you to pass in a {@link ChartRenderingInfo} object, to collect
      * information about the chart dimensions/entities.  You will need this
      * info if you want to create an HTML image map.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
+     * @param parameterObjectChartAsPNG5 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeChartAsPNG(OutputStream out, JFreeChart chart,
-            int width, int height,  ChartRenderingInfo info)
+    public static void writeChartAsPNG(WriteChartAsPNGParameter5 parameterObjectChartAsPNG5)
             throws IOException {
 
-        ParamChecks.nullNotPermitted(chart, "chart");
+        ParamChecks.nullNotPermitted(parameterObjectChartAsPNG5.chart, "chart");
         BufferedImage bufferedImage
-                = chart.createBufferedImage(width, height, info);
-        EncoderUtil.writeBufferedImage(bufferedImage, ImageFormat.PNG, out);
+                = parameterObjectChartAsPNG5.chart.createBufferedImage(parameterObjectChartAsPNG5.width, parameterObjectChartAsPNG5.height, parameterObjectChartAsPNG5.info);
+        EncoderUtil.writeBufferedImage(bufferedImage, ImageFormat.PNG, parameterObjectChartAsPNG5.out);
     }
 
     /**
@@ -307,7 +296,7 @@ public abstract class ChartUtilities {
         ParamChecks.nullNotPermitted(file, "file");
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
         try {
-            ChartUtilities.writeChartAsPNG(out, chart, width, height, info);
+            ChartUtilities.writeChartAsPNG(new WriteChartAsPNGParameter5(out, chart, width, height, info));
         }
         finally {
             out.close();
