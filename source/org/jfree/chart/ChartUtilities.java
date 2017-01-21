@@ -540,17 +540,14 @@ public abstract class ChartUtilities {
 
     /**
      * Writes a {@link BufferedImage} to an output stream in JPEG format.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param image  the image (<code>null</code> not permitted).
+     * @param parameterObjectBufferedImageAsJPEG2 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeBufferedImageAsJPEG(OutputStream out,
-            BufferedImage image) throws IOException {
+    public static void writeBufferedImageAsJPEG(WriteBufferedImageAsJPEGParameter2 parameterObjectBufferedImageAsJPEG2) throws IOException {
 
         // defer argument checking...
-        writeBufferedImageAsJPEG(out, 0.75f, image);
+        writeBufferedImageAsJPEG(parameterObjectBufferedImageAsJPEG2.out, 0.75f, parameterObjectBufferedImageAsJPEG2.image);
 
     }
 
