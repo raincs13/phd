@@ -93,7 +93,7 @@ public class PieChartTest  {
         data.setValue("Java", new Double(43.2));
         data.setValue("Visual Basic", new Double(0.0));
         data.setValue("C/C++", new Double(17.5));
-        return ChartFactory.createPieChart("Pie Chart", data);
+        return ChartFactory.createPieChart(new CreatePieChartParameter2("Pie Chart", data));
     }
 
     /**

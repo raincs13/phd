@@ -311,16 +311,14 @@ public abstract class ChartFactory {
      * <P>
      * The chart object returned by this method uses a {@link PiePlot} instance
      * as the plot.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectPieChart2 TODO
      *
      * @return A pie chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createPieChart(String title, PieDataset dataset) {
-        return createPieChart(title, dataset, true, true, false);
+    public static JFreeChart createPieChart(CreatePieChartParameter2 parameterObjectPieChart2) {
+        return createPieChart(parameterObjectPieChart2.title, parameterObjectPieChart2.dataset, true, true, false);
     }
     
     /**
