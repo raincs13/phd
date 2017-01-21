@@ -210,8 +210,7 @@ public abstract class ChartUtilities {
         ParamChecks.nullNotPermitted(chart, "chart");
         BufferedImage chartImage = chart.createBufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB, info);
-        ChartUtilities.writeBufferedImageAsPNG(out, chartImage, encodeAlpha,
-                compression);
+        ChartUtilities.writeBufferedImageAsPNG(new WriteBufferedImageAsPNGParameter4(out, chartImage, encodeAlpha, compression));
 
     }
 
@@ -587,20 +586,15 @@ public abstract class ChartUtilities {
 
     /**
      * Writes a {@link BufferedImage} to an output stream in PNG format.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param image  the image (<code>null</code> not permitted).
-     * @param encodeAlpha  encode alpha?
-     * @param compression  the compression level (0-9).
+     * @param parameterObjectBufferedImageAsPNG4 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeBufferedImageAsPNG(OutputStream out,
-            BufferedImage image, boolean encodeAlpha, int compression)
+    public static void writeBufferedImageAsPNG(WriteBufferedImageAsPNGParameter4 parameterObjectBufferedImageAsPNG4)
             throws IOException {
 
-        EncoderUtil.writeBufferedImage(image, ImageFormat.PNG, out,
-                compression, encodeAlpha);
+        EncoderUtil.writeBufferedImage(parameterObjectBufferedImageAsPNG4.image, ImageFormat.PNG, parameterObjectBufferedImageAsPNG4.out,
+                parameterObjectBufferedImageAsPNG4.compression, parameterObjectBufferedImageAsPNG4.encodeAlpha);
     }
 
     /**
