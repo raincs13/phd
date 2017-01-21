@@ -168,8 +168,7 @@ public class LineChartTest  {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
 
-        return ChartFactory.createLineChart("Line Chart", "Domain", "Range",
-                dataset);
+        return ChartFactory.createLineChart(new CreateLineChartParameter4("Line Chart", "Domain", "Range", dataset));
 
     }
 

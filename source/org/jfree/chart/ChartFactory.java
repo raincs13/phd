@@ -1325,23 +1325,15 @@ public abstract class ChartFactory {
      * by this method uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link LineAndShapeRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectLineChart4 TODO
      *
      * @return A line chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createLineChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-        return createLineChart(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createLineChart(CreateLineChartParameter4 parameterObjectLineChart4) {
+        return createLineChart(parameterObjectLineChart4.title, parameterObjectLineChart4.categoryAxisLabel, parameterObjectLineChart4.valueAxisLabel,
+                parameterObjectLineChart4.dataset, PlotOrientation.VERTICAL, true, true, false);
     }
     
     /**
