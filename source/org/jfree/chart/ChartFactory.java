@@ -2285,21 +2285,19 @@ public abstract class ChartFactory {
      * {@link org.jfree.chart.axis.SegmentedTimeline} such as the Monday
      * through Friday timeline that will remove Saturdays and Sundays from
      * the axis.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObjectHighLowChart2 TODO
      * @param timeAxisLabel  a label for the time axis (<code>null</code>
      *                       permitted).
      * @param valueAxisLabel  a label for the value axis (<code>null</code>
      *                        permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param timeline  the timeline.
-     * @param legend  a flag specifying whether or not a legend is required.
      *
      * @return A high-low-open-close chart.
      */
-    public static JFreeChart createHighLowChart(String title,
+    public static JFreeChart createHighLowChart(CreateHighLowChartParameter2 parameterObjectHighLowChart2,
             String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset,
-            Timeline timeline, boolean legend) {
+            Timeline timeline) {
 
         DateAxis timeAxis = new DateAxis(timeAxisLabel);
         timeAxis.setTimeline(timeline);
@@ -2307,8 +2305,8 @@ public abstract class ChartFactory {
         HighLowRenderer renderer = new HighLowRenderer();
         renderer.setBaseToolTipGenerator(new HighLowItemLabelGenerator());
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObjectHighLowChart2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObjectHighLowChart2.legend);
         currentTheme.apply(chart);
         return chart;
 
