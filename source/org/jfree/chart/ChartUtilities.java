@@ -572,16 +572,13 @@ public abstract class ChartUtilities {
 
     /**
      * Writes a {@link BufferedImage} to an output stream in PNG format.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param image  the image (<code>null</code> not permitted).
+     * @param parameterObjectBufferedImageAsPNG2 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeBufferedImageAsPNG(OutputStream out,
-            BufferedImage image) throws IOException {
+    public static void writeBufferedImageAsPNG(WriteBufferedImageAsPNGParameter2 parameterObjectBufferedImageAsPNG2) throws IOException {
 
-        EncoderUtil.writeBufferedImage(image, ImageFormat.PNG, out);
+        EncoderUtil.writeBufferedImage(parameterObjectBufferedImageAsPNG2.image, ImageFormat.PNG, parameterObjectBufferedImageAsPNG2.out);
 
     }
 
