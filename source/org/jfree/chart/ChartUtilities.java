@@ -618,19 +618,15 @@ public abstract class ChartUtilities {
 
     /**
      * Encodes a {@link BufferedImage} to PNG format.
-     *
-     * @param image  the image (<code>null</code> not permitted).
-     * @param encodeAlpha  encode alpha?
-     * @param compression  the PNG compression level (0-9).
+     * @param parameterObjectEncodeAsPNG3 TODO
      *
      * @return The byte array in PNG format.
      *
      * @throws IOException if there is an I/O problem.
      */
-    public static byte[] encodeAsPNG(BufferedImage image, boolean encodeAlpha,
-            int compression) throws IOException {
-        return EncoderUtil.encode(image, ImageFormat.PNG, compression,
-                encodeAlpha);
+    public static byte[] encodeAsPNG(EncodeAsPNGParameter3 parameterObjectEncodeAsPNG3) throws IOException {
+        return EncoderUtil.encode(parameterObjectEncodeAsPNG3.image, ImageFormat.PNG, parameterObjectEncodeAsPNG3.compression,
+                parameterObjectEncodeAsPNG3.encodeAlpha);
     }
 
     /**
