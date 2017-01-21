@@ -1397,23 +1397,15 @@ public abstract class ChartFactory {
      * this method uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} as
      * the range axis, and a {@link LineRenderer3D} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectLineChart3D3 TODO
      *
      * @return A line chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createLineChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-        return createLineChart3D(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createLineChart3D(CreateLineChart3DParameter3 parameterObjectLineChart3D3) {
+        return createLineChart3D(parameterObjectLineChart3D3.title, parameterObjectLineChart3D3.categoryAxisLabel, parameterObjectLineChart3D3.valueAxisLabel,
+                parameterObjectLineChart3D3.dataset, PlotOrientation.VERTICAL, true, true, false);
     }    
         
     /**

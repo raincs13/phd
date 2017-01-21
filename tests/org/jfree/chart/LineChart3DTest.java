@@ -167,8 +167,7 @@ public class LineChart3DTest  {
 
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-        return ChartFactory.createLineChart3D("Line Chart", "Domain", "Range",
-            dataset);
+        return ChartFactory.createLineChart3D(new CreateLineChart3DParameter3("Line Chart", "Domain", "Range", dataset));
     }
 
     /**
