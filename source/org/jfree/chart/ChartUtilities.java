@@ -550,23 +550,19 @@ public abstract class ChartUtilities {
             BufferedImage image) throws IOException {
 
         // defer argument checking...
-        writeBufferedImageAsJPEG(out, 0.75f, image);
+        writeBufferedImageAsJPEG(new WriteBufferedImageAsJPEGParameter3(out, 0.75f, image));
 
     }
 
     /**
      * Writes a {@link BufferedImage} to an output stream in JPEG format.
-     *
-     * @param out  the output stream (<code>null</code> not permitted).
-     * @param quality  the image quality (0.0f to 1.0f).
-     * @param image  the image (<code>null</code> not permitted).
+     * @param parameterObjectBufferedImageAsJPEG3 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void writeBufferedImageAsJPEG(OutputStream out, float quality,
-            BufferedImage image) throws IOException {
+    public static void writeBufferedImageAsJPEG(WriteBufferedImageAsJPEGParameter3 parameterObjectBufferedImageAsJPEG3) throws IOException {
 
-        EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out, quality);
+        EncoderUtil.writeBufferedImage(parameterObjectBufferedImageAsJPEG3.image, ImageFormat.JPEG, parameterObjectBufferedImageAsJPEG3.out, parameterObjectBufferedImageAsJPEG3.quality);
 
     }
 
