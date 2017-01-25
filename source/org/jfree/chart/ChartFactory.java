@@ -1880,20 +1880,15 @@ public abstract class ChartFactory {
      * method uses an {@link XYPlot} instance as the plot, with a
      * {@link NumberAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link StackedXYAreaRenderer2} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectStackedXYAreaChart4 TODO
      *
      * @return A stacked XY area chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createStackedXYAreaChart(String title,
-            String xAxisLabel, String yAxisLabel, TableXYDataset dataset) {
-        return createStackedXYAreaChart(title, xAxisLabel, yAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createStackedXYAreaChart(CreateStackedXYAreaChartParameter4 parameterObjectStackedXYAreaChart4) {
+        return createStackedXYAreaChart(parameterObjectStackedXYAreaChart4.title, parameterObjectStackedXYAreaChart4.xAxisLabel, parameterObjectStackedXYAreaChart4.yAxisLabel,
+                parameterObjectStackedXYAreaChart4.dataset, PlotOrientation.VERTICAL, true, true, false);
     }
     
     /**
