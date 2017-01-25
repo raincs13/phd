@@ -1721,21 +1721,15 @@ public abstract class ChartFactory {
      * as the plot, with a {@link DateAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link XYBarRenderer} as the
      * renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param dateAxis  make the domain axis display dates?
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectXYBarChart5 TODO
      *
      * @return An XY bar chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createXYBarChart(String title, String xAxisLabel,
-            boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset) {
-        return createXYBarChart(title, xAxisLabel, dateAxis, yAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createXYBarChart(CreateXYBarChartParameter5 parameterObjectXYBarChart5) {
+        return createXYBarChart(parameterObjectXYBarChart5.title, parameterObjectXYBarChart5.xAxisLabel, parameterObjectXYBarChart5.dateAxis, parameterObjectXYBarChart5.yAxisLabel,
+                parameterObjectXYBarChart5.dataset, PlotOrientation.VERTICAL, true, true, false);
     }
     
     /**

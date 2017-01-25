@@ -153,8 +153,7 @@ public class XYBarChartTest {
         series1.add(3.0, 3.0);
         IntervalXYDataset dataset = new XYBarDataset(new XYSeriesCollection(
                 series1), 1.0);
-        return ChartFactory.createXYBarChart("XY Bar Chart", "Domain", false,
-                "Range", dataset);
+        return ChartFactory.createXYBarChart(new CreateXYBarChartParameter5("XY Bar Chart", "Domain", false, "Range", dataset));
 
     }
 
