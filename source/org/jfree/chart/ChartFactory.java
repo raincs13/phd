@@ -740,17 +740,14 @@ public abstract class ChartFactory {
      * Creates a 3D pie chart using the specified dataset.  The chart object
      * returned by this method uses a {@link PiePlot3D} instance as the
      * plot.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectPieChart3D2 TODO
      *
      * @return A pie chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createPieChart3D(String title,
-            PieDataset dataset) {
-        return createPieChart3D(title, dataset, true, true, false);
+    public static JFreeChart createPieChart3D(CreatePieChart3DParameter2 parameterObjectPieChart3D2) {
+        return createPieChart3D(parameterObjectPieChart3D2.title, parameterObjectPieChart3D2.dataset, true, true, false);
     }
     
     /**

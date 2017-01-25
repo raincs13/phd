@@ -116,7 +116,7 @@ public class PieChart3DTest  {
      * @return The pie chart.
      */
     private static JFreeChart createPieChart3D(PieDataset dataset) {
-        return ChartFactory.createPieChart3D("Pie Chart", dataset);
+        return ChartFactory.createPieChart3D(new CreatePieChart3DParameter2("Pie Chart", dataset));
     }
 
     /**

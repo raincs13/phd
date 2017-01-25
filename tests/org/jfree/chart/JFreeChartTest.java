@@ -280,7 +280,7 @@ public class JFreeChartTest implements ChartChangeListener {
         data.setValue("Type 1", 54.5);
         data.setValue("Type 2", 23.9);
         data.setValue("Type 3", 45.8);
-        JFreeChart c1 = ChartFactory.createPieChart3D("Test", data);
+        JFreeChart c1 = ChartFactory.createPieChart3D(new CreatePieChart3DParameter2("Test", data));
         JFreeChart c2 = (JFreeChart) TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
