@@ -150,8 +150,7 @@ public class ScatterPlotTest {
         series1.add(2.0, 2.0);
         series1.add(3.0, 3.0);
         XYDataset dataset = new XYSeriesCollection(series1);
-        return ChartFactory.createScatterPlot("Scatter Plot", "Domain",
-                "Range", dataset);
+        return ChartFactory.createScatterPlot(new CreateScatterPlotParameter4("Scatter Plot", "Domain", "Range", dataset));
     }
 
     /**

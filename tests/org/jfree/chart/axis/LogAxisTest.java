@@ -50,6 +50,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateScatterPlotParameter4;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.plot.CategoryPlot;
@@ -213,8 +214,7 @@ public class LogAxisTest {
         series.add(3.0, 3.0);
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
-                dataset);
+        JFreeChart chart = ChartFactory.createScatterPlot(new CreateScatterPlotParameter4("Test", "X", "Y", dataset));
         XYPlot plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -234,8 +234,7 @@ public class LogAxisTest {
         series.add(3.0, 3.0);
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
-                dataset);
+        JFreeChart chart = ChartFactory.createScatterPlot(new CreateScatterPlotParameter4("Test", "X", "Y", dataset));
         XYPlot plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);

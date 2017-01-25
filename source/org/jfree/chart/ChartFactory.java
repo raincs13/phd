@@ -1645,19 +1645,14 @@ public abstract class ChartFactory {
      * with a {@link NumberAxis} for the domain axis, a  {@link NumberAxis}
      * as the range axis, and an {@link XYLineAndShapeRenderer} as the
      * renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectScatterPlot4 TODO
      *
      * @return A scatter plot.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createScatterPlot(String title, String xAxisLabel,
-            String yAxisLabel, XYDataset dataset) {
-        return createScatterPlot(title, xAxisLabel, yAxisLabel, dataset,
+    public static JFreeChart createScatterPlot(CreateScatterPlotParameter4 parameterObjectScatterPlot4) {
+        return createScatterPlot(parameterObjectScatterPlot4.title, parameterObjectScatterPlot4.xAxisLabel, parameterObjectScatterPlot4.yAxisLabel, parameterObjectScatterPlot4.dataset,
                 PlotOrientation.VERTICAL, true, true, false);
     }
 
