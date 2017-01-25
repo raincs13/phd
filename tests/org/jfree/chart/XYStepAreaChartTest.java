@@ -149,8 +149,7 @@ public class XYStepAreaChartTest {
         series1.add(2.0, 2.0);
         series1.add(3.0, 3.0);
         XYDataset dataset = new XYSeriesCollection(series1);
-        return ChartFactory.createXYStepAreaChart("Step Chart", "Domain",
-                "Range", dataset);
+        return ChartFactory.createXYStepAreaChart(new CreateXYStepAreaChartParameter4("Step Chart", "Domain", "Range", dataset));
     }
 
     /**
