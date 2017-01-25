@@ -2148,22 +2148,15 @@ public abstract class ChartFactory {
      * <P>
      * A convenient dataset to use with this chart is a
      * {@link org.jfree.data.time.TimeSeriesCollection}.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param timeAxisLabel  a label for the time axis (<code>null</code>
-     *                       permitted).
-     * @param valueAxisLabel  a label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectTimeSeriesChart4 TODO
      *
      * @return A time series chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createTimeSeriesChart(String title, 
-            String timeAxisLabel, String valueAxisLabel, XYDataset dataset) {
-        return createTimeSeriesChart(title, timeAxisLabel, valueAxisLabel, 
-                dataset, true, true, false);
+    public static JFreeChart createTimeSeriesChart(CreateTimeSeriesChartParameter4 parameterObjectTimeSeriesChart4) {
+        return createTimeSeriesChart(parameterObjectTimeSeriesChart4.title, parameterObjectTimeSeriesChart4.timeAxisLabel, parameterObjectTimeSeriesChart4.valueAxisLabel, 
+                parameterObjectTimeSeriesChart4.dataset, true, true, false);
     }
     
     /**

@@ -357,8 +357,7 @@ public class JFreeChartTest implements ChartChangeListener {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(series);
 
-        JFreeChart c1 = ChartFactory.createTimeSeriesChart("Test", "Date",
-                "Value", dataset);
+        JFreeChart c1 = ChartFactory.createTimeSeriesChart(new CreateTimeSeriesChartParameter4("Test", "Date", "Value", dataset));
         JFreeChart c2 = (JFreeChart) TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
