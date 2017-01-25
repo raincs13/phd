@@ -934,23 +934,15 @@ public abstract class ChartFactory {
      * plot, with a {@link CategoryAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link StackedBarRenderer}
      * as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param domainAxisLabel  the label for the category axis
-     *                         (<code>null</code> permitted).
-     * @param rangeAxisLabel  the label for the value axis
-     *                        (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectStackedBarChart4 TODO
      *
      * @return A stacked bar chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createStackedBarChart(String title,
-            String domainAxisLabel, String rangeAxisLabel,
-            CategoryDataset dataset) {
-        return createStackedBarChart(title, domainAxisLabel, rangeAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createStackedBarChart(CreateStackedBarChartParameter4 parameterObjectStackedBarChart4) {
+        return createStackedBarChart(parameterObjectStackedBarChart4.title, parameterObjectStackedBarChart4.domainAxisLabel, parameterObjectStackedBarChart4.rangeAxisLabel,
+                parameterObjectStackedBarChart4.dataset, PlotOrientation.VERTICAL, true, true, false);
     }
     
     /**
