@@ -150,8 +150,7 @@ public class XYLineChartTest {
         series1.add(2.0, 2.0);
         series1.add(3.0, 3.0);
         XYDataset dataset = new XYSeriesCollection(series1);
-        return ChartFactory.createXYLineChart("XY Line Chart", "Domain",
-                "Range", dataset);
+        return ChartFactory.createXYLineChart(new CreateXYLineChartParameter4("XY Line Chart", "Domain", "Range", dataset));
     }
 
     /**

@@ -1952,17 +1952,12 @@ public abstract class ChartFactory {
     /**
      * Creates a line chart (based on an {@link XYDataset}) with default
      * settings.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectXYLineChart4 TODO
      *
      * @return The chart.
      */
-    public static JFreeChart createXYLineChart(String title,
-            String xAxisLabel, String yAxisLabel, XYDataset dataset) {
-        return createXYLineChart(title, xAxisLabel, yAxisLabel, dataset,
+    public static JFreeChart createXYLineChart(CreateXYLineChartParameter4 parameterObjectXYLineChart4) {
+        return createXYLineChart(parameterObjectXYLineChart4.title, parameterObjectXYLineChart4.xAxisLabel, parameterObjectXYLineChart4.yAxisLabel, parameterObjectXYLineChart4.dataset,
                 PlotOrientation.VERTICAL, true, true, false);
     }
 

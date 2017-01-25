@@ -68,6 +68,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateXYLineChartParameter4;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
@@ -688,8 +689,7 @@ public class XYPlotTest {
     public void testSerialization3() {
 
         XYSeriesCollection dataset = new XYSeriesCollection();
-        JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
-                "Domain Axis", "Range Axis", dataset);
+        JFreeChart chart = ChartFactory.createXYLineChart(new CreateXYLineChartParameter4("Test Chart", "Domain Axis", "Range Axis", dataset));
         JFreeChart chart2 = (JFreeChart) TestUtilities.serialised(chart);
         assertEquals(chart, chart2);
         try {
@@ -708,8 +708,7 @@ public class XYPlotTest {
     public void testSerialization4() {
 
         XYSeriesCollection dataset = new XYSeriesCollection();
-        JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
-                "Domain Axis", "Range Axis", dataset);
+        JFreeChart chart = ChartFactory.createXYLineChart(new CreateXYLineChartParameter4("Test Chart", "Domain Axis", "Range Axis", dataset));
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.addDomainMarker(new ValueMarker(1.0), Layer.FOREGROUND);
         plot.addDomainMarker(new IntervalMarker(2.0, 3.0), Layer.BACKGROUND);
