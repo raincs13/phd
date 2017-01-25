@@ -1250,23 +1250,15 @@ public abstract class ChartFactory {
      * plot, with a {@link CategoryAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link StackedAreaRenderer}
      * as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectStackedAreaChart4 TODO
      *
      * @return A stacked area chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createStackedAreaChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-        return createStackedAreaChart(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createStackedAreaChart(CreateStackedAreaChartParameter4 parameterObjectStackedAreaChart4) {
+        return createStackedAreaChart(parameterObjectStackedAreaChart4.title, parameterObjectStackedAreaChart4.categoryAxisLabel, parameterObjectStackedAreaChart4.valueAxisLabel,
+                parameterObjectStackedAreaChart4.dataset, PlotOrientation.VERTICAL, true, true, false);
     }
     
     /**
