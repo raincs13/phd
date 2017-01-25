@@ -1808,19 +1808,14 @@ public abstract class ChartFactory {
      * as the plot, with a {@link NumberAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link XYAreaRenderer} as
      * the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectXYAreaChart4 TODO
      *
      * @return An XY area chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createXYAreaChart(String title,String xAxisLabel,
-            String yAxisLabel, XYDataset dataset) {
-        return createXYAreaChart(title, xAxisLabel, yAxisLabel, dataset, 
+    public static JFreeChart createXYAreaChart(CreateXYAreaChartParameter4 parameterObjectXYAreaChart4) {
+        return createXYAreaChart(parameterObjectXYAreaChart4.title, parameterObjectXYAreaChart4.xAxisLabel, parameterObjectXYAreaChart4.yAxisLabel, parameterObjectXYAreaChart4.dataset, 
                 PlotOrientation.VERTICAL, true, true, false);
     }
     
