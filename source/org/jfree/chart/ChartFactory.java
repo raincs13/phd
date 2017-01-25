@@ -2075,19 +2075,14 @@ public abstract class ChartFactory {
 
     /**
      * Creates a filled stepped XY plot with default settings.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObjectXYStepAreaChart4 TODO
      *
      * @return A chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createXYStepAreaChart(String title,
-            String xAxisLabel, String yAxisLabel, XYDataset dataset) {
-        return createXYStepAreaChart(title, xAxisLabel, yAxisLabel, dataset,
+    public static JFreeChart createXYStepAreaChart(CreateXYStepAreaChartParameter4 parameterObjectXYStepAreaChart4) {
+        return createXYStepAreaChart(parameterObjectXYStepAreaChart4.title, parameterObjectXYStepAreaChart4.xAxisLabel, parameterObjectXYStepAreaChart4.yAxisLabel, parameterObjectXYStepAreaChart4.dataset,
                 PlotOrientation.VERTICAL, true, true, false);   
     }
  
