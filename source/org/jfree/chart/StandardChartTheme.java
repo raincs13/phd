@@ -1508,17 +1508,21 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param axis  the axis (<code>null</code> not permitted).
      */
     protected void applyToValueAxis(ValueAxis axis) {
-        axis.setLabelFont(this.largeFont);
-        axis.setLabelPaint(this.axisLabelPaint);
-        axis.setTickLabelFont(this.regularFont);
-        axis.setTickLabelPaint(this.tickLabelPaint);
-        if (axis instanceof SymbolAxis) {
+        axis(axis);
+		if (axis instanceof SymbolAxis) {
             applyToSymbolAxis((SymbolAxis) axis);
         }
         if (axis instanceof PeriodAxis) {
             applyToPeriodAxis((PeriodAxis) axis);
         }
     }
+
+	private void axis(ValueAxis axis) {
+		axis.setLabelFont(this.largeFont);
+		axis.setLabelPaint(this.axisLabelPaint);
+		axis.setTickLabelFont(this.regularFont);
+		axis.setTickLabelPaint(this.tickLabelPaint);
+	}
 
     /**
      * Applies the attributes for this theme to a {@link SymbolAxis}.
