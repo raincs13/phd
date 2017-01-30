@@ -1477,13 +1477,17 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot  the plot.
      */
     protected void applyToThermometerPlot(ThermometerPlot plot) {
-        plot.setValueFont(this.largeFont);
-        plot.setThermometerPaint(this.thermometerPaint);
-        ValueAxis axis = plot.getRangeAxis();
+        plot(plot);
+		ValueAxis axis = plot.getRangeAxis();
         if (axis != null) {
             applyToValueAxis(axis);
         }
     }
+
+	private void plot(ThermometerPlot plot) {
+		plot.setValueFont(this.largeFont);
+		plot.setThermometerPaint(this.thermometerPaint);
+	}
 
     /**
      * Applies the attributes for this theme to a {@link CategoryAxis}.
