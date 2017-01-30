@@ -1434,15 +1434,19 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot  the plot (<code>null</code> not permitted).
      */
     protected void applyToPolarPlot(PolarPlot plot) {
-        plot.setAngleLabelFont(this.regularFont);
-        plot.setAngleLabelPaint(this.tickLabelPaint);
-        plot.setAngleGridlinePaint(this.domainGridlinePaint);
-        plot.setRadiusGridlinePaint(this.rangeGridlinePaint);
-        ValueAxis axis = plot.getAxis();
+        plot(plot);
+		ValueAxis axis = plot.getAxis();
         if (axis != null) {
             applyToValueAxis(axis);
         }
     }
+
+	private void plot(PolarPlot plot) {
+		plot.setAngleLabelFont(this.regularFont);
+		plot.setAngleLabelPaint(this.tickLabelPaint);
+		plot.setAngleGridlinePaint(this.domainGridlinePaint);
+		plot.setRadiusGridlinePaint(this.rangeGridlinePaint);
+	}
 
     /**
      * Applies the attributes of this theme to a {@link SpiderWebPlot}.
