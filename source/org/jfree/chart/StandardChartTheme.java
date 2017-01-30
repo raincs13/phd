@@ -1201,15 +1201,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     protected void applyToPlot(Plot plot) {
         ParamChecks.nullNotPermitted(plot, "plot");
-        if (plot.getDrawingSupplier() != null) {
-            plot.setDrawingSupplier(getDrawingSupplier());
-        }
-        if (plot.getBackgroundPaint() != null) {
-            plot.setBackgroundPaint(this.plotBackgroundPaint);
-        }
-        plot.setOutlinePaint(this.plotOutlinePaint);
-
-        // now handle specific plot types (and yes, I know this is some
+        checkPlotState(plot);
+		// now handle specific plot types (and yes, I know this is some
         // really ugly code that has to be manually updated any time a new
         // plot type is added - I should have written something much cooler,
         // but I didn't and neither did anyone else).
@@ -1241,6 +1234,16 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             applyToPolarPlot((PolarPlot) plot);
         }
     }
+
+	private void checkPlotState(Plot plot) {
+		if (plot.getDrawingSupplier() != null) {
+			plot.setDrawingSupplier(getDrawingSupplier());
+		}
+		if (plot.getBackgroundPaint() != null) {
+			plot.setBackgroundPaint(this.plotBackgroundPaint);
+		}
+		plot.setOutlinePaint(this.plotOutlinePaint);
+	}
 
     /**
      * Applies the attributes of this theme to a {@link PiePlot} instance.
