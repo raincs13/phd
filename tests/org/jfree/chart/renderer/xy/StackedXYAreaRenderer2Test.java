@@ -53,6 +53,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateStackedXYAreaChartParameter;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.NumberAxis;
@@ -76,8 +77,7 @@ public class StackedXYAreaRenderer2Test {
     @Test
     public void testDrawWithEmptyDataset() {
         boolean success = false;
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart("title", "x",
-                "y", new DefaultTableXYDataset(), PlotOrientation.VERTICAL,
+        JFreeChart chart = ChartFactory.createStackedXYAreaChart(new CreateStackedXYAreaChartParameter("title", "x", "y", new DefaultTableXYDataset()), PlotOrientation.VERTICAL,
                 true, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYAreaRenderer2());
@@ -164,8 +164,7 @@ public class StackedXYAreaRenderer2Test {
         TableXYDataset dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
-                false, false, false);
+                new CreateStackedXYAreaChartParameter("Test Chart", "X", "Y", dataset), PlotOrientation.VERTICAL, false, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
         plot.setRenderer(renderer);

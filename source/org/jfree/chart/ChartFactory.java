@@ -210,7 +210,6 @@ import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.BoxAndWhiskerXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.OHLCDataset;
-import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.WindDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
@@ -1880,20 +1879,15 @@ public abstract class ChartFactory {
      * method uses an {@link XYPlot} instance as the plot, with a
      * {@link NumberAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link StackedXYAreaRenderer2} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param pO4_StackedXYAreaChartParameter TODO
      *
      * @return A stacked XY area chart.
      * 
      * @since 1.0.16
      */
-    public static JFreeChart createStackedXYAreaChart(String title,
-            String xAxisLabel, String yAxisLabel, TableXYDataset dataset) {
-        return createStackedXYAreaChart(title, xAxisLabel, yAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createStackedXYAreaChart(CreateStackedXYAreaChartParameter4 pO4_StackedXYAreaChartParameter) {
+        return createStackedXYAreaChart(new CreateStackedXYAreaChartParameter(pO4_StackedXYAreaChartParameter.title, pO4_StackedXYAreaChartParameter.xAxisLabel, pO4_StackedXYAreaChartParameter.yAxisLabel, pO4_StackedXYAreaChartParameter.dataset), PlotOrientation.VERTICAL, true,
+                true, false);
     }
     
     /**
@@ -1901,11 +1895,7 @@ public abstract class ChartFactory {
      * method uses an {@link XYPlot} instance as the plot, with a
      * {@link NumberAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link StackedXYAreaRenderer2} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param pO4_StackedXYAreaChart TODO
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
      * @param legend  a flag specifying whether or not a legend is required.
@@ -1914,17 +1904,16 @@ public abstract class ChartFactory {
      *
      * @return A stacked XY area chart.
      */
-    public static JFreeChart createStackedXYAreaChart(String title,
-            String xAxisLabel, String yAxisLabel, TableXYDataset dataset,
+    public static JFreeChart createStackedXYAreaChart(CreateStackedXYAreaChartParameter pO4_StackedXYAreaChart,
             PlotOrientation orientation, boolean legend, boolean tooltips,
             boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
-        NumberAxis xAxis = new NumberAxis(xAxisLabel);
+        NumberAxis xAxis = new NumberAxis(pO4_StackedXYAreaChart.xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
-        NumberAxis yAxis = new NumberAxis(yAxisLabel);
+        NumberAxis yAxis = new NumberAxis(pO4_StackedXYAreaChart.yAxisLabel);
         XYToolTipGenerator toolTipGenerator = null;
         if (tooltips) {
             toolTipGenerator = new StandardXYToolTipGenerator();
@@ -1937,12 +1926,12 @@ public abstract class ChartFactory {
         StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2(
                 toolTipGenerator, urlGenerator);
         renderer.setOutline(true);
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        XYPlot plot = new XYPlot(pO4_StackedXYAreaChart.dataset, xAxis, yAxis, renderer);
         plot.setOrientation(orientation);
 
         plot.setRangeAxis(yAxis);  // forces recalculation of the axis range
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        JFreeChart chart = new JFreeChart(pO4_StackedXYAreaChart.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
