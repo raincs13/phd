@@ -1188,11 +1188,16 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             applyToTitle((Title) b);
         }
         else if (b instanceof LabelBlock) {
-            LabelBlock lb = (LabelBlock) b;
-            lb.setFont(this.regularFont);
-            lb.setPaint(this.legendItemPaint);
+            LabelBlock lb = lb(b);
         }
     }
+
+	private LabelBlock lb(Block b) {
+		LabelBlock lb = (LabelBlock) b;
+		lb.setFont(this.regularFont);
+		lb.setPaint(this.legendItemPaint);
+		return lb;
+	}
 
     /**
      * Applies the attributes of this theme to a plot.
