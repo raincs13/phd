@@ -72,6 +72,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.TestUtilities;
+import org.jfree.chart.XYLineChartParameter2;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
@@ -936,8 +937,8 @@ public class XYPlotTest {
     @Test
     public void test1654215() {
         DefaultXYDataset dataset = new DefaultXYDataset();
-        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+        JFreeChart chart = ChartFactory.createXYLineChart(new XYLineChartParameter2("Title", true), "X", "Y",
+                dataset, PlotOrientation.VERTICAL, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(1, new XYLineAndShapeRenderer());
         try {
@@ -959,8 +960,8 @@ public class XYPlotTest {
     @Test
     public void testDrawRangeGridlines() {
         DefaultXYDataset dataset = new DefaultXYDataset();
-        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+        JFreeChart chart = ChartFactory.createXYLineChart(new XYLineChartParameter2("Title", true), "X", "Y",
+                dataset, PlotOrientation.VERTICAL, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(null);
         try {
@@ -984,8 +985,8 @@ public class XYPlotTest {
         DefaultXYDataset dataset = new DefaultXYDataset();
         dataset.addSeries("Series 1", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
         dataset.addSeries("Series 2", new double[][] {{}, {}});
-        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+        JFreeChart chart = ChartFactory.createXYLineChart(new XYLineChartParameter2("Title", true), "X", "Y",
+                dataset, PlotOrientation.VERTICAL, false, false);
         try {
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);

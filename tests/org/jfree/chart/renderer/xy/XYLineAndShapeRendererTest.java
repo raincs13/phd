@@ -55,6 +55,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.TestUtilities;
+import org.jfree.chart.XYLineChartParameter2;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -245,8 +246,8 @@ public class XYLineAndShapeRendererTest {
         XYSeriesCollection dataset
                 = RendererXYPackageUtils.createTestXYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
-                false, false, false);
+                new XYLineChartParameter2("Test Chart", false), "X", "Y", dataset, PlotOrientation.VERTICAL,
+                false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
         domainAxis.setAutoRangeIncludesZero(false);
@@ -265,8 +266,8 @@ public class XYLineAndShapeRendererTest {
         TableXYDataset dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
-                false, false, false);
+                new XYLineChartParameter2("Test Chart", false), "X", "Y", dataset, PlotOrientation.VERTICAL,
+                false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setAutoRangeIncludesZero(false);

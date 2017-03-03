@@ -1962,29 +1962,27 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createXYLineChart(String title,
             String xAxisLabel, String yAxisLabel, XYDataset dataset) {
-        return createXYLineChart(title, xAxisLabel, yAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+        return createXYLineChart(new XYLineChartParameter2(title, true), xAxisLabel, yAxisLabel, dataset,
+                PlotOrientation.VERTICAL, true, false);
     }
 
     /**
      * Creates a line chart (based on an {@link XYDataset}) with default
      * settings.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param pO2 TODO
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return The chart.
      */
-    public static JFreeChart createXYLineChart(String title, String xAxisLabel,
+    public static JFreeChart createXYLineChart(XYLineChartParameter2 pO2, String xAxisLabel,
             String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
@@ -2000,8 +1998,8 @@ public abstract class ChartFactory {
             renderer.setURLGenerator(new StandardXYURLGenerator());
         }
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(pO2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, pO2.legend);
         currentTheme.apply(chart);
         return chart;
 
