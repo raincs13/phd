@@ -2331,8 +2331,8 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createBubbleChart(String title, String xAxisLabel,
             String yAxisLabel, XYZDataset dataset) {
-        return createBubbleChart(title, xAxisLabel, yAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+        return createBubbleChart(new CreateBubbleChartParameter(title, true), xAxisLabel, yAxisLabel, dataset,
+                PlotOrientation.VERTICAL, true, false);
     }
     
     /**
@@ -2340,22 +2340,20 @@ public abstract class ChartFactory {
      * an {@link XYPlot}, with a {@link NumberAxis} for the domain axis,
      * a {@link NumberAxis} for the range axis, and an {@link XYBubbleRenderer}
      * to draw the data items.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject TODO
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A bubble chart.
      */
-    public static JFreeChart createBubbleChart(String title, String xAxisLabel,
+    public static JFreeChart createBubbleChart(CreateBubbleChartParameter parameterObject, String xAxisLabel,
             String yAxisLabel, XYZDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
@@ -2376,8 +2374,8 @@ public abstract class ChartFactory {
         plot.setRenderer(renderer);
         plot.setOrientation(orientation);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject.legend);
         currentTheme.apply(chart);
         return chart;
 
