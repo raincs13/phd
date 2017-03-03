@@ -1496,11 +1496,16 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         axis.setTickLabelFont(this.regularFont);
         axis.setTickLabelPaint(this.tickLabelPaint);
         if (axis instanceof SubCategoryAxis) {
-            SubCategoryAxis sca = (SubCategoryAxis) axis;
-            sca.setSubLabelFont(this.regularFont);
-            sca.setSubLabelPaint(this.tickLabelPaint);
+            SubCategoryAxis sca = sca(axis);
         }
     }
+
+	private SubCategoryAxis sca(CategoryAxis axis) {
+		SubCategoryAxis sca = (SubCategoryAxis) axis;
+		sca.setSubLabelFont(this.regularFont);
+		sca.setSubLabelPaint(this.tickLabelPaint);
+		return sca;
+	}
 
     /**
      * Applies the attributes for this theme to a {@link ValueAxis}.
