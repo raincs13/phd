@@ -362,7 +362,7 @@ public abstract class ChartUtilities {
             JFreeChart chart, int width, int height) throws IOException {
 
         // defer argument checking...
-        writeChartAsJPEG(out, chart, width, height, null);
+        writeChartAsJPEG(out, chart, new ChartAsJPEGParameter3(width, height, null));
 
     }
 
@@ -395,20 +395,17 @@ public abstract class ChartUtilities {
      *
      * @param out  the output stream (<code>null</code> not permitted).
      * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
-     *
+     * @param parameterChartAsJPEG3 TODO
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsJPEG(OutputStream out, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info)
+            ChartAsJPEGParameter3 parameterChartAsJPEG3)
             throws IOException {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
-        BufferedImage image = chart.createBufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB, info);
+        BufferedImage image = chart.createBufferedImage(parameterChartAsJPEG3.width, parameterChartAsJPEG3.height,
+                BufferedImage.TYPE_INT_RGB, parameterChartAsJPEG3.info);
         EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out);
 
     }
@@ -498,7 +495,7 @@ public abstract class ChartUtilities {
         ParamChecks.nullNotPermitted(chart, "chart");
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
         try {
-            writeChartAsJPEG(out, chart, width, height, info);
+            writeChartAsJPEG(out, chart, new ChartAsJPEGParameter3(width, height, info));
         }
         finally {
             out.close();
