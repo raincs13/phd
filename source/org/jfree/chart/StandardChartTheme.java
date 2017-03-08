@@ -1581,10 +1581,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
         // BarRenderer
         if (renderer instanceof BarRenderer) {
-            BarRenderer br = (BarRenderer) renderer;
-            br.setBarPainter(this.barPainter);
-            br.setShadowVisible(this.shadowVisible);
-            br.setShadowPaint(this.shadowPaint);
+            BarRenderer br = br(renderer);
         }
 
         // BarRenderer3D
@@ -1611,6 +1608,14 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             mmcr.setGroupPaint(this.errorIndicatorPaint);
         }
     }
+
+	private BarRenderer br(CategoryItemRenderer renderer) {
+		BarRenderer br = (BarRenderer) renderer;
+		br.setBarPainter(this.barPainter);
+		br.setShadowVisible(this.shadowVisible);
+		br.setShadowPaint(this.shadowPaint);
+		return br;
+	}
 
     /**
      * Applies the settings of this theme to the specified renderer.
