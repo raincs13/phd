@@ -1128,28 +1128,16 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     protected void applyToTitle(Title title) {
         if (title instanceof TextTitle) {
-            TextTitle tt = (TextTitle) title;
-            tt.setFont(this.largeFont);
-            tt.setPaint(this.subtitlePaint);
+            TextTitle tt = tt(title);
         }
         else if (title instanceof LegendTitle) {
-            LegendTitle lt = (LegendTitle) title;
-            if (lt.getBackgroundPaint() != null) {
-                lt.setBackgroundPaint(this.legendBackgroundPaint);
-            }
-            lt.setItemFont(this.regularFont);
-            lt.setItemPaint(this.legendItemPaint);
-            if (lt.getWrapper() != null) {
+            LegendTitle lt = lt(title);
+			if (lt.getWrapper() != null) {
                 applyToBlockContainer(lt.getWrapper());
             }
         }
         else if (title instanceof PaintScaleLegend) {
-            PaintScaleLegend psl = (PaintScaleLegend) title;
-            psl.setBackgroundPaint(this.legendBackgroundPaint);
-            ValueAxis axis = psl.getAxis();
-            if (axis != null) {
-                applyToValueAxis(axis);
-            }
+            ValueAxis axis = axis(title);
         }
         else if (title instanceof CompositeTitle) {
             CompositeTitle ct = (CompositeTitle) title;
@@ -1164,6 +1152,33 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             }
         }
     }
+
+	private ValueAxis axis(Title title) {
+		PaintScaleLegend psl = (PaintScaleLegend) title;
+		psl.setBackgroundPaint(this.legendBackgroundPaint);
+		ValueAxis axis = psl.getAxis();
+		if (axis != null) {
+			applyToValueAxis(axis);
+		}
+		return axis;
+	}
+
+	private LegendTitle lt(Title title) {
+		LegendTitle lt = (LegendTitle) title;
+		if (lt.getBackgroundPaint() != null) {
+			lt.setBackgroundPaint(this.legendBackgroundPaint);
+		}
+		lt.setItemFont(this.regularFont);
+		lt.setItemPaint(this.legendItemPaint);
+		return lt;
+	}
+
+	private TextTitle tt(Title title) {
+		TextTitle tt = (TextTitle) title;
+		tt.setFont(this.largeFont);
+		tt.setPaint(this.subtitlePaint);
+		return tt;
+	}
 
     /**
      * Applies the attributes of this theme to the specified container.
@@ -1414,18 +1429,23 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot
      */
     protected void applyToFastScatterPlot(FastScatterPlot plot) {
-        plot.setDomainGridlinePaint(this.domainGridlinePaint);
-        plot.setRangeGridlinePaint(this.rangeGridlinePaint);
-        ValueAxis xAxis = plot.getDomainAxis();
-        if (xAxis != null) {
-            applyToValueAxis(xAxis);
-        }
-        ValueAxis yAxis = plot.getRangeAxis();
+        ValueAxis xAxis = xAxis(plot);
+		ValueAxis yAxis = plot.getRangeAxis();
         if (yAxis != null) {
             applyToValueAxis(yAxis);
         }
 
     }
+
+	private ValueAxis xAxis(FastScatterPlot plot) {
+		plot.setDomainGridlinePaint(this.domainGridlinePaint);
+		plot.setRangeGridlinePaint(this.rangeGridlinePaint);
+		ValueAxis xAxis = plot.getDomainAxis();
+		if (xAxis != null) {
+			applyToValueAxis(xAxis);
+		}
+		return xAxis;
+	}
 
     /**
      * Applies the attributes of this theme to a {@link PolarPlot}.  This
