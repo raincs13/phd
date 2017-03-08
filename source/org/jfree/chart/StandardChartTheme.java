@@ -1101,25 +1101,32 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     @Override
     public void apply(JFreeChart chart) {
         ParamChecks.nullNotPermitted(chart, "chart");
-        TextTitle title = chart.getTitle();
-        if (title != null) {
-            title.setFont(this.extraLargeFont);
-            title.setPaint(this.titlePaint);
-        }
-
-        int subtitleCount = chart.getSubtitleCount();
+        TextTitle title = processTitle(chart);
+		int subtitleCount = chart.getSubtitleCount();
         for (int i = 0; i < subtitleCount; i++) {
             applyToTitle(chart.getSubtitle(i));
         }
 
-        chart.setBackgroundPaint(this.chartBackgroundPaint);
-
-        // now process the plot if there is one
-        Plot plot = chart.getPlot();
-        if (plot != null) {
-            applyToPlot(plot);
-        }
+        Plot plot = plot(chart);
     }
+
+	private Plot plot(JFreeChart chart) {
+		Plot plot = chart.getPlot();
+		if (plot != null) {
+			applyToPlot(plot);
+		}
+		return plot;
+	}
+
+	private TextTitle processTitle(JFreeChart chart) {
+		TextTitle title = chart.getTitle();
+		if (title != null) {
+			title.setFont(this.extraLargeFont);
+			title.setPaint(this.titlePaint);
+		}
+		chart.setBackgroundPaint(this.chartBackgroundPaint);
+		return title;
+	}
 
     /**
      * Applies the attributes of this theme to the specified title.
