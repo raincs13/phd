@@ -1232,20 +1232,21 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             }
         }
 
-        Rectangle2D plotArea = nonTitleArea;
-
-        // draw the plot (axes and data visualisation)
-        PlotRenderingInfo plotInfo = null;
-        if (info != null) {
-            plotInfo = info.getPlotInfo();
-        }
-        this.plot.draw(g2, plotArea, anchor, null, plotInfo);
-
-        g2.setClip(savedClip);
+        plot(g2, anchor, info, nonTitleArea);
+		g2.setClip(savedClip);
 
         notifyListeners(new ChartProgressEvent(this, this,
                 ChartProgressEvent.DRAWING_FINISHED, 100));
     }
+
+	private void plot(Graphics2D g2, Point2D anchor, ChartRenderingInfo info, Rectangle2D nonTitleArea) {
+		Rectangle2D plotArea = nonTitleArea;
+		PlotRenderingInfo plotInfo = null;
+		if (info != null) {
+			plotInfo = info.getPlotInfo();
+		}
+		this.plot.draw(g2, plotArea, anchor, null, plotInfo);
+	}
 
     /**
      * Creates a rectangle that is aligned to the frame.
