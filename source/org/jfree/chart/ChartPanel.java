@@ -2367,15 +2367,16 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (plot == null) {
             return;
         }
-        // here we tweak the notify flag on the plot so that only
-        // one notification happens even though we update multiple
-        // axes...
-        boolean savedNotify = plot.isNotify();
-        plot.setNotify(false);
-        restoreAutoDomainBounds();
+        plot(plot);
+		restoreAutoDomainBounds();
         restoreAutoRangeBounds();
-        plot.setNotify(savedNotify);
     }
+
+	private void plot(Plot plot) {
+		boolean savedNotify = plot.isNotify();
+		plot.setNotify(false);
+		plot.setNotify(savedNotify);
+	}
 
     /**
      * Restores the auto-range calculation on the domain axis.
