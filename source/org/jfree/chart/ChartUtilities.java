@@ -321,25 +321,17 @@ public abstract class ChartUtilities {
      * create an HTML image map.
      *
      * @param file  the file (<code>null</code> not permitted).
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
-     * @param encodeAlpha  encode alpha?
-     * @param compression  the PNG compression level (0-9).
-     *
+     * @param parameterObject TODO
      * @throws IOException if there are any I/O errors.
      */
-    public static void saveChartAsPNG(File file, JFreeChart chart,
-           int width, int height, ChartRenderingInfo info, boolean encodeAlpha,
-           int compression) throws IOException {
+    public static void saveChartAsPNG(File file, SaveChartAsPNGParameter parameterObject) throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
-        ParamChecks.nullNotPermitted(chart, "chart");
+        ParamChecks.nullNotPermitted(parameterObject.chart, "chart");
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
         try {
-            writeChartAsPNG(out, chart, width, height, info, encodeAlpha,
-                    compression);
+            writeChartAsPNG(out, parameterObject.chart, parameterObject.width, parameterObject.height, parameterObject.info, parameterObject.encodeAlpha,
+                    parameterObject.compression);
         }
         finally {
             out.close();
