@@ -473,7 +473,7 @@ public abstract class ChartUtilities {
             JFreeChart chart, int width, int height) throws IOException {
 
         // defer argument checking...
-        saveChartAsJPEG(file, quality, chart, width, height, null);
+        saveChartAsJPEG(file, new ChartAsJPEGParameter5(quality, chart, width, height, null));
 
     }
 
@@ -513,24 +513,17 @@ public abstract class ChartUtilities {
      * create an HTML image map.
      *
      * @param file  the file name (<code>null</code> not permitted).
-     * @param quality  the quality setting.
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
-     *
+     * @param parameterObjectChartAsJPEG5 TODO
      * @throws IOException if there are any I/O errors.
      */
-    public static void saveChartAsJPEG(File file, float quality,
-            JFreeChart chart, int width, int height,
-            ChartRenderingInfo info) throws IOException {
+    public static void saveChartAsJPEG(File file, ChartAsJPEGParameter5 parameterObjectChartAsJPEG5) throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
-        ParamChecks.nullNotPermitted(chart, "chart");
+        ParamChecks.nullNotPermitted(parameterObjectChartAsJPEG5.chart, "chart");
         OutputStream out = new BufferedOutputStream(new FileOutputStream(
                 file));
         try {
-            writeChartAsJPEG(out, quality, chart, width, height, info);
+            writeChartAsJPEG(out, parameterObjectChartAsJPEG5.quality, parameterObjectChartAsJPEG5.chart, parameterObjectChartAsJPEG5.width, parameterObjectChartAsJPEG5.height, parameterObjectChartAsJPEG5.info);
         }
         finally {
             out.close();
