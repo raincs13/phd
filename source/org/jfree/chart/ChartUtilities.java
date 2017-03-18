@@ -282,7 +282,7 @@ public abstract class ChartUtilities {
             int width, int height) throws IOException {
 
         // defer argument checking...
-        saveChartAsPNG(file, chart, width, height, null);
+        saveChartAsPNG(file, new ChartAsPNGParameter4(chart, width, height, null));
 
     }
 
@@ -293,21 +293,16 @@ public abstract class ChartUtilities {
      * create an HTML image map.
      *
      * @param file  the file (<code>null</code> not permitted).
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
-     *
+     * @param parameterObject4ChartAsPNG TODO
      * @throws IOException if there are any I/O errors.
      */
-    public static void saveChartAsPNG(File file, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info)
+    public static void saveChartAsPNG(File file, ChartAsPNGParameter4 parameterObject4ChartAsPNG)
         throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
         try {
-            ChartUtilities.writeChartAsPNG(out, chart, width, height, info);
+            ChartUtilities.writeChartAsPNG(out, parameterObject4ChartAsPNG.chart, parameterObject4ChartAsPNG.width, parameterObject4ChartAsPNG.height, parameterObject4ChartAsPNG.info);
         }
         finally {
             out.close();

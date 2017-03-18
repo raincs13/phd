@@ -71,6 +71,7 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jfree.chart.ChartAsPNGParameter4;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -180,7 +181,7 @@ public class ServletUtilities {
         }
         File tempFile = File.createTempFile(prefix, ".png",
                 new File(System.getProperty("java.io.tmpdir")));
-        ChartUtilities.saveChartAsPNG(tempFile, chart, width, height, info);
+        ChartUtilities.saveChartAsPNG(tempFile, new ChartAsPNGParameter4(chart, width, height, info));
         if (session != null) {
             ServletUtilities.registerChartForDeletion(tempFile, session);
         }
