@@ -454,7 +454,7 @@ public abstract class ChartUtilities {
             int width, int height) throws IOException {
 
         // defer argument checking...
-        saveChartAsJPEG(file, chart, width, height, null);
+        saveChartAsJPEG(new ChartAsJPEGParameter4(file, chart, width, height, null));
 
     }
 
@@ -482,23 +482,17 @@ public abstract class ChartUtilities {
      * in a {@link ChartRenderingInfo} object, to collect information about the
      * chart dimensions/entities.  You will need this info if you want to
      * create an HTML image map.
-     *
-     * @param file  the file name (<code>null</code> not permitted).
-     * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the image width.
-     * @param height  the image height.
-     * @param info  the chart rendering info (<code>null</code> permitted).
+     * @param parameterObjectChartAsJPEG4 TODO
      *
      * @throws IOException if there are any I/O errors.
      */
-    public static void saveChartAsJPEG(File file, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info) throws IOException {
+    public static void saveChartAsJPEG(ChartAsJPEGParameter4 parameterObjectChartAsJPEG4) throws IOException {
 
-        ParamChecks.nullNotPermitted(file, "file");
-        ParamChecks.nullNotPermitted(chart, "chart");
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+        ParamChecks.nullNotPermitted(parameterObjectChartAsJPEG4.file, "file");
+        ParamChecks.nullNotPermitted(parameterObjectChartAsJPEG4.chart, "chart");
+        OutputStream out = new BufferedOutputStream(new FileOutputStream(parameterObjectChartAsJPEG4.file));
         try {
-            writeChartAsJPEG(out, chart, width, height, info);
+            writeChartAsJPEG(out, parameterObjectChartAsJPEG4.chart, parameterObjectChartAsJPEG4.width, parameterObjectChartAsJPEG4.height, parameterObjectChartAsJPEG4.info);
         }
         finally {
             out.close();

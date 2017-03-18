@@ -71,6 +71,7 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jfree.chart.ChartAsJPEGParameter4;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -252,7 +253,7 @@ public class ServletUtilities {
         }
         File tempFile = File.createTempFile(prefix, ".jpeg",
                 new File(System.getProperty("java.io.tmpdir")));
-        ChartUtilities.saveChartAsJPEG(tempFile, chart, width, height, info);
+        ChartUtilities.saveChartAsJPEG(new ChartAsJPEGParameter4(tempFile, chart, width, height, info));
         if (session != null) {
             ServletUtilities.registerChartForDeletion(tempFile, session);
         }
