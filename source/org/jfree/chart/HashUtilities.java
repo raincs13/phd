@@ -288,25 +288,25 @@ public class HashUtilities {
         if (list == null) {
             return pre;
         }
-        int result = 127;
-        int size = list.size();
-        result = HashUtilities.hashCode(result, size);
-        
-        // for efficiency, we just use the first, last and middle items to
-        // compute a hashCode...
-        if (size > 0) {
-            result = HashUtilities.hashCode(result, list.getPaint(0));
-            if (size > 1) {
-                result = HashUtilities.hashCode(result, 
-                        list.getPaint(size - 1));
-                if (size > 2) {
-                    result = HashUtilities.hashCode(result, 
-                            list.getPaint(size / 2));
-                }
-            }
-        }
-        return 37 * pre + result;
+        int result = result(list);
+		return 37 * pre + result;
     }
+
+	private static int result(PaintList list) {
+		int result = 127;
+		int size = list.size();
+		result = HashUtilities.hashCode(result, size);
+		if (size > 0) {
+			result = HashUtilities.hashCode(result, list.getPaint(0));
+			if (size > 1) {
+				result = HashUtilities.hashCode(result, list.getPaint(size - 1));
+				if (size > 2) {
+					result = HashUtilities.hashCode(result, list.getPaint(size / 2));
+				}
+			}
+		}
+		return result;
+	}
 
     /**
      * Computes a hash code for a {@link StrokeList}.  In the latest version
