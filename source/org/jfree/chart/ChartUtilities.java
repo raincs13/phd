@@ -220,52 +220,65 @@ public abstract class ChartUtilities {
      *
      * @param out  the output stream (<code>null</code> not permitted).
      * @param chart  the chart (<code>null</code> not permitted).
-     * @param width  the unscaled chart width.
-     * @param height  the unscaled chart height.
-     * @param widthScaleFactor  the horizontal scale factor.
-     * @param heightScaleFactor  the vertical scale factor.
-     *
+     * @param parameterObject4writeScaledChartAsPNG TODO
      * @throws IOException if there are any I/O problems.
      */
     public static void writeScaledChartAsPNG(OutputStream out,
-            JFreeChart chart, int width, int height, int widthScaleFactor,
-            int heightScaleFactor) throws IOException {
+            JFreeChart chart, WriteScaledChartAsPNGParameter parameterObject4writeScaledChartAsPNG) throws IOException {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
 
-        BufferedImage image = image(width, height, widthScaleFactor, heightScaleFactor);
-		double desiredWidth = width * widthScaleFactor;
-        double desiredHeight = height * heightScaleFactor;
-        double defaultWidth = width;
-        double defaultHeight = height;
-        boolean scale = false;
-
-        // get desired width and height from somewhere then...
-        if (compareWidthHeightScaleFactor(widthScaleFactor,heightScaleFactor)) {
-            scale = true;
-        }
-
-        double scaleX = desiredWidth / defaultWidth;
-        double scaleY = desiredHeight / defaultHeight;
+        chart(chart, parameterObject4writeScaledChartAsPNG.width, parameterObject4writeScaledChartAsPNG.height, parameterObject4writeScaledChartAsPNG.widthScaleFactor, parameterObject4writeScaledChartAsPNG.heightScaleFactor);
+		BufferedImage image = image(parameterObject4writeScaledChartAsPNG.width, parameterObject4writeScaledChartAsPNG.height, parameterObject4writeScaledChartAsPNG.widthScaleFactor, parameterObject4writeScaledChartAsPNG.heightScaleFactor);
+        double defaultWidth = parameterObject4writeScaledChartAsPNG.width;
+        double defaultHeight = parameterObject4writeScaledChartAsPNG.height;
+        boolean scale = scale(parameterObject4writeScaledChartAsPNG.widthScaleFactor, parameterObject4writeScaledChartAsPNG.heightScaleFactor);
+		double scaleX = calculateDesiredHeight(parameterObject4writeScaledChartAsPNG) / defaultWidth;
+        double scaleY = calculateDesiredWidth(parameterObject4writeScaledChartAsPNG) / defaultHeight;
 
         Graphics2D g2 = image.createGraphics();
 
         if (scale) {
             AffineTransform saved = g2.getTransform();
             g2.transform(AffineTransform.getScaleInstance(scaleX, scaleY));
-            chart.draw(g2, new Rectangle2D.Double(0, 0, defaultWidth,
-                    defaultHeight), null, null);
             g2.setTransform(saved);
             g2.dispose();
         }
         else {
-            chart.draw(g2, new Rectangle2D.Double(0, 0, defaultWidth,
-                    defaultHeight), null, null);
         }
         out.write(encodeAsPNG(image));
 
     }
+    
+    private static double calculateDesiredWidth(WriteScaledChartAsPNGParameter parameterObject4writeScaledChartAsPNG){
+    	return parameterObject4writeScaledChartAsPNG.width * parameterObject4writeScaledChartAsPNG.widthScaleFactor;
+    }
+
+    private static double calculateDesiredHeight(WriteScaledChartAsPNGParameter parameterObject4writeScaledChartAsPNG){
+    	return parameterObject4writeScaledChartAsPNG.height * parameterObject4writeScaledChartAsPNG.heightScaleFactor;
+    }
+    
+	private static void chart(JFreeChart chart, int width, int height, int widthScaleFactor, int heightScaleFactor) {
+		BufferedImage image = image(width, height, widthScaleFactor, heightScaleFactor);
+		double defaultWidth = width;
+		double defaultHeight = height;
+		boolean scale = scale(widthScaleFactor, heightScaleFactor);
+		Graphics2D g2 = image.createGraphics();
+		if (scale) {
+			chart.draw(g2, new Rectangle2D.Double(0, 0, defaultWidth, defaultHeight), null, null);
+		} else {
+			chart.draw(g2, new Rectangle2D.Double(0, 0, defaultWidth, defaultHeight), null, null);
+		}
+	}
+
+	private static boolean scale(int widthScaleFactor, int heightScaleFactor) {
+		boolean scale = false;
+		if (compareWidthHeightScaleFactor(widthScaleFactor, heightScaleFactor)) {
+			scale = true;
+		}
+		return scale;
+	}
     
     private static boolean compareWidthHeightScaleFactor(int widthScaleFactor, int heightScaleFactor){
     	if((widthScaleFactor != 1) || (heightScaleFactor != 1))
