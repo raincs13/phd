@@ -234,22 +234,21 @@ public abstract class ChartUtilities {
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
 
-        double desiredWidth = width * widthScaleFactor;
+        BufferedImage image = image(width, height, widthScaleFactor, heightScaleFactor);
+		double desiredWidth = width * widthScaleFactor;
         double desiredHeight = height * heightScaleFactor;
         double defaultWidth = width;
         double defaultHeight = height;
         boolean scale = false;
 
         // get desired width and height from somewhere then...
-        if ((widthScaleFactor != 1) || (heightScaleFactor != 1)) {
+        if (compareWidthHeightScaleFactor(widthScaleFactor,heightScaleFactor)) {
             scale = true;
         }
 
         double scaleX = desiredWidth / defaultWidth;
         double scaleY = desiredHeight / defaultHeight;
 
-        BufferedImage image = new BufferedImage((int) desiredWidth,
-                (int) desiredHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
 
         if (scale) {
@@ -267,6 +266,20 @@ public abstract class ChartUtilities {
         out.write(encodeAsPNG(image));
 
     }
+    
+    private static boolean compareWidthHeightScaleFactor(int widthScaleFactor, int heightScaleFactor){
+    	if((widthScaleFactor != 1) || (heightScaleFactor != 1))
+    		return true;
+    	else
+    		return false;
+    }
+
+	private static BufferedImage image(int width, int height, int widthScaleFactor, int heightScaleFactor) {
+		double desiredWidth = width * widthScaleFactor;
+		double desiredHeight = height * heightScaleFactor;
+		BufferedImage image = new BufferedImage((int) desiredWidth, (int) desiredHeight, BufferedImage.TYPE_INT_ARGB);
+		return image;
+	}
 
     /**
      * Saves a chart to the specified file in PNG format.
