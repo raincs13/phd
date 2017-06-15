@@ -2864,25 +2864,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             fileChooser.addChoosableFileFilter(filter);
             fileChooser.setFileFilter(filter);
 
-            int option = fileChooser.showSaveDialog(this);
-            if (option == JFileChooser.APPROVE_OPTION) {
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                 String filename = fileChooser.getSelectedFile().getPath();
                 if (isEnforceFileExtensions()) {
-                    if (!filename.endsWith(".pdf")) {
-                        filename = filename + ".pdf";
-                    }
+                    filename = filename(filename);
                 }
-                file = new File(filename);
-                if (file.exists()) {
-                    String fileExists = localizationResources.getString(
-                            "FILE_EXISTS_CONFIRM_OVERWRITE");
-                    int response = JOptionPane.showConfirmDialog(this, 
-                            fileExists, "Save As PDF", 
-                            JOptionPane.OK_CANCEL_OPTION);
-                    if (response == JOptionPane.CANCEL_OPTION) {
-                        file = null;
-                    }
-                }
+                file = file(file, filename);
             }
         }
         
@@ -2890,6 +2877,25 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             writeAsPDF(file, getWidth(), getHeight());
         }
     }
+
+	private String filename(String filename) {
+		if (!filename.endsWith(".pdf")) {
+			filename = filename + ".pdf";
+		}
+		return filename;
+	}
+
+	private File file(File file, String filename) throws java.awt.HeadlessException {
+		file = new File(filename);
+		if (file.exists()) {
+			String fileExists = localizationResources.getString("FILE_EXISTS_CONFIRM_OVERWRITE");
+			int response = JOptionPane.showConfirmDialog(this, fileExists, "Save As PDF", JOptionPane.OK_CANCEL_OPTION);
+			if (response == JOptionPane.CANCEL_OPTION) {
+				file = null;
+			}
+		}
+		return file;
+	}
 
     /**
      * Returns <code>true</code> if OrsonPDF is on the classpath, and 
