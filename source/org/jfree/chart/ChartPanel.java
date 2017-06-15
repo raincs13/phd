@@ -2993,8 +2993,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             return NO_SUCH_PAGE;
         }
         Graphics2D g2 = (Graphics2D) g;
-        double h = pf.getImageableHeight();
-        this.chart.draw(g2, new Rectangle2D.Double(getX(pf), getY(pf), getW(pf), h), this.anchor,
+        this.chart.draw(g2, new Rectangle2D.Double(getX(pf), getY(pf), getW(pf), getH(pf)), this.anchor,
                 null);
         return PAGE_EXISTS;
 
@@ -3006,6 +3005,10 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     public double getW(PageFormat pf){
     	return pf.getImageableWidth();
+    }
+    
+    public double getH(PageFormat pf){
+    	return pf.getImageableHeight();
     }
     
     public double getY(PageFormat pf){
