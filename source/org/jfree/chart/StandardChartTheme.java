@@ -1283,33 +1283,19 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot  the plot (<code>null</code> not permitted).
      */
     protected void applyToCategoryPlot(CategoryPlot plot) {
-        plot.setAxisOffset(this.axisOffset);
-        plot.setDomainGridlinePaint(this.domainGridlinePaint);
-        plot.setRangeGridlinePaint(this.rangeGridlinePaint);
-        plot.setRangeZeroBaselinePaint(this.baselinePaint);
-        plot.setShadowGenerator(this.shadowGenerator);
-
-        // process all domain axes
-        int domainAxisCount = plot.getDomainAxisCount();
-        for (int i = 0; i < domainAxisCount; i++) {
-            CategoryAxis axis = plot.getDomainAxis(i);
-            if (axis != null) {
-                applyToCategoryAxis(axis);
-            }
+        plot(plot);
+		// process all domain axes
+        for (int i = 0; i <  plot.getDomainAxisCount(); i++) {
+            CategoryAxis axis = axis(plot, i);
         }
 
         // process all range axes
-        int rangeAxisCount = plot.getRangeAxisCount();
-        for (int i = 0; i < rangeAxisCount; i++) {
-            ValueAxis axis = plot.getRangeAxis(i);
-            if (axis != null) {
-                applyToValueAxis(axis);
-            }
+        for (int i = 0; i < plot.getRangeAxisCount(); i++) {
+            ValueAxis axis = axis2(plot, i);
         }
 
         // process all renderers
-        int rendererCount = plot.getRendererCount();
-        for (int i = 0; i < rendererCount; i++) {
+        for (int i = 0; i < plot.getRendererCount(); i++) {
             CategoryItemRenderer r = plot.getRenderer(i);
             if (r != null) {
                 applyToCategoryItemRenderer(r);
@@ -1320,23 +1306,57 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             CombinedDomainCategoryPlot cp = (CombinedDomainCategoryPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
             while (iterator.hasNext()) {
-                CategoryPlot subplot = (CategoryPlot) iterator.next();
-                if (subplot != null) {
-                    applyToPlot(subplot);
-                }
+                CategoryPlot subplot = subplot(iterator);
             }
         }
         if (plot instanceof CombinedRangeCategoryPlot) {
             CombinedRangeCategoryPlot cp = (CombinedRangeCategoryPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
             while (iterator.hasNext()) {
-                CategoryPlot subplot = (CategoryPlot) iterator.next();
-                if (subplot != null) {
-                    applyToPlot(subplot);
-                }
+                CategoryPlot subplot = subplot2(iterator);
             }
         }
     }
+
+	private CategoryPlot subplot2(Iterator iterator) {
+		CategoryPlot subplot = (CategoryPlot) iterator.next();
+		if (subplot != null) {
+			applyToPlot(subplot);
+		}
+		return subplot;
+	}
+
+	private ValueAxis axis2(CategoryPlot plot, int i) {
+		ValueAxis axis = plot.getRangeAxis(i);
+		if (axis != null) {
+			applyToValueAxis(axis);
+		}
+		return axis;
+	}
+
+	private CategoryPlot subplot(Iterator iterator) {
+		CategoryPlot subplot = (CategoryPlot) iterator.next();
+		if (subplot != null) {
+			applyToPlot(subplot);
+		}
+		return subplot;
+	}
+
+	private CategoryAxis axis(CategoryPlot plot, int i) {
+		CategoryAxis axis = plot.getDomainAxis(i);
+		if (axis != null) {
+			applyToCategoryAxis(axis);
+		}
+		return axis;
+	}
+
+	private void plot(CategoryPlot plot) {
+		plot.setAxisOffset(this.axisOffset);
+		plot.setDomainGridlinePaint(this.domainGridlinePaint);
+		plot.setRangeGridlinePaint(this.rangeGridlinePaint);
+		plot.setRangeZeroBaselinePaint(this.baselinePaint);
+		plot.setShadowGenerator(this.shadowGenerator);
+	}
 
     /**
      * Applies the attributes of this theme to a {@link XYPlot}.
