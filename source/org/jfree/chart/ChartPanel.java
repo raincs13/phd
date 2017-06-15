@@ -2746,11 +2746,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             fileChooser.setFileFilter(filter);
 
             if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                String filename = fileChooser.getSelectedFile().getPath();
-                if (isEnforceFileExtensions()) {
-                    filename = filename(filename);
-                }
-                file = file(file, filename);
+                file = file2(file, fileChooser);
             }
         }
         
@@ -2775,6 +2771,15 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         }
     }
+
+	private File file2(File file, JFileChooser fileChooser) throws java.awt.HeadlessException {
+		String filename = fileChooser.getSelectedFile().getPath();
+		if (isEnforceFileExtensions()) {
+			filename = filename(filename);
+		}
+		file = file(file, filename);
+		return file;
+	}
 
 	private String filename(String filename) {
 		if (!filename.endsWith(".svg")) {
