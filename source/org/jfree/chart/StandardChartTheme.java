@@ -1344,36 +1344,19 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot  the plot (<code>null</code> not permitted).
      */
     protected void applyToXYPlot(XYPlot plot) {
-        plot.setAxisOffset(this.axisOffset);
-        plot.setDomainZeroBaselinePaint(this.baselinePaint);
-        plot.setRangeZeroBaselinePaint(this.baselinePaint);
-        plot.setDomainGridlinePaint(this.domainGridlinePaint);
-        plot.setRangeGridlinePaint(this.rangeGridlinePaint);
-        plot.setDomainCrosshairPaint(this.crosshairPaint);
-        plot.setRangeCrosshairPaint(this.crosshairPaint);
-        plot.setShadowGenerator(this.shadowGenerator);
-
-        // process all domain axes
-        int domainAxisCount = plot.getDomainAxisCount();
-        for (int i = 0; i < domainAxisCount; i++) {
-            ValueAxis axis = plot.getDomainAxis(i);
-            if (axis != null) {
-                applyToValueAxis(axis);
-            }
+        plot(plot);
+		// process all domain axes
+        for (int i = 0; i < plot.getDomainAxisCount(); i++) {
+            ValueAxis axis = axis(plot, i);
         }
 
         // process all range axes
-        int rangeAxisCount = plot.getRangeAxisCount();
-        for (int i = 0; i < rangeAxisCount; i++) {
-            ValueAxis axis = plot.getRangeAxis(i);
-            if (axis != null) {
-                applyToValueAxis(axis);
-            }
+        for (int i = 0; i < plot.getRangeAxisCount(); i++) {
+            ValueAxis axis = axis2(plot, i);
         }
 
         // process all renderers
-        int rendererCount = plot.getRendererCount();
-        for (int i = 0; i < rendererCount; i++) {
+        for (int i = 0; i < plot.getRendererCount(); i++) {
             XYItemRenderer r = plot.getRenderer(i);
             if (r != null) {
                 applyToXYItemRenderer(r);
@@ -1391,23 +1374,60 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             CombinedDomainXYPlot cp = (CombinedDomainXYPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
             while (iterator.hasNext()) {
-                XYPlot subplot = (XYPlot) iterator.next();
-                if (subplot != null) {
-                    applyToPlot(subplot);
-                }
+                XYPlot subplot = subplot(iterator);
             }
         }
         if (plot instanceof CombinedRangeXYPlot) {
             CombinedRangeXYPlot cp = (CombinedRangeXYPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
             while (iterator.hasNext()) {
-                XYPlot subplot = (XYPlot) iterator.next();
-                if (subplot != null) {
-                    applyToPlot(subplot);
-                }
+                XYPlot subplot = subplot2(iterator);
             }
         }
     }
+
+	private XYPlot subplot2(Iterator iterator) {
+		XYPlot subplot = (XYPlot) iterator.next();
+		if (subplot != null) {
+			applyToPlot(subplot);
+		}
+		return subplot;
+	}
+
+	private XYPlot subplot(Iterator iterator) {
+		XYPlot subplot = (XYPlot) iterator.next();
+		if (subplot != null) {
+			applyToPlot(subplot);
+		}
+		return subplot;
+	}
+
+	private ValueAxis axis2(XYPlot plot, int i) {
+		ValueAxis axis = plot.getRangeAxis(i);
+		if (axis != null) {
+			applyToValueAxis(axis);
+		}
+		return axis;
+	}
+
+	private ValueAxis axis(XYPlot plot, int i) {
+		ValueAxis axis = plot.getDomainAxis(i);
+		if (axis != null) {
+			applyToValueAxis(axis);
+		}
+		return axis;
+	}
+
+	private void plot(XYPlot plot) {
+		plot.setAxisOffset(this.axisOffset);
+		plot.setDomainZeroBaselinePaint(this.baselinePaint);
+		plot.setRangeZeroBaselinePaint(this.baselinePaint);
+		plot.setDomainGridlinePaint(this.domainGridlinePaint);
+		plot.setRangeGridlinePaint(this.rangeGridlinePaint);
+		plot.setDomainCrosshairPaint(this.crosshairPaint);
+		plot.setRangeCrosshairPaint(this.crosshairPaint);
+		plot.setShadowGenerator(this.shadowGenerator);
+	}
 
     /**
      * Applies the attributes of this theme to a {@link FastScatterPlot}.
