@@ -1303,16 +1303,26 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         }
 
         if (plot instanceof CombinedDomainCategoryPlot) {
-            CombinedDomainCategoryPlot cp = (CombinedDomainCategoryPlot) plot;
-            Iterator iterator = cp.getSubplots().iterator();
-            iterator(iterator);
+            Iterator iterator = iterator3(plot);
         }
         if (plot instanceof CombinedRangeCategoryPlot) {
-            CombinedRangeCategoryPlot cp = (CombinedRangeCategoryPlot) plot;
-            Iterator iterator = cp.getSubplots().iterator();
-            iterator2(iterator);
+            Iterator iterator = iterator4(plot);
         }
     }
+
+	private Iterator iterator4(CategoryPlot plot) {
+		CombinedRangeCategoryPlot cp = (CombinedRangeCategoryPlot) plot;
+		Iterator iterator = cp.getSubplots().iterator();
+		iterator2(iterator);
+		return iterator;
+	}
+
+	private Iterator iterator3(CategoryPlot plot) {
+		CombinedDomainCategoryPlot cp = (CombinedDomainCategoryPlot) plot;
+		Iterator iterator = cp.getSubplots().iterator();
+		iterator(iterator);
+		return iterator;
+	}
 
 	private void iterator2(Iterator iterator) {
 		while (iterator.hasNext()) {
