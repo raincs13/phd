@@ -2857,22 +2857,25 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     private void saveAsPDF(File f) {
         File file = f;
         if (file == null) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(this.defaultDirectoryForSaveAs);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    localizationResources.getString("PDF_Files"), "pdf");
-            fileChooser.addChoosableFileFilter(filter);
-            fileChooser.setFileFilter(filter);
-
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                file2(file, fileChooser);
-            }
+            file3(file);
         }
         
         if (file != null) {
             writeAsPDF(file, getWidth(), getHeight());
         }
     }
+
+	private void file3(File file) throws java.awt.HeadlessException {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(this.defaultDirectoryForSaveAs);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(localizationResources.getString("PDF_Files"),
+				"pdf");
+		fileChooser.addChoosableFileFilter(filter);
+		fileChooser.setFileFilter(filter);
+		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			file2(file, fileChooser);
+		}
+	}
 
 	private void file2(File file, JFileChooser fileChooser) throws java.awt.HeadlessException {
 		String filename = fileChooser.getSelectedFile().getPath();
