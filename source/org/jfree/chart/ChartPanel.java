@@ -2855,15 +2855,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * present, the method will fail.
      */
     private void saveAsPDF(File f) {
-        File file = f;
-        if (file == null) {
-            file3(file);
-        }
-        
-        if (file != null) {
+        File file = file5(f);
+		if (file != null) {
             writeAsPDF(file, getWidth(), getHeight());
         }
     }
+
+	private File file5(File f) throws java.awt.HeadlessException {
+		File file = f;
+		if (file == null) {
+			file3(file);
+		}
+		return file;
+	}
 
 	private void file3(File file) throws java.awt.HeadlessException {
 		JFileChooser fileChooser = new JFileChooser();
