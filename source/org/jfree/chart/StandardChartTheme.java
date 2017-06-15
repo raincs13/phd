@@ -1373,18 +1373,26 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (plot instanceof CombinedDomainXYPlot) {
             CombinedDomainXYPlot cp = (CombinedDomainXYPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                XYPlot subplot = subplot(iterator);
-            }
+            iterator(iterator);
         }
         if (plot instanceof CombinedRangeXYPlot) {
             CombinedRangeXYPlot cp = (CombinedRangeXYPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                XYPlot subplot = subplot2(iterator);
-            }
+            iterator2(iterator);
         }
     }
+
+	private void iterator2(Iterator iterator) {
+		while (iterator.hasNext()) {
+			XYPlot subplot = subplot2(iterator);
+		}
+	}
+
+	private void iterator(Iterator iterator) {
+		while (iterator.hasNext()) {
+			XYPlot subplot = subplot(iterator);
+		}
+	}
 
 	private XYPlot subplot2(Iterator iterator) {
 		XYPlot subplot = (XYPlot) iterator.next();
