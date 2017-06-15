@@ -1305,18 +1305,26 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (plot instanceof CombinedDomainCategoryPlot) {
             CombinedDomainCategoryPlot cp = (CombinedDomainCategoryPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                CategoryPlot subplot = subplot(iterator);
-            }
+            iterator(iterator);
         }
         if (plot instanceof CombinedRangeCategoryPlot) {
             CombinedRangeCategoryPlot cp = (CombinedRangeCategoryPlot) plot;
             Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                CategoryPlot subplot = subplot2(iterator);
-            }
+            iterator2(iterator);
         }
     }
+
+	private void iterator2(Iterator iterator) {
+		while (iterator.hasNext()) {
+			CategoryPlot subplot = subplot2(iterator);
+		}
+	}
+
+	private void iterator(Iterator iterator) {
+		while (iterator.hasNext()) {
+			CategoryPlot subplot = subplot(iterator);
+		}
+	}
 
 	private CategoryPlot subplot2(Iterator iterator) {
 		CategoryPlot subplot = (CategoryPlot) iterator.next();
