@@ -859,8 +859,8 @@ public abstract class ChartFactory {
     public static JFreeChart createBarChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
-        return createBarChart(new CreateBarChartParameter2(title, true), categoryAxisLabel, valueAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, false);
+        return createBarChart(new CreateBarChartParameter3(new CreateBarChartParameter2(title, true), PlotOrientation.VERTICAL), categoryAxisLabel, valueAxisLabel, dataset,
+                true, false);
     }
  
     /**
@@ -868,61 +868,55 @@ public abstract class ChartFactory {
      * {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}
      * for the domain axis, a {@link NumberAxis} as the range axis, and a
      * {@link BarRenderer} as the renderer.
-     * @param parameterObject2BarChart TODO
+     * @param parameterObject3 TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis
      *                        (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param orientation  the plot orientation (horizontal or vertical)
-     *                     (<code>null</code> not permitted).
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
-     *
      * @return A bar chart.
      */
-    public static JFreeChart createBarChart(CreateBarChartParameter2 parameterObject2BarChart,
+    public static JFreeChart createBarChart(CreateBarChartParameter3 parameterObject3,
             String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset, PlotOrientation orientation,
-            boolean tooltips, boolean urls) {
+            CategoryDataset dataset, boolean tooltips,
+            boolean urls) {
 
-        ParamChecks.nullNotPermitted(orientation, "orientation");
+        ParamChecks.nullNotPermitted(parameterObject3.orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
-        BarRenderer renderer = new BarRenderer();
-        if (orientation == PlotOrientation.HORIZONTAL) {
-            ItemLabelPosition position1 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT);
-            renderer.setBasePositiveItemLabelPosition(position1);
-            ItemLabelPosition position2 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE9, TextAnchor.CENTER_RIGHT);
-            renderer.setBaseNegativeItemLabelPosition(position2);
-         }
-        else if (orientation == PlotOrientation.VERTICAL) {
-            ItemLabelPosition position1 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
-            renderer.setBasePositiveItemLabelPosition(position1);
-            ItemLabelPosition position2 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
-            renderer.setBaseNegativeItemLabelPosition(position2);
-        }
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-
-        CategoryPlot plot = plot(parameterObject2BarChart.title, dataset, orientation, parameterObject2BarChart.legend, categoryAxis, valueAxis, renderer);
-		JFreeChart chart = new JFreeChart(parameterObject2BarChart.title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, parameterObject2BarChart.legend);
+        BarRenderer renderer = renderer(parameterObject3.orientation, tooltips, urls);
+		CategoryPlot plot = plot(parameterObject3.parameterObject2BarChart.title, dataset, parameterObject3.orientation, parameterObject3.parameterObject2BarChart.legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject3.parameterObject2BarChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject3.parameterObject2BarChart.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static BarRenderer renderer(PlotOrientation orientation, boolean tooltips, boolean urls) {
+		BarRenderer renderer = new BarRenderer();
+		if (orientation == PlotOrientation.HORIZONTAL) {
+			ItemLabelPosition position1 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT);
+			renderer.setBasePositiveItemLabelPosition(position1);
+			ItemLabelPosition position2 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE9, TextAnchor.CENTER_RIGHT);
+			renderer.setBaseNegativeItemLabelPosition(position2);
+		} else if (orientation == PlotOrientation.VERTICAL) {
+			ItemLabelPosition position1 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
+			renderer.setBasePositiveItemLabelPosition(position1);
+			ItemLabelPosition position2 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
+			renderer.setBaseNegativeItemLabelPosition(position2);
+		}
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
 
 	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
 			CategoryAxis categoryAxis, ValueAxis valueAxis, BarRenderer renderer) {
