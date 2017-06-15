@@ -179,12 +179,11 @@ public class BarChartTest {
 
         // create the chart...
         return ChartFactory.createBarChart(
-            "Bar Chart",
+            new CreateBarChartParameter2("Bar Chart", true),
             "Domain", "Range",
             dataset,
             PlotOrientation.HORIZONTAL,
             true,     // include legend
-            true,
             true
         );
 

@@ -46,6 +46,7 @@ import java.awt.GradientPaint;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.CreateBarChartParameter2;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.CategoryAxis;
@@ -144,13 +145,12 @@ public class BarChartDemo1 extends ApplicationFrame {
 
         // create the chart...
         JFreeChart chart = ChartFactory.createBarChart(
-            "Bar Chart Demo 1",       // chart title
+            new CreateBarChartParameter2("Bar Chart Demo 1", true),       // chart title
             "Category",               // domain axis label
             "Value",                  // range axis label
             dataset,                  // data
             PlotOrientation.VERTICAL, // orientation
             true,                     // include legend
-            true,                     // tooltips?
             false                     // URLs?
         );
 

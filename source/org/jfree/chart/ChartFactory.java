@@ -859,8 +859,8 @@ public abstract class ChartFactory {
     public static JFreeChart createBarChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
-        return createBarChart(title, categoryAxisLabel, valueAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+        return createBarChart(new CreateBarChartParameter2(title, true), categoryAxisLabel, valueAxisLabel, dataset,
+                PlotOrientation.VERTICAL, true, false);
     }
  
     /**
@@ -868,8 +868,7 @@ public abstract class ChartFactory {
      * {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}
      * for the domain axis, a {@link NumberAxis} as the range axis, and a
      * {@link BarRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2BarChart TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis
@@ -877,16 +876,15 @@ public abstract class ChartFactory {
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> not permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A bar chart.
      */
-    public static JFreeChart createBarChart(String title,
+    public static JFreeChart createBarChart(CreateBarChartParameter2 parameterObject2BarChart,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
@@ -918,15 +916,21 @@ public abstract class ChartFactory {
                     new StandardCategoryURLGenerator());
         }
 
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        CategoryPlot plot = plot(parameterObject2BarChart.title, dataset, orientation, parameterObject2BarChart.legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject2BarChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2BarChart.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
+			CategoryAxis categoryAxis, ValueAxis valueAxis, BarRenderer renderer) {
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a stacked bar chart with default settings.  The chart object

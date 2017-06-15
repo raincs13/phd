@@ -68,6 +68,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateBarChartParameter2;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
@@ -667,8 +668,8 @@ public class CategoryPlotTest {
     public void testSerialization3() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createBarChart(
-                "Test Chart", "Category Axis", "Value Axis", dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+                new CreateBarChartParameter2("Test Chart", true), "Category Axis", "Value Axis", dataset,
+                PlotOrientation.VERTICAL, true, false);
         JFreeChart chart2 = (JFreeChart) TestUtilities.serialised(chart);
 
         // now check that the chart is usable...
@@ -687,8 +688,8 @@ public class CategoryPlotTest {
     public void testSerialization4() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createBarChart(
-                "Test Chart", "Category Axis", "Value Axis",
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+                new CreateBarChartParameter2("Test Chart", true), "Category Axis", "Value Axis",
+                dataset, PlotOrientation.VERTICAL, true, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.addRangeMarker(new ValueMarker(1.1), Layer.FOREGROUND);
         plot.addRangeMarker(new IntervalMarker(2.2, 3.3), Layer.BACKGROUND);
