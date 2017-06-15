@@ -2736,21 +2736,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * present, the method will fail.
      */
     private void saveAsSVG(File f) throws IOException {
-        File file = f;
-        if (file == null) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(this.defaultDirectoryForSaveAs);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    localizationResources.getString("SVG_Files"), "svg");
-            fileChooser.addChoosableFileFilter(filter);
-            fileChooser.setFileFilter(filter);
-
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                file = file2(file, fileChooser);
-            }
-        }
-        
-        if (file != null) {
+        File file = file5(f);
+		if (file != null) {
             // use reflection to get the SVG string
             String svg = generateSVG(getWidth(), getHeight());
             BufferedWriter writer = null;
@@ -2771,6 +2758,27 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         }
     }
+
+	private File file5(File f) throws java.awt.HeadlessException {
+		File file = f;
+		if (file == null) {
+			file = file3(file);
+		}
+		return file;
+	}
+
+	private File file3(File file) throws java.awt.HeadlessException {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(this.defaultDirectoryForSaveAs);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(localizationResources.getString("SVG_Files"),
+				"svg");
+		fileChooser.addChoosableFileFilter(filter);
+		fileChooser.setFileFilter(filter);
+		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			file = file2(file, fileChooser);
+		}
+		return file;
+	}
 
 	private File file2(File file, JFileChooser fileChooser) throws java.awt.HeadlessException {
 		String filename = fileChooser.getSelectedFile().getPath();
