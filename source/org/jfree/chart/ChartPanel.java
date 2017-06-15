@@ -2745,25 +2745,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             fileChooser.addChoosableFileFilter(filter);
             fileChooser.setFileFilter(filter);
 
-            int option = fileChooser.showSaveDialog(this);
-            if (option == JFileChooser.APPROVE_OPTION) {
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                 String filename = fileChooser.getSelectedFile().getPath();
                 if (isEnforceFileExtensions()) {
-                    if (!filename.endsWith(".svg")) {
-                        filename = filename + ".svg";
-                    }
+                    filename = filename(filename);
                 }
-                file = new File(filename);
-                if (file.exists()) {
-                    String fileExists = localizationResources.getString(
-                            "FILE_EXISTS_CONFIRM_OVERWRITE");
-                    int response = JOptionPane.showConfirmDialog(this, 
-                            fileExists, "Save As SVG", 
-                            JOptionPane.OK_CANCEL_OPTION);
-                    if (response == JOptionPane.CANCEL_OPTION) {
-                        file = null;
-                    }
-                }
+                file = file(file, filename);
             }
         }
         
@@ -2788,6 +2775,25 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         }
     }
+
+	private String filename(String filename) {
+		if (!filename.endsWith(".svg")) {
+			filename = filename + ".svg";
+		}
+		return filename;
+	}
+
+	private File file(File file, String filename) throws java.awt.HeadlessException {
+		file = new File(filename);
+		if (file.exists()) {
+			String fileExists = localizationResources.getString("FILE_EXISTS_CONFIRM_OVERWRITE");
+			int response = JOptionPane.showConfirmDialog(this, fileExists, "Save As SVG", JOptionPane.OK_CANCEL_OPTION);
+			if (response == JOptionPane.CANCEL_OPTION) {
+				file = null;
+			}
+		}
+		return file;
+	}
     
     /**
      * Generates a string containing a rendering of the chart in SVG format.
