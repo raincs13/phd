@@ -55,6 +55,7 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateBarChartParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.plot.CategoryPlot;
@@ -253,9 +254,8 @@ public class NumberAxisTest {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
-        JFreeChart chart = ChartFactory.createBarChart("Test", "Categories",
-                "Value", dataset, PlotOrientation.VERTICAL, false, false,
-                false);
+        JFreeChart chart = ChartFactory.createBarChart(new CreateBarChartParameter3("Test", PlotOrientation.VERTICAL, false), "Categories",
+                "Value", dataset, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         axis.setAutoRangeIncludesZero(false);

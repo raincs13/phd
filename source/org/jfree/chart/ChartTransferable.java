@@ -204,9 +204,8 @@ public class ChartTransferable implements Transferable {
             throws UnsupportedFlavorException, IOException {
         
         if (this.imageFlavor.equals(flavor)) {
-            return createBufferedImage(this.chart, this.width, this.height,
-                    this.minDrawWidth, this.minDrawHeight, this.maxDrawWidth,
-                    this.maxDrawHeight);
+            return createBufferedImage(this.chart, new CreateBufferedImageParameter(this.width, this.height), this.minDrawWidth,
+                    this.minDrawHeight, this.maxDrawWidth, this.maxDrawHeight);
         }
         else {
             throw new UnsupportedFlavorException(flavor);
@@ -217,62 +216,83 @@ public class ChartTransferable implements Transferable {
      * A utility method that creates an image of a chart, with scaling.
      *
      * @param chart  the chart.
-     * @param w  the image width.
-     * @param h  the image height.
+     * @param parameterObject TODO
      * @param minDrawW  the minimum width for chart drawing.
      * @param minDrawH  the minimum height for chart drawing.
      * @param maxDrawW  the maximum width for chart drawing.
      * @param maxDrawH  the maximum height for chart drawing.
-     *
      * @return  A chart image.
      *
      * @since 1.0.14
      */
-    private BufferedImage createBufferedImage(JFreeChart chart, int w, int h,
-            int minDrawW, int minDrawH, int maxDrawW, int maxDrawH) {
+    private BufferedImage createBufferedImage(JFreeChart chart, CreateBufferedImageParameter parameterObject, int minDrawW,
+            int minDrawH, int maxDrawW, int maxDrawH) {
 
-        BufferedImage image = new BufferedImage(w, h,
+        BufferedImage image = new BufferedImage(parameterObject.w, parameterObject.h,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
 
-        // work out if scaling is required...
-        boolean scale = false;
-        double drawWidth = w;
-        double drawHeight = h;
+        boolean scale = scale(parameterObject.w, parameterObject.h, minDrawW, minDrawH, maxDrawW, maxDrawH);
+		double drawWidth = parameterObject.w;
+        double drawHeight = parameterObject.h;
         double scaleX = 1.0;
         double scaleY = 1.0;
         if (drawWidth < minDrawW) {
             scaleX = drawWidth / minDrawW;
             drawWidth = minDrawW;
-            scale = true;
         }
         else if (drawWidth > maxDrawW) {
             scaleX = drawWidth / maxDrawW;
             drawWidth = maxDrawW;
-            scale = true;
         }
-        if (drawHeight < minDrawH) {
-            scaleY = drawHeight / minDrawH;
+        scaleY = scaleY(minDrawH, maxDrawH, drawHeight, scaleY);
+		if (drawHeight < minDrawH) {
             drawHeight = minDrawH;
-            scale = true;
         }
         else if (drawHeight > maxDrawH) {
-            scaleY = drawHeight / maxDrawH;
             drawHeight = maxDrawH;
-            scale = true;
         }
 
-        Rectangle2D chartArea = new Rectangle2D.Double(0.0, 0.0, drawWidth,
-                drawHeight);
-        if (scale) {
+        chart(chart, g2, drawWidth, drawHeight);
+		if (scale) {
             AffineTransform st = AffineTransform.getScaleInstance(scaleX,
                     scaleY);
             g2.transform(st);
         }
-        chart.draw(g2, chartArea, null, null);
         g2.dispose();
         return image;
 
     }
+
+	private boolean scale(int w, int h, int minDrawW, int minDrawH, int maxDrawW, int maxDrawH) {
+		boolean scale = false;
+		double drawWidth = w;
+		double drawHeight = h;
+		if (drawWidth < minDrawW) {
+			scale = true;
+		} else if (drawWidth > maxDrawW) {
+			scale = true;
+		}
+		if (drawHeight < minDrawH) {
+			scale = true;
+		} else if (drawHeight > maxDrawH) {
+			scale = true;
+		}
+		return scale;
+	}
+
+	private double scaleY(int minDrawH, int maxDrawH, double drawHeight, double scaleY) {
+		if (drawHeight < minDrawH) {
+			scaleY = drawHeight / minDrawH;
+		} else if (drawHeight > maxDrawH) {
+			scaleY = drawHeight / maxDrawH;
+		}
+		return scaleY;
+	}
+
+	private void chart(JFreeChart chart, Graphics2D g2, double drawWidth, double drawHeight) {
+		Rectangle2D chartArea = new Rectangle2D.Double(0.0, 0.0, drawWidth, drawHeight);
+		chart.draw(g2, chartArea, null, null);
+	}
 
 }

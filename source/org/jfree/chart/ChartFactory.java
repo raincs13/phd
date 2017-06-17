@@ -859,8 +859,8 @@ public abstract class ChartFactory {
     public static JFreeChart createBarChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
-        return createBarChart(title, categoryAxisLabel, valueAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+        return createBarChart(new CreateBarChartParameter3(title, PlotOrientation.VERTICAL, true), categoryAxisLabel, valueAxisLabel, dataset,
+                true, false);
     }
  
     /**
@@ -868,65 +868,66 @@ public abstract class ChartFactory {
      * {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}
      * for the domain axis, a {@link NumberAxis} as the range axis, and a
      * {@link BarRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject3BarChart TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis
      *                        (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param orientation  the plot orientation (horizontal or vertical)
-     *                     (<code>null</code> not permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A bar chart.
      */
-    public static JFreeChart createBarChart(String title,
+    public static JFreeChart createBarChart(CreateBarChartParameter3 parameterObject3BarChart,
             String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            CategoryDataset dataset, boolean tooltips,
+            boolean urls) {
 
-        ParamChecks.nullNotPermitted(orientation, "orientation");
+        ParamChecks.nullNotPermitted(parameterObject3BarChart.orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
-        BarRenderer renderer = new BarRenderer();
-        if (orientation == PlotOrientation.HORIZONTAL) {
-            ItemLabelPosition position1 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT);
-            renderer.setBasePositiveItemLabelPosition(position1);
-            ItemLabelPosition position2 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE9, TextAnchor.CENTER_RIGHT);
-            renderer.setBaseNegativeItemLabelPosition(position2);
-         }
-        else if (orientation == PlotOrientation.VERTICAL) {
-            ItemLabelPosition position1 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
-            renderer.setBasePositiveItemLabelPosition(position1);
-            ItemLabelPosition position2 = new ItemLabelPosition(
-                    ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
-            renderer.setBaseNegativeItemLabelPosition(position2);
-        }
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        BarRenderer renderer = renderer(parameterObject3BarChart, tooltips, urls);
+		CategoryPlot plot = plot(parameterObject3BarChart, dataset, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject3BarChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject3BarChart.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static BarRenderer renderer(CreateBarChartParameter3 parameterObject3BarChart, boolean tooltips,
+			boolean urls) {
+		BarRenderer renderer = new BarRenderer();
+		if (parameterObject3BarChart.orientation == PlotOrientation.HORIZONTAL) {
+			ItemLabelPosition position1 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT);
+			renderer.setBasePositiveItemLabelPosition(position1);
+			ItemLabelPosition position2 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE9, TextAnchor.CENTER_RIGHT);
+			renderer.setBaseNegativeItemLabelPosition(position2);
+		} else if (parameterObject3BarChart.orientation == PlotOrientation.VERTICAL) {
+			ItemLabelPosition position1 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
+			renderer.setBasePositiveItemLabelPosition(position1);
+			ItemLabelPosition position2 = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
+			renderer.setBaseNegativeItemLabelPosition(position2);
+		}
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
+
+	private static CategoryPlot plot(CreateBarChartParameter3 parameterObject3BarChart, CategoryDataset dataset,
+			CategoryAxis categoryAxis, ValueAxis valueAxis, BarRenderer renderer) {
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(parameterObject3BarChart.orientation);
+		JFreeChart chart = new JFreeChart(parameterObject3BarChart.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject3BarChart.legend);
+		return plot;
+	}
 
     /**
      * Creates a stacked bar chart with default settings.  The chart object
