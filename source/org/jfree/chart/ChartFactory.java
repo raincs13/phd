@@ -1520,15 +1520,21 @@ public abstract class ChartFactory {
                     new StandardCategoryURLGenerator());
         }
 
-        CategoryPlot plot = new CategoryPlot(parameterObject4.dataset, categoryAxis, dateAxis,
-                renderer);
-        plot.setOrientation(PlotOrientation.HORIZONTAL);
-        JFreeChart chart = new JFreeChart(parameterObject4.title, JFreeChart.DEFAULT_TITLE_FONT,
+        CategoryPlot plot = plot(parameterObject4, legend, categoryAxis, dateAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject4.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static CategoryPlot plot(CreateGanttChartParameter4 parameterObject4, boolean legend,
+			CategoryAxis categoryAxis, DateAxis dateAxis, CategoryItemRenderer renderer) {
+		CategoryPlot plot = new CategoryPlot(parameterObject4.dataset, categoryAxis, dateAxis, renderer);
+		plot.setOrientation(PlotOrientation.HORIZONTAL);
+		JFreeChart chart = new JFreeChart(parameterObject4.title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a waterfall chart.  The chart object returned by this method
