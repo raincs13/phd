@@ -2495,21 +2495,19 @@ public abstract class ChartFactory {
 
     /**
      * Creates a wind plot with default settings.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param xAxisLabel  a label for the x-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag that controls whether or not a legend is created.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A wind plot.
      *
      */
-    public static JFreeChart createWindPlot(String title, String xAxisLabel,
-            String yAxisLabel, WindDataset dataset, boolean legend,
-            boolean tooltips, boolean urls) {
+    public static JFreeChart createWindPlot(CreateWindPlotParameter2 parameterObject2, String xAxisLabel,
+            String yAxisLabel, WindDataset dataset, boolean tooltips,
+            boolean urls) {
 
         ValueAxis xAxis = new DateAxis(xAxisLabel);
         ValueAxis yAxis = new NumberAxis(yAxisLabel);
@@ -2519,16 +2517,23 @@ public abstract class ChartFactory {
         if (tooltips) {
             renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
         }
-        if (urls) {
-            renderer.setURLGenerator(new StandardXYURLGenerator());
-        }
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        XYPlot plot = plot(parameterObject2.title, dataset, parameterObject2.legend, urls, xAxis, yAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYPlot plot(String title, WindDataset dataset, boolean legend, boolean urls, ValueAxis xAxis,
+			ValueAxis yAxis, WindItemRenderer renderer) {
+		if (urls) {
+			renderer.setURLGenerator(new StandardXYURLGenerator());
+		}
+		XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a wafer map chart.
