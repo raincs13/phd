@@ -1509,24 +1509,26 @@ public abstract class ChartFactory {
         CategoryAxis categoryAxis = new CategoryAxis(parameterObject4.categoryAxisLabel);
         DateAxis dateAxis = new DateAxis(parameterObject4.dateAxisLabel);
 
-        CategoryItemRenderer renderer = new GanttRenderer();
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new IntervalCategoryToolTipGenerator(
-                    "{3} - {4}", DateFormat.getDateInstance()));
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-
-        CategoryPlot plot = plot(parameterObject4, legend, categoryAxis, dateAxis, renderer);
+        CategoryItemRenderer renderer = renderer(tooltips, urls);
+		CategoryPlot plot = plot(parameterObject4, legend, categoryAxis, dateAxis, renderer);
 		JFreeChart chart = new JFreeChart(parameterObject4.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static CategoryItemRenderer renderer(boolean tooltips, boolean urls) {
+		CategoryItemRenderer renderer = new GanttRenderer();
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(
+					new IntervalCategoryToolTipGenerator("{3} - {4}", DateFormat.getDateInstance()));
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
 
 	private static CategoryPlot plot(CreateGanttChartParameter4 parameterObject4, boolean legend,
 			CategoryAxis categoryAxis, DateAxis dateAxis, CategoryItemRenderer renderer) {
