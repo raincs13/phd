@@ -722,17 +722,25 @@ public abstract class ChartFactory {
             boolean tooltips, Locale locale) {
 
         ParamChecks.nullNotPermitted(locale, "locale");
-        PiePlot3D plot = new PiePlot3D(dataset);
-        plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
-        if (tooltips) {
-            plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
-        }
-        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+        PiePlot3D plot = plot(parameterObject2, dataset, tooltips, locale);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static PiePlot3D plot(CreatePieChart3DParameter2 parameterObject2, PieDataset dataset, boolean tooltips,
+			Locale locale) {
+		PiePlot3D plot = new PiePlot3D(dataset);
+		plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
+		if (tooltips) {
+			plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
+		}
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject2.legend);
+		return plot;
+	}
 
     /**
      * Creates a 3D pie chart using the specified dataset.  The chart object
