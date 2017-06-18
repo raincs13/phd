@@ -2532,28 +2532,26 @@ public abstract class ChartFactory {
 
     /**
      * Creates a wafer map chart.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param dataset  the dataset (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted.
-     * @param legend  display a legend?
      * @param tooltips  generate tooltips?
      * @param urls  generate URLs?
      *
      * @return A wafer map chart.
      */
-    public static JFreeChart createWaferMapChart(String title,
+    public static JFreeChart createWaferMapChart(CreateWaferMapChartParameter2 parameterObject2,
             WaferMapDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         WaferMapPlot plot = new WaferMapPlot(dataset);
         WaferMapRenderer renderer = new WaferMapRenderer();
         plot.setRenderer(renderer);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
     }
