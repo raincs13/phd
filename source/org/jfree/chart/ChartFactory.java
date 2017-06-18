@@ -642,21 +642,29 @@ public abstract class ChartFactory {
     public static JFreeChart createRingChart(CreateRingChartParameter2 parameterObject2RingChart, PieDataset dataset,
             boolean tooltips, boolean urls) {
 
-        RingPlot plot = new RingPlot(dataset);
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator());
-        plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
-        if (tooltips) {
-            plot.setToolTipGenerator(new StandardPieToolTipGenerator());
-        }
-        if (urls) {
-            plot.setURLGenerator(new StandardPieURLGenerator());
-        }
-        JFreeChart chart = new JFreeChart(parameterObject2RingChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+        RingPlot plot = plot(parameterObject2RingChart, dataset, tooltips, urls);
+		JFreeChart chart = new JFreeChart(parameterObject2RingChart.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2RingChart.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static RingPlot plot(CreateRingChartParameter2 parameterObject2RingChart, PieDataset dataset,
+			boolean tooltips, boolean urls) {
+		RingPlot plot = new RingPlot(dataset);
+		plot.setLabelGenerator(new StandardPieSectionLabelGenerator());
+		plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
+		if (tooltips) {
+			plot.setToolTipGenerator(new StandardPieToolTipGenerator());
+		}
+		if (urls) {
+			plot.setURLGenerator(new StandardPieURLGenerator());
+		}
+		JFreeChart chart = new JFreeChart(parameterObject2RingChart.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject2RingChart.legend);
+		return plot;
+	}
 
     /**
      * Creates a chart that displays multiple pie plots.  The chart object
