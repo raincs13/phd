@@ -632,17 +632,15 @@ public abstract class ChartFactory {
      * <P>
      * The chart object returned by this method uses a {@link RingPlot}
      * instance as the plot.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2RingChart TODO
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A ring chart.
      */
-    public static JFreeChart createRingChart(String title, PieDataset dataset,
-            boolean legend, boolean tooltips, boolean urls) {
+    public static JFreeChart createRingChart(CreateRingChartParameter2 parameterObject2RingChart, PieDataset dataset,
+            boolean tooltips, boolean urls) {
 
         RingPlot plot = new RingPlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator());
@@ -653,8 +651,8 @@ public abstract class ChartFactory {
         if (urls) {
             plot.setURLGenerator(new StandardPieURLGenerator());
         }
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2RingChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2RingChart.legend);
         currentTheme.apply(chart);
         return chart;
 
