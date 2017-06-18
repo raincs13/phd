@@ -52,6 +52,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreatePieChart3DParameter2;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.junit.Test;
@@ -97,8 +98,8 @@ public class PiePlot3DTest {
      */
     @Test
     public void testDrawWithNullDataset() {
-        JFreeChart chart = ChartFactory.createPieChart3D("Test", null, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart3D(new CreatePieChart3DParameter2("Test", true), null, false,
+                false);
         boolean success = false;
         try {
             BufferedImage image = new BufferedImage(200 , 100,
