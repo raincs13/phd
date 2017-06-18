@@ -613,17 +613,25 @@ public abstract class ChartFactory {
     public static JFreeChart createRingChart(CreateRingChartParameter2 parameterObject2, PieDataset dataset,
             boolean tooltips, Locale locale) {
 
-        RingPlot plot = new RingPlot(dataset);
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
-        plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
-        if (tooltips) {
-            plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
-        }
-        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+        RingPlot plot = plot(parameterObject2, dataset, tooltips, locale);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
     }
+
+	private static RingPlot plot(CreateRingChartParameter2 parameterObject2, PieDataset dataset, boolean tooltips,
+			Locale locale) {
+		RingPlot plot = new RingPlot(dataset);
+		plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
+		plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
+		if (tooltips) {
+			plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
+		}
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject2.legend);
+		return plot;
+	}
 
     /**
      * Creates a ring chart with default settings.

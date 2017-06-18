@@ -28,7 +28,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 8.1"/>
-    <property name="classworlds.conf" value="C:\Users\Probook\workspacePhd\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf4241987928559552155.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\Probook\workspacePhd\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf9009987283857367233.tmp"/>
     <property name="sun.jnu.encoding" value="MS874"/>
     <property name="java.library.path" value="C:\jdk1.8.0_111\New folder\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/jdk1.8.0_111/New folder/bin/server;C:/jdk1.8.0_111/New folder/bin;C:/jdk1.8.0_111/New folder/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\jdk1.8.0_111\bin;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\SciTools/bin/pc-win64;C:\jdk1.8.0_111\bin;C:\Users\Probook\Desktop;;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -63,8 +63,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="org.jfree.chart.BarChartTest" name="testDrawWithNullInfo" time="0.012"/>
-  <testcase classname="org.jfree.chart.BarChartTest" name="testSetSeriesToolTipGenerator" time="0.001"/>
-  <testcase classname="org.jfree.chart.BarChartTest" name="testSetSeriesURLGenerator" time="0"/>
-  <testcase classname="org.jfree.chart.BarChartTest" name="testReplaceDataset" time="0.002"/>
+  <testcase classname="org.jfree.chart.BarChartTest" name="testDrawWithNullInfo" time="0.005"/>
+  <testcase classname="org.jfree.chart.BarChartTest" name="testSetSeriesToolTipGenerator" time="0.002"/>
+  <testcase classname="org.jfree.chart.BarChartTest" name="testSetSeriesURLGenerator" time="0.002"/>
+  <testcase classname="org.jfree.chart.BarChartTest" name="testReplaceDataset" time="0.006"/>
 </testsuite>
