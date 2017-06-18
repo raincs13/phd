@@ -204,8 +204,8 @@ public class ChartTransferable implements Transferable {
             throws UnsupportedFlavorException, IOException {
         
         if (this.imageFlavor.equals(flavor)) {
-            return createBufferedImage(this.chart, new CreateBufferedImageParameter(this.width, this.height), this.minDrawWidth,
-                    this.minDrawHeight, this.maxDrawWidth, this.maxDrawHeight);
+            return createBufferedImage(this.chart, new CreateBufferedImageParameter6(new CreateBufferedImageParameter(this.width, this.height), this.minDrawWidth, this.minDrawHeight, this.maxDrawWidth,
+					this.maxDrawHeight));
         }
         else {
             throw new UnsupportedFlavorException(flavor);
@@ -216,41 +216,33 @@ public class ChartTransferable implements Transferable {
      * A utility method that creates an image of a chart, with scaling.
      *
      * @param chart  the chart.
-     * @param parameterObject TODO
-     * @param minDrawW  the minimum width for chart drawing.
-     * @param minDrawH  the minimum height for chart drawing.
-     * @param maxDrawW  the maximum width for chart drawing.
-     * @param maxDrawH  the maximum height for chart drawing.
+     * @param parameterObject6 TODO
      * @return  A chart image.
      *
      * @since 1.0.14
      */
-    private BufferedImage createBufferedImage(JFreeChart chart, CreateBufferedImageParameter parameterObject, int minDrawW,
-            int minDrawH, int maxDrawW, int maxDrawH) {
+    private BufferedImage createBufferedImage(JFreeChart chart, CreateBufferedImageParameter6 parameterObject6) {
 
-        BufferedImage image = new BufferedImage(parameterObject.w, parameterObject.h,
+        BufferedImage image = new BufferedImage(parameterObject6.parameterObject.w, parameterObject6.parameterObject.h,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
 
-        boolean scale = scale(parameterObject.w, parameterObject.h, minDrawW, minDrawH, maxDrawW, maxDrawH);
-		double drawWidth = parameterObject.w;
-        double drawHeight = parameterObject.h;
-        double scaleX = 1.0;
-        double scaleY = 1.0;
-        if (drawWidth < minDrawW) {
-            scaleX = drawWidth / minDrawW;
-            drawWidth = minDrawW;
+        boolean scale = scale(parameterObject6.parameterObject.w, parameterObject6.parameterObject.h, parameterObject6.minDrawW, parameterObject6.minDrawH, parameterObject6.maxDrawW, parameterObject6.maxDrawH);
+		double scaleX = scaleX(parameterObject6.parameterObject, parameterObject6.minDrawW, parameterObject6.maxDrawW);
+		double drawWidth = parameterObject6.parameterObject.w;
+        double scaleY = scaleY2(parameterObject6.parameterObject, parameterObject6.minDrawH, parameterObject6.maxDrawH);
+		double drawHeight = parameterObject6.parameterObject.h;
+        if (drawWidth < parameterObject6.minDrawW) {
+            drawWidth = parameterObject6.minDrawW;
         }
-        else if (drawWidth > maxDrawW) {
-            scaleX = drawWidth / maxDrawW;
-            drawWidth = maxDrawW;
+        else if (drawWidth > parameterObject6.maxDrawW) {
+            drawWidth = parameterObject6.maxDrawW;
         }
-        scaleY = scaleY(minDrawH, maxDrawH, drawHeight, scaleY);
-		if (drawHeight < minDrawH) {
-            drawHeight = minDrawH;
+        if (drawHeight < parameterObject6.minDrawH) {
+            drawHeight = parameterObject6.minDrawH;
         }
-        else if (drawHeight > maxDrawH) {
-            drawHeight = maxDrawH;
+        else if (drawHeight > parameterObject6.maxDrawH) {
+            drawHeight = parameterObject6.maxDrawH;
         }
 
         chart(chart, g2, drawWidth, drawHeight);
@@ -263,6 +255,24 @@ public class ChartTransferable implements Transferable {
         return image;
 
     }
+
+	private double scaleX(CreateBufferedImageParameter parameterObject, int minDrawW, int maxDrawW) {
+		double drawWidth = parameterObject.w;
+		double scaleX = 1.0;
+		if (drawWidth < minDrawW) {
+			scaleX = drawWidth / minDrawW;
+		} else if (drawWidth > maxDrawW) {
+			scaleX = drawWidth / maxDrawW;
+		}
+		return scaleX;
+	}
+
+	private double scaleY2(CreateBufferedImageParameter parameterObject, int minDrawH, int maxDrawH) {
+		double drawHeight = parameterObject.h;
+		double scaleY = 1.0;
+		scaleY = scaleY(minDrawH, maxDrawH, drawHeight, scaleY);
+		return scaleY;
+	}
 
 	private boolean scale(int w, int h, int minDrawW, int minDrawH, int maxDrawW, int maxDrawH) {
 		boolean scale = false;
