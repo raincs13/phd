@@ -279,10 +279,8 @@ public abstract class ChartFactory {
      * <P>
      * The chart object returned by this method uses a {@link PiePlot} instance
      * as the plot.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2PieChart TODO
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param locale  the locale (<code>null</code> not permitted).
      *
@@ -290,8 +288,8 @@ public abstract class ChartFactory {
      *
      * @since 1.0.7
      */
-    public static JFreeChart createPieChart(String title, PieDataset dataset,
-            boolean legend, boolean tooltips, Locale locale) {
+    public static JFreeChart createPieChart(CreatePieChartParameter2 parameterObject2PieChart, PieDataset dataset,
+            boolean tooltips, Locale locale) {
 
         PiePlot plot = new PiePlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
@@ -299,8 +297,8 @@ public abstract class ChartFactory {
         if (tooltips) {
             plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
         }
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2PieChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2PieChart.legend);
         currentTheme.apply(chart);
         return chart;
 
