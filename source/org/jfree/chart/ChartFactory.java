@@ -291,18 +291,26 @@ public abstract class ChartFactory {
     public static JFreeChart createPieChart(CreatePieChartParameter2 parameterObject2PieChart, PieDataset dataset,
             boolean tooltips, Locale locale) {
 
-        PiePlot plot = new PiePlot(dataset);
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
-        plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
-        if (tooltips) {
-            plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
-        }
-        JFreeChart chart = new JFreeChart(parameterObject2PieChart.title, JFreeChart.DEFAULT_TITLE_FONT,
+        PiePlot plot = plot(parameterObject2PieChart, dataset, tooltips, locale);
+		JFreeChart chart = new JFreeChart(parameterObject2PieChart.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2PieChart.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static PiePlot plot(CreatePieChartParameter2 parameterObject2PieChart, PieDataset dataset, boolean tooltips,
+			Locale locale) {
+		PiePlot plot = new PiePlot(dataset);
+		plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
+		plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
+		if (tooltips) {
+			plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
+		}
+		JFreeChart chart = new JFreeChart(parameterObject2PieChart.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject2PieChart.legend);
+		return plot;
+	}
 
     /**
      * Creates a pie chart with default settings.
