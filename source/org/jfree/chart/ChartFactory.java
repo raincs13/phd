@@ -1485,8 +1485,8 @@ public abstract class ChartFactory {
     public static JFreeChart createGanttChart(String title,
             String categoryAxisLabel, String dateAxisLabel,
             IntervalCategoryDataset dataset) {
-        return createGanttChart(title, categoryAxisLabel, dateAxisLabel,
-                dataset, true, true, false);
+        return createGanttChart(new CreateGanttChartParameter4(title, categoryAxisLabel, dateAxisLabel, dataset), true, true,
+                false);
     }
     
     /**
@@ -1495,26 +1495,19 @@ public abstract class ChartFactory {
      * {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}
      * for the domain axis, a {@link DateAxis} as the range axis, and a
      * {@link GanttRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param dateAxisLabel  the label for the date axis
-     *                       (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param parameterObject4 TODO
      * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A Gantt chart.
      */
-    public static JFreeChart createGanttChart(String title,
-            String categoryAxisLabel, String dateAxisLabel,
-            IntervalCategoryDataset dataset, boolean legend, boolean tooltips,
+    public static JFreeChart createGanttChart(CreateGanttChartParameter4 parameterObject4,
+            boolean legend, boolean tooltips,
             boolean urls) {
 
-        CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
-        DateAxis dateAxis = new DateAxis(dateAxisLabel);
+        CategoryAxis categoryAxis = new CategoryAxis(parameterObject4.categoryAxisLabel);
+        DateAxis dateAxis = new DateAxis(parameterObject4.dateAxisLabel);
 
         CategoryItemRenderer renderer = new GanttRenderer();
         if (tooltips) {
@@ -1527,10 +1520,10 @@ public abstract class ChartFactory {
                     new StandardCategoryURLGenerator());
         }
 
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, dateAxis,
+        CategoryPlot plot = new CategoryPlot(parameterObject4.dataset, categoryAxis, dateAxis,
                 renderer);
         plot.setOrientation(PlotOrientation.HORIZONTAL);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        JFreeChart chart = new JFreeChart(parameterObject4.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
