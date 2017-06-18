@@ -2546,14 +2546,20 @@ public abstract class ChartFactory {
             boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
-        WaferMapPlot plot = new WaferMapPlot(dataset);
-        WaferMapRenderer renderer = new WaferMapRenderer();
-        plot.setRenderer(renderer);
-
-        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+        WaferMapPlot plot = plot(parameterObject2, dataset);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
     }
+
+	private static WaferMapPlot plot(CreateWaferMapChartParameter2 parameterObject2, WaferMapDataset dataset) {
+		WaferMapPlot plot = new WaferMapPlot(dataset);
+		WaferMapRenderer renderer = new WaferMapRenderer();
+		plot.setRenderer(renderer);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject2.legend);
+		return plot;
+	}
 
 }
