@@ -1910,20 +1910,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
            
             boolean old = this.chart.getPlot().isNotify();
             this.chart.getPlot().setNotify(false);
-            Pannable p = (Pannable) this.chart.getPlot();
-            if (p.getOrientation() == PlotOrientation.VERTICAL) {
-                p.panDomainAxes(getWPercent(e), this.info.getPlotInfo(),
-                        this.panLast);
-                p.panRangeAxes(getHPercent(e), this.info.getPlotInfo(),
-                        this.panLast);
-            }
-            else {
-                p.panDomainAxes(getHPercent(e), this.info.getPlotInfo(),
-                        this.panLast);
-                p.panRangeAxes(getWPercent(e), this.info.getPlotInfo(),
-                        this.panLast);
-            }
-            this.panLast = e.getPoint();
+            Pannable p = p(e);
+			this.panLast = e.getPoint();
             this.chart.getPlot().setNotify(old);
             return;
         }
@@ -1951,30 +1939,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             hZoom = this.domainZoomable;
             vZoom = this.rangeZoomable;
         }
-        Rectangle2D scaledDataArea = getScreenDataArea(
-                (int) this.zoomPoint.getX(), (int) this.zoomPoint.getY());
-        if (hZoom && vZoom) {
-            // selected rectangle shouldn't extend outside the data area...
-            double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
-            double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
-            this.zoomRectangle = new Rectangle2D.Double(
-                    this.zoomPoint.getX(), this.zoomPoint.getY(),
-                    xmax - this.zoomPoint.getX(), ymax - this.zoomPoint.getY());
-        }
-        else if (hZoom) {
-            double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
-            this.zoomRectangle = new Rectangle2D.Double(
-                    this.zoomPoint.getX(), scaledDataArea.getMinY(),
-                    xmax - this.zoomPoint.getX(), scaledDataArea.getHeight());
-        }
-        else if (vZoom) {
-            double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
-            this.zoomRectangle = new Rectangle2D.Double(
-                    scaledDataArea.getMinX(), this.zoomPoint.getY(),
-                    scaledDataArea.getWidth(), ymax - this.zoomPoint.getY());
-        }
-
-        // Draw the new zoom rectangle...
+        zoomRectangle(e, hZoom, vZoom);
+		// Draw the new zoom rectangle...
         if (this.useBuffer) {
             repaint();
         }
@@ -1986,6 +1952,36 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         g2.dispose();
 
     }
+
+	private Pannable p(MouseEvent e) {
+		Pannable p = (Pannable) this.chart.getPlot();
+		if (p.getOrientation() == PlotOrientation.VERTICAL) {
+			p.panDomainAxes(getWPercent(e), this.info.getPlotInfo(), this.panLast);
+			p.panRangeAxes(getHPercent(e), this.info.getPlotInfo(), this.panLast);
+		} else {
+			p.panDomainAxes(getHPercent(e), this.info.getPlotInfo(), this.panLast);
+			p.panRangeAxes(getWPercent(e), this.info.getPlotInfo(), this.panLast);
+		}
+		return p;
+	}
+
+	private void zoomRectangle(MouseEvent e, boolean hZoom, boolean vZoom) {
+		Rectangle2D scaledDataArea = getScreenDataArea((int) this.zoomPoint.getX(), (int) this.zoomPoint.getY());
+		if (hZoom && vZoom) {
+			double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
+			double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
+			this.zoomRectangle = new Rectangle2D.Double(this.zoomPoint.getX(), this.zoomPoint.getY(),
+					xmax - this.zoomPoint.getX(), ymax - this.zoomPoint.getY());
+		} else if (hZoom) {
+			double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
+			this.zoomRectangle = new Rectangle2D.Double(this.zoomPoint.getX(), scaledDataArea.getMinY(),
+					xmax - this.zoomPoint.getX(), scaledDataArea.getHeight());
+		} else if (vZoom) {
+			double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
+			this.zoomRectangle = new Rectangle2D.Double(scaledDataArea.getMinX(), this.zoomPoint.getY(),
+					scaledDataArea.getWidth(), ymax - this.zoomPoint.getY());
+		}
+	}
     
     public double getDx(MouseEvent e){
     	return e.getX() - this.panLast.getX();
