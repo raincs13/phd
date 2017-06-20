@@ -1820,8 +1820,8 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createXYAreaChart(String title,String xAxisLabel,
             String yAxisLabel, XYDataset dataset) {
-        return createXYAreaChart(title, xAxisLabel, yAxisLabel, dataset, 
-                PlotOrientation.VERTICAL, true, true, false);
+        return createXYAreaChart(new CreateXYAreaChartParameter2(title, true), xAxisLabel, yAxisLabel, dataset, 
+                PlotOrientation.VERTICAL, true, false);
     }
     
     /**
@@ -1831,22 +1831,20 @@ public abstract class ChartFactory {
      * as the plot, with a {@link NumberAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link XYAreaRenderer} as
      * the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return An XY area chart.
      */
-    public static JFreeChart createXYAreaChart(String title, String xAxisLabel,
+    public static JFreeChart createXYAreaChart(CreateXYAreaChartParameter2 parameterObject2, String xAxisLabel,
             String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
@@ -1856,24 +1854,32 @@ public abstract class ChartFactory {
         plot.setOrientation(orientation);
         plot.setForegroundAlpha(0.5f);
 
-        XYToolTipGenerator tipGenerator = null;
-        if (tooltips) {
-            tipGenerator = new StandardXYToolTipGenerator();
-        }
-
-        XYURLGenerator urlGenerator = null;
-        if (urls) {
-            urlGenerator = new StandardXYURLGenerator();
-        }
-
-        plot.setRenderer(new XYAreaRenderer(XYAreaRenderer.AREA, tipGenerator,
+        XYToolTipGenerator tipGenerator = tipGenerator(tooltips);
+		XYURLGenerator urlGenerator = urlGenerator(urls);
+		plot.setRenderer(new XYAreaRenderer(XYAreaRenderer.AREA, tipGenerator,
                 urlGenerator));
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYURLGenerator urlGenerator(boolean urls) {
+		XYURLGenerator urlGenerator = null;
+		if (urls) {
+			urlGenerator = new StandardXYURLGenerator();
+		}
+		return urlGenerator;
+	}
+
+	private static XYToolTipGenerator tipGenerator(boolean tooltips) {
+		XYToolTipGenerator tipGenerator = null;
+		if (tooltips) {
+			tipGenerator = new StandardXYToolTipGenerator();
+		}
+		return tipGenerator;
+	}
 
     /**
      * Creates a stacked XY area plot.  The chart object returned by this
