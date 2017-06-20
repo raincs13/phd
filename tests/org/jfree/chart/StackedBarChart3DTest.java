@@ -173,12 +173,9 @@ public class StackedBarChart3DTest {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createStackedBarChart3D(
-            "Stacked Bar Chart 3D",  // chart title
+            new CreateStackedBarChart3DParameter4("Stacked Bar Chart 3D", dataset, PlotOrientation.HORIZONTAL, true),  // chart title
             "Domain", "Range",
-            dataset,      // data
-            PlotOrientation.HORIZONTAL,
-            true,         // include legend
-            true,
+            true,      // data
             true
         );
 
