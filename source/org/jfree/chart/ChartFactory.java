@@ -1734,8 +1734,8 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createXYBarChart(String title, String xAxisLabel,
             boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset) {
-        return createXYBarChart(title, xAxisLabel, dateAxis, yAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+        return createXYBarChart(new CreateXYBarChartParameter2(title, true), xAxisLabel, dateAxis, yAxisLabel,
+                dataset, PlotOrientation.VERTICAL, true, false);
     }
     
     /**
@@ -1745,47 +1745,48 @@ public abstract class ChartFactory {
      * as the plot, with a {@link DateAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link XYBarRenderer} as the
      * renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param dateAxis  make the domain axis display dates?
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return An XY bar chart.
      */
-    public static JFreeChart createXYBarChart(String title, String xAxisLabel,
+    public static JFreeChart createXYBarChart(CreateXYBarChartParameter2 parameterObject2, String xAxisLabel,
             boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset,
-            PlotOrientation orientation, boolean legend, boolean tooltips,
-            boolean urls) {
+            PlotOrientation orientation, boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
-        ValueAxis domainAxis;
-        if (dateAxis) {
-            domainAxis = new DateAxis(xAxisLabel);
-        }
-        else {
-            NumberAxis axis = new NumberAxis(xAxisLabel);
-            axis.setAutoRangeIncludesZero(false);
-            domainAxis = axis;
-        }
-        ValueAxis valueAxis = new NumberAxis(yAxisLabel);
+        ValueAxis domainAxis = domainAxis(xAxisLabel, dateAxis);
+		ValueAxis valueAxis = new NumberAxis(yAxisLabel);
 
         XYBarRenderer renderer = renderer(dateAxis, tooltips, urls);
 		XYPlot plot = new XYPlot(dataset, domainAxis, valueAxis, renderer);
         plot.setOrientation(orientation);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static ValueAxis domainAxis(String xAxisLabel, boolean dateAxis) {
+		ValueAxis domainAxis;
+		if (dateAxis) {
+			domainAxis = new DateAxis(xAxisLabel);
+		} else {
+			NumberAxis axis = new NumberAxis(xAxisLabel);
+			axis.setAutoRangeIncludesZero(false);
+			domainAxis = axis;
+		}
+		return domainAxis;
+	}
 
 	private static XYBarRenderer renderer(boolean dateAxis, boolean tooltips, boolean urls) {
 		XYBarRenderer renderer = new XYBarRenderer();
