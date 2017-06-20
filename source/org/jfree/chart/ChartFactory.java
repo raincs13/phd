@@ -664,21 +664,16 @@ public abstract class ChartFactory {
      * Creates a chart that displays multiple pie plots.  The chart object
      * returned by this method uses a {@link MultiplePiePlot} instance as the
      * plot.
-     * @param parameterObject2 TODO
-     * @param dataset  the dataset (<code>null</code> permitted).
-     * @param order  the order that the data is extracted (by row or by column)
-     *               (<code>null</code> not permitted).
+     * @param parameterObject4 TODO
      * @param tooltips  generate tooltips?
      * @param urls  generate URLs?
-     *
      * @return A chart.
      */
-    public static JFreeChart createMultiplePieChart(CreateMultiplePieChartParameter2 parameterObject2,
-            CategoryDataset dataset, TableOrder order, boolean tooltips,
-            boolean urls) {
+    public static JFreeChart createMultiplePieChart(CreateMultiplePieChartParameter4 parameterObject4,
+            boolean tooltips, boolean urls) {
 
-        ParamChecks.nullNotPermitted(order, "order");
-        MultiplePiePlot plot = plot(parameterObject2.title, dataset, order, parameterObject2.legend);
+        ParamChecks.nullNotPermitted(parameterObject4.order, "order");
+        MultiplePiePlot plot = plot(parameterObject4.parameterObject2.title, parameterObject4.dataset, parameterObject4.order, parameterObject4.parameterObject2.legend);
 		if (tooltips) {
             PieToolTipGenerator tooltipGenerator
                 = new StandardPieToolTipGenerator();
@@ -692,8 +687,8 @@ public abstract class ChartFactory {
             pp.setURLGenerator(urlGenerator);
         }
 
-        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, parameterObject2.legend);
+        JFreeChart chart = new JFreeChart(parameterObject4.parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject4.parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
