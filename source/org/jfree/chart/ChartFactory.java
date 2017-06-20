@@ -1776,22 +1776,8 @@ public abstract class ChartFactory {
         }
         ValueAxis valueAxis = new NumberAxis(yAxisLabel);
 
-        XYBarRenderer renderer = new XYBarRenderer();
-        if (tooltips) {
-            XYToolTipGenerator tt;
-            if (dateAxis) {
-                tt = StandardXYToolTipGenerator.getTimeSeriesInstance();
-            }
-            else {
-                tt = new StandardXYToolTipGenerator();
-            }
-            renderer.setBaseToolTipGenerator(tt);
-        }
-        if (urls) {
-            renderer.setURLGenerator(new StandardXYURLGenerator());
-        }
-
-        XYPlot plot = new XYPlot(dataset, domainAxis, valueAxis, renderer);
+        XYBarRenderer renderer = renderer(dateAxis, tooltips, urls);
+		XYPlot plot = new XYPlot(dataset, domainAxis, valueAxis, renderer);
         plot.setOrientation(orientation);
 
         JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
@@ -1800,6 +1786,23 @@ public abstract class ChartFactory {
         return chart;
 
     }
+
+	private static XYBarRenderer renderer(boolean dateAxis, boolean tooltips, boolean urls) {
+		XYBarRenderer renderer = new XYBarRenderer();
+		if (tooltips) {
+			XYToolTipGenerator tt;
+			if (dateAxis) {
+				tt = StandardXYToolTipGenerator.getTimeSeriesInstance();
+			} else {
+				tt = new StandardXYToolTipGenerator();
+			}
+			renderer.setBaseToolTipGenerator(tt);
+		}
+		if (urls) {
+			renderer.setURLGenerator(new StandardXYURLGenerator());
+		}
+		return renderer;
+	}
 
     /**
      * Creates an area chart using an {@link XYDataset}.
