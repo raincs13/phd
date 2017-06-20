@@ -1903,26 +1903,24 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         // handle panning if we have a start point
         if (this.panLast != null) {
-            double dx = e.getX() - this.panLast.getX();
-            double dy = e.getY() - this.panLast.getY();
-            if (dx == 0.0 && dy == 0.0) {
+            
+            if (getDx(e) == 0.0 && getDy(e) == 0.0) {
                 return;
             }
-            double wPercent = -dx / this.panW;
-            double hPercent = dy / this.panH;
+           
             boolean old = this.chart.getPlot().isNotify();
             this.chart.getPlot().setNotify(false);
             Pannable p = (Pannable) this.chart.getPlot();
             if (p.getOrientation() == PlotOrientation.VERTICAL) {
-                p.panDomainAxes(wPercent, this.info.getPlotInfo(),
+                p.panDomainAxes(getWPercent(e), this.info.getPlotInfo(),
                         this.panLast);
-                p.panRangeAxes(hPercent, this.info.getPlotInfo(),
+                p.panRangeAxes(getHPercent(e), this.info.getPlotInfo(),
                         this.panLast);
             }
             else {
-                p.panDomainAxes(hPercent, this.info.getPlotInfo(),
+                p.panDomainAxes(getHPercent(e), this.info.getPlotInfo(),
                         this.panLast);
-                p.panRangeAxes(wPercent, this.info.getPlotInfo(),
+                p.panRangeAxes(getWPercent(e), this.info.getPlotInfo(),
                         this.panLast);
             }
             this.panLast = e.getPoint();
@@ -1987,6 +1985,22 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
         g2.dispose();
 
+    }
+    
+    public double getDx(MouseEvent e){
+    	return e.getX() - this.panLast.getX();
+    }
+    
+    public double getDy(MouseEvent e){
+    	return  e.getY() - this.panLast.getY();
+    }
+    
+    public double getWPercent(MouseEvent e){
+    	return -getDx(e) / this.panW;
+    }
+    
+    public double getHPercent(MouseEvent e){
+    	return  getDy(e) / this.panH;
     }
 
     /**
