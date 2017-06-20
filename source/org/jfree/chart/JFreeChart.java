@@ -1249,32 +1249,30 @@ public class JFreeChart implements Drawable, TitleChangeListener,
 
     /**
      * Creates a rectangle that is aligned to the frame.
-     *
-     * @param dimensions  the dimensions for the rectangle.
-     * @param frame  the frame to align to.
-     * @param hAlign  the horizontal alignment.
+     * @param parameterObject3 TODO
      * @param vAlign  the vertical alignment.
      *
      * @return A rectangle.
      */
-    private Rectangle2D createAlignedRectangle2D(Size2D dimensions,
-            Rectangle2D frame, HorizontalAlignment hAlign,
+    private Rectangle2D createAlignedRectangle2D(CreateAlignedRectangle2DParameter3 parameterObject3,
             VerticalAlignment vAlign) {
-        double x = x(dimensions, frame, hAlign);
-		double y = Double.NaN;
-        if (vAlign == VerticalAlignment.TOP) {
-            y = frame.getY();
-        }
-        else if (vAlign == VerticalAlignment.CENTER) {
-            y = frame.getCenterY() - (dimensions.height / 2.0);
-        }
-        else if (vAlign == VerticalAlignment.BOTTOM) {
-            y = frame.getMaxY() - dimensions.height;
-        }
-
-        return new Rectangle2D.Double(x, y, dimensions.width,
-                dimensions.height);
+        double x = x(parameterObject3.dimensions, parameterObject3.frame, parameterObject3.hAlign);
+		double y = y(parameterObject3.dimensions, parameterObject3.frame, vAlign);
+		return new Rectangle2D.Double(x, y, parameterObject3.dimensions.width,
+                parameterObject3.dimensions.height);
     }
+
+	private double y(Size2D dimensions, Rectangle2D frame, VerticalAlignment vAlign) {
+		double y = Double.NaN;
+		if (vAlign == VerticalAlignment.TOP) {
+			y = frame.getY();
+		} else if (vAlign == VerticalAlignment.CENTER) {
+			y = frame.getCenterY() - (dimensions.height / 2.0);
+		} else if (vAlign == VerticalAlignment.BOTTOM) {
+			y = frame.getMaxY() - dimensions.height;
+		}
+		return y;
+	}
 
 	private double x(Size2D dimensions, Rectangle2D frame, HorizontalAlignment hAlign) {
 		double x = Double.NaN;
@@ -1325,8 +1323,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         p.setGenerateEntities(entities);
         if (position == RectangleEdge.TOP) {
             Size2D size = t.arrange(g2, constraint);
-            titleArea = createAlignedRectangle2D(size, area,
-                    t.getHorizontalAlignment(), VerticalAlignment.TOP);
+            titleArea = createAlignedRectangle2D(new CreateAlignedRectangle2DParameter3(size, area, t.getHorizontalAlignment()), VerticalAlignment.TOP);
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX(), Math.min(area.getY() + size.height,
                     area.getMaxY()), area.getWidth(), Math.max(area.getHeight()
@@ -1334,16 +1331,14 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         }
         else if (position == RectangleEdge.BOTTOM) {
             Size2D size = t.arrange(g2, constraint);
-            titleArea = createAlignedRectangle2D(size, area,
-                    t.getHorizontalAlignment(), VerticalAlignment.BOTTOM);
+            titleArea = createAlignedRectangle2D(new CreateAlignedRectangle2DParameter3(size, area, t.getHorizontalAlignment()), VerticalAlignment.BOTTOM);
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX(), area.getY(), area.getWidth(),
                     area.getHeight() - size.height);
         }
         else if (position == RectangleEdge.RIGHT) {
             Size2D size = t.arrange(g2, constraint);
-            titleArea = createAlignedRectangle2D(size, area,
-                    HorizontalAlignment.RIGHT, t.getVerticalAlignment());
+            titleArea = createAlignedRectangle2D(new CreateAlignedRectangle2DParameter3(size, area, HorizontalAlignment.RIGHT), t.getVerticalAlignment());
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX(), area.getY(), area.getWidth()
                     - size.width, area.getHeight());
@@ -1351,8 +1346,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
 
         else if (position == RectangleEdge.LEFT) {
             Size2D size = t.arrange(g2, constraint);
-            titleArea = createAlignedRectangle2D(size, area,
-                    HorizontalAlignment.LEFT, t.getVerticalAlignment());
+            titleArea = createAlignedRectangle2D(new CreateAlignedRectangle2DParameter3(size, area, HorizontalAlignment.LEFT), t.getVerticalAlignment());
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX() + size.width, area.getY(), area.getWidth()
                     - size.width, area.getHeight());
