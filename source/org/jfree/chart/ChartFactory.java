@@ -2087,58 +2087,71 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createXYStepAreaChart(String title,
             String xAxisLabel, String yAxisLabel, XYDataset dataset) {
-        return createXYStepAreaChart(title, xAxisLabel, yAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, true, false);   
+        return createXYStepAreaChart(new CreateXYStepAreaChartParameter2(title, true), xAxisLabel, yAxisLabel, dataset,
+                PlotOrientation.VERTICAL, true, false);   
     }
  
     /**
      * Creates a filled stepped XY plot with default settings.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A chart.
      */
-    public static JFreeChart createXYStepAreaChart(String title, 
+    public static JFreeChart createXYStepAreaChart(CreateXYStepAreaChartParameter2 parameterObject2, 
             String xAxisLabel, String yAxisLabel, XYDataset dataset,
-            PlotOrientation orientation, boolean legend, boolean tooltips,
-            boolean urls) {
+            PlotOrientation orientation, boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
         NumberAxis yAxis = new NumberAxis(yAxisLabel);
 
-        XYToolTipGenerator toolTipGenerator = null;
-        if (tooltips) {
-            toolTipGenerator = new StandardXYToolTipGenerator();
-        }
-
-        XYURLGenerator urlGenerator = null;
-        if (urls) {
-            urlGenerator = new StandardXYURLGenerator();
-        }
-        XYItemRenderer renderer = new XYStepAreaRenderer(
+        XYToolTipGenerator toolTipGenerator = toolTipGenerator(tooltips);
+		XYURLGenerator urlGenerator = urlGenerator(urls);
+		XYItemRenderer renderer = new XYStepAreaRenderer(
                 XYStepAreaRenderer.AREA_AND_SHAPES, toolTipGenerator,
                 urlGenerator);
 
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
-        plot.setRenderer(renderer);
-        plot.setOrientation(orientation);
-        plot.setDomainCrosshairVisible(false);
-        plot.setRangeCrosshairVisible(false);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        XYPlot plot = plot(parameterObject2.title, dataset, orientation, parameterObject2.legend, xAxis, yAxis);
+		plot.setRenderer(renderer);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
     }
+
+	private static XYURLGenerator urlGenerator(boolean urls) {
+		XYURLGenerator urlGenerator = null;
+		if (urls) {
+			urlGenerator = new StandardXYURLGenerator();
+		}
+		return urlGenerator;
+	}
+
+	private static XYToolTipGenerator toolTipGenerator(boolean tooltips) {
+		XYToolTipGenerator toolTipGenerator = null;
+		if (tooltips) {
+			toolTipGenerator = new StandardXYToolTipGenerator();
+		}
+		return toolTipGenerator;
+	}
+
+	private static XYPlot plot(String title, XYDataset dataset, PlotOrientation orientation, boolean legend,
+			NumberAxis xAxis, NumberAxis yAxis) {
+		XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
+		plot.setOrientation(orientation);
+		plot.setDomainCrosshairVisible(false);
+		plot.setRangeCrosshairVisible(false);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates and returns a time series chart.  A time series chart is an
