@@ -56,6 +56,7 @@ import java.awt.GradientPaint;
 import java.awt.Stroke;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateStackedXYAreaChartParameter2;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.axis.NumberAxis;
@@ -152,8 +153,8 @@ public class StackedXYAreaRendererTest {
         TableXYDataset dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
-                false, false, false);
+                new CreateStackedXYAreaChartParameter2("Test Chart", false), "X", "Y", dataset, PlotOrientation.VERTICAL,
+                false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         Range bounds = rangeAxis.getRange();
