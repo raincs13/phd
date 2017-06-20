@@ -170,12 +170,9 @@ public class StackedAreaChartTest {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createStackedAreaChart(
-            "Stacked Area Chart",  // chart title
+            new CreateStackedAreaChartParameter4(new CreateStackedAreaChartParameter2("Stacked Area Chart", true), dataset, PlotOrientation.HORIZONTAL),  // chart title
             "Domain", "Range",
-            dataset,      // data
-            PlotOrientation.HORIZONTAL,
-            true,         // include legend
-            true,
+            true,      // data
             true
         );
 

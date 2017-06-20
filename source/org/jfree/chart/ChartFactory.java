@@ -1265,8 +1265,8 @@ public abstract class ChartFactory {
     public static JFreeChart createStackedAreaChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
-        return createStackedAreaChart(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+        return createStackedAreaChart(new CreateStackedAreaChartParameter4(new CreateStackedAreaChartParameter2(title, true), dataset, PlotOrientation.VERTICAL), categoryAxisLabel, valueAxisLabel,
+                true, false);
     }
     
     /**
@@ -1275,50 +1275,51 @@ public abstract class ChartFactory {
      * plot, with a {@link CategoryAxis} for the domain axis, a
      * {@link NumberAxis} as the range axis, and a {@link StackedAreaRenderer}
      * as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject4 TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis (<code>null</code>
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param orientation  the plot orientation (horizontal or vertical)
-     *                     (<code>null</code> not permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
-     *
      * @return A stacked area chart.
      */
-    public static JFreeChart createStackedAreaChart(String title,
+    public static JFreeChart createStackedAreaChart(CreateStackedAreaChartParameter4 parameterObject4,
             String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
-        ParamChecks.nullNotPermitted(orientation, "orientation");
+        ParamChecks.nullNotPermitted(parameterObject4.orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         categoryAxis.setCategoryMargin(0.0);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
-        StackedAreaRenderer renderer = new StackedAreaRenderer();
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        StackedAreaRenderer renderer = renderer(tooltips, urls);
+		CategoryPlot plot = plot(parameterObject4.parameterObject2.title, parameterObject4.dataset, parameterObject4.orientation, parameterObject4.parameterObject2.legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject4.parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject4.parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static StackedAreaRenderer renderer(boolean tooltips, boolean urls) {
+		StackedAreaRenderer renderer = new StackedAreaRenderer();
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
+
+	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
+			CategoryAxis categoryAxis, ValueAxis valueAxis, StackedAreaRenderer renderer) {
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a line chart with default settings.  The chart object returned
