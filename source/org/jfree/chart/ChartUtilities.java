@@ -208,8 +208,7 @@ public abstract class ChartUtilities {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
-        BufferedImage chartImage = chart.createBufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB, info);
+        BufferedImage chartImage = chart.createBufferedImage(new CreateBufferedImageParameter3(width, height, BufferedImage.TYPE_INT_ARGB), info);
         ChartUtilities.writeBufferedImageAsPNG(out, chartImage, encodeAlpha,
                 compression);
 
@@ -407,8 +406,7 @@ public abstract class ChartUtilities {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
-        BufferedImage image = chart.createBufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB, info);
+        BufferedImage image = chart.createBufferedImage(new CreateBufferedImageParameter3(width, height, BufferedImage.TYPE_INT_RGB), info);
         EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out);
 
     }
@@ -434,8 +432,7 @@ public abstract class ChartUtilities {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
-        BufferedImage image = chart.createBufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB, info);
+        BufferedImage image = chart.createBufferedImage(new CreateBufferedImageParameter3(width, height, BufferedImage.TYPE_INT_RGB), info);
         EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out, quality);
 
     }

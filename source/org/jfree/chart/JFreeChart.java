@@ -1389,27 +1389,21 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      */
     public BufferedImage createBufferedImage(int width, int height,
                                              ChartRenderingInfo info) {
-        return createBufferedImage(width, height, BufferedImage.TYPE_INT_ARGB,
-                info);
+        return createBufferedImage(new CreateBufferedImageParameter3(width, height, BufferedImage.TYPE_INT_ARGB), info);
     }
 
     /**
      * Creates and returns a buffered image into which the chart has been drawn.
-     *
-     * @param width  the width.
-     * @param height  the height.
-     * @param imageType  the image type.
+     * @param parameterObject3 TODO
      * @param info  carries back chart state information (<code>null</code>
      *              permitted).
      *
      * @return A buffered image.
      */
-    public BufferedImage createBufferedImage(int width, int height,
-                                             int imageType,
-                                             ChartRenderingInfo info) {
-        BufferedImage image = new BufferedImage(width, height, imageType);
+    public BufferedImage createBufferedImage(CreateBufferedImageParameter3 parameterObject3, ChartRenderingInfo info) {
+        BufferedImage image = new BufferedImage(parameterObject3.width, parameterObject3.height, parameterObject3.imageType);
         Graphics2D g2 = image.createGraphics();
-        draw(g2, new Rectangle2D.Double(0, 0, width, height), null, info);
+        draw(g2, new Rectangle2D.Double(0, 0, parameterObject3.width, parameterObject3.height), null, info);
         g2.dispose();
         return image;
     }
