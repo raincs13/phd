@@ -1454,15 +1454,21 @@ public abstract class ChartFactory {
             renderer.setBaseItemURLGenerator(
                     new StandardCategoryURLGenerator());
         }
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        CategoryPlot plot = plot(title, dataset, orientation, legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
+			CategoryAxis categoryAxis, ValueAxis valueAxis, LineRenderer3D renderer) {
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a Gantt chart using the supplied attributes plus default values
