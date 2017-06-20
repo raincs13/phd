@@ -53,6 +53,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.CreateXYBarChartParameter2;
+import org.jfree.chart.CreateXYBarChartParameter3;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.TestUtilities;
@@ -236,7 +237,7 @@ public class XYBarRendererTest {
         XYSeriesCollection dataset
                 = RendererXYPackageUtils.createTestXYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYBarChart(new CreateXYBarChartParameter2("Test Chart", false), "X",
-                false, "Y", dataset, PlotOrientation.VERTICAL, false, false);
+                new CreateXYBarChartParameter3(false, false, false), "Y", dataset, PlotOrientation.VERTICAL);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
         domainAxis.setAutoRangeIncludesZero(false);
