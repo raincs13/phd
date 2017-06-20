@@ -1298,23 +1298,25 @@ public abstract class ChartFactory {
         categoryAxis.setCategoryMargin(0.0);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
-        StackedAreaRenderer renderer = new StackedAreaRenderer();
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-
-        CategoryPlot plot = plot(parameterObject2.title, dataset, orientation, parameterObject2.legend, categoryAxis, valueAxis, renderer);
+        StackedAreaRenderer renderer = renderer(tooltips, urls);
+		CategoryPlot plot = plot(parameterObject2.title, dataset, orientation, parameterObject2.legend, categoryAxis, valueAxis, renderer);
 		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static StackedAreaRenderer renderer(boolean tooltips, boolean urls) {
+		StackedAreaRenderer renderer = new StackedAreaRenderer();
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
 
 	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
 			CategoryAxis categoryAxis, ValueAxis valueAxis, StackedAreaRenderer renderer) {
