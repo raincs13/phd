@@ -1340,8 +1340,8 @@ public abstract class ChartFactory {
     public static JFreeChart createLineChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
-        return createLineChart(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+        return createLineChart(new CreateLineChartParameter4(title, dataset, PlotOrientation.VERTICAL, true), categoryAxisLabel, valueAxisLabel,
+                true, false);
     }
     
     /**
@@ -1349,46 +1349,43 @@ public abstract class ChartFactory {
      * by this method uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link LineAndShapeRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject4 TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis (<code>null</code>
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param orientation  the chart orientation (horizontal or vertical)
-     *                     (<code>null</code> not permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A line chart.
      */
-    public static JFreeChart createLineChart(String title,
+    public static JFreeChart createLineChart(CreateLineChartParameter4 parameterObject4,
             String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
-        ParamChecks.nullNotPermitted(orientation, "orientation");
+        ParamChecks.nullNotPermitted(parameterObject4.orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
-        LineAndShapeRenderer renderer = new LineAndShapeRenderer(true, false);
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-        CategoryPlot plot = plot(title, dataset, orientation, legend, categoryAxis, valueAxis, renderer);
-		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        LineAndShapeRenderer renderer = renderer(tooltips, urls);
+		CategoryPlot plot = plot(parameterObject4.title, parameterObject4.dataset, parameterObject4.orientation, parameterObject4.legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject4.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject4.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static LineAndShapeRenderer renderer(boolean tooltips, boolean urls) {
+		LineAndShapeRenderer renderer = new LineAndShapeRenderer(true, false);
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
 
 	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
 			CategoryAxis categoryAxis, ValueAxis valueAxis, LineAndShapeRenderer renderer) {

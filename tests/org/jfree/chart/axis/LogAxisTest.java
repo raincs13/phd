@@ -50,6 +50,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateLineChartParameter4;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.TestUtilities;
 import org.jfree.chart.plot.CategoryPlot;
@@ -183,9 +184,8 @@ public class LogAxisTest {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
-        JFreeChart chart = ChartFactory.createLineChart("Test", "Categories",
-                "Value", dataset, PlotOrientation.VERTICAL, false, false,
-                false);
+        JFreeChart chart = ChartFactory.createLineChart(new CreateLineChartParameter4("Test", dataset, PlotOrientation.VERTICAL, false), "Categories",
+                "Value", false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);

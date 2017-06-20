@@ -55,6 +55,7 @@ import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.CreateLineChartParameter4;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -235,8 +236,8 @@ public class ValueAxisTest {
     @Test
     public void test3555275() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        JFreeChart chart = ChartFactory.createLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+        JFreeChart chart = ChartFactory.createLineChart(new CreateLineChartParameter4("Title", dataset, PlotOrientation.VERTICAL, true), "X", "Y",
+                false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setInsets(RectangleInsets.ZERO_INSETS);
         plot.setAxisOffset(RectangleInsets.ZERO_INSETS);

@@ -68,6 +68,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.CreateLineChartParameter4;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
@@ -819,8 +820,8 @@ public class CategoryPlotTest {
     @Test
     public void test1654215() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        JFreeChart chart = ChartFactory.createLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+        JFreeChart chart = ChartFactory.createLineChart(new CreateLineChartParameter4("Title", dataset, PlotOrientation.VERTICAL, true), "X", "Y",
+                false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setRenderer(1, new LineAndShapeRenderer());
         try {
