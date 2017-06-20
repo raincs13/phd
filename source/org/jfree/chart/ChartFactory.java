@@ -1024,8 +1024,8 @@ public abstract class ChartFactory {
     public static JFreeChart createBarChart3D(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
-        return createBarChart3D(title, categoryAxisLabel, valueAxisLabel,
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+        return createBarChart3D(new CreateBarChart3DParameter2(title, true), categoryAxisLabel, valueAxisLabel,
+                dataset, PlotOrientation.VERTICAL, true, false);
     }
     
     /**
@@ -1033,8 +1033,7 @@ public abstract class ChartFactory {
      * method uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} as
      * the range axis, and a {@link BarRenderer3D} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis (<code>null</code>
@@ -1042,30 +1041,20 @@ public abstract class ChartFactory {
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> not permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A bar chart with a 3D effect.
      */
-    public static JFreeChart createBarChart3D(String title,
+    public static JFreeChart createBarChart3D(CreateBarChart3DParameter2 parameterObject2,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
-        CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
+        BarRenderer3D renderer = renderer(categoryAxisLabel, valueAxisLabel, dataset, tooltips, urls);
+		CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
-
-        BarRenderer3D renderer = new BarRenderer3D();
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -1078,12 +1067,27 @@ public abstract class ChartFactory {
         }
         plot.setForegroundAlpha(0.75f);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static BarRenderer3D renderer(String categoryAxisLabel, String valueAxisLabel, CategoryDataset dataset,
+			boolean tooltips, boolean urls) {
+		CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
+		ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
+		BarRenderer3D renderer = new BarRenderer3D();
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+		return renderer;
+	}
 
     /**
      * Creates a stacked bar chart with a 3D effect and default settings. The

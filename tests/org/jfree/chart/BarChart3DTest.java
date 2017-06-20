@@ -175,8 +175,8 @@ public class BarChart3DTest {
 
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-        return ChartFactory.createBarChart3D("Bar Chart 3D", "Domain", "Range",
-                dataset, PlotOrientation.HORIZONTAL, true, true, true);
+        return ChartFactory.createBarChart3D(new CreateBarChart3DParameter2("Bar Chart 3D", true), "Domain", "Range",
+                dataset, PlotOrientation.HORIZONTAL, true, true);
 
     }
 
