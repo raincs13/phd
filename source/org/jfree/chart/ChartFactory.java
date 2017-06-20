@@ -664,28 +664,22 @@ public abstract class ChartFactory {
      * Creates a chart that displays multiple pie plots.  The chart object
      * returned by this method uses a {@link MultiplePiePlot} instance as the
      * plot.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param dataset  the dataset (<code>null</code> permitted).
      * @param order  the order that the data is extracted (by row or by column)
      *               (<code>null</code> not permitted).
-     * @param legend  include a legend?
      * @param tooltips  generate tooltips?
      * @param urls  generate URLs?
      *
      * @return A chart.
      */
-    public static JFreeChart createMultiplePieChart(String title,
-            CategoryDataset dataset, TableOrder order, boolean legend,
-            boolean tooltips, boolean urls) {
+    public static JFreeChart createMultiplePieChart(CreateMultiplePieChartParameter2 parameterObject2,
+            CategoryDataset dataset, TableOrder order, boolean tooltips,
+            boolean urls) {
 
         ParamChecks.nullNotPermitted(order, "order");
-        MultiplePiePlot plot = new MultiplePiePlot(dataset);
-        plot.setDataExtractOrder(order);
-        plot.setBackgroundPaint(null);
-        plot.setOutlineStroke(null);
-
-        if (tooltips) {
+        MultiplePiePlot plot = plot(parameterObject2.title, dataset, order, parameterObject2.legend);
+		if (tooltips) {
             PieToolTipGenerator tooltipGenerator
                 = new StandardPieToolTipGenerator();
             PiePlot pp = (PiePlot) plot.getPieChart().getPlot();
@@ -698,12 +692,21 @@ public abstract class ChartFactory {
             pp.setURLGenerator(urlGenerator);
         }
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static MultiplePiePlot plot(String title, CategoryDataset dataset, TableOrder order, boolean legend) {
+		MultiplePiePlot plot = new MultiplePiePlot(dataset);
+		plot.setDataExtractOrder(order);
+		plot.setBackgroundPaint(null);
+		plot.setOutlineStroke(null);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a 3D pie chart using the specified dataset.  The chart object
