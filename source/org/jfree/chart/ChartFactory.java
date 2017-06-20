@@ -2021,57 +2021,66 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createXYStepChart(String title, String xAxisLabel,
             String yAxisLabel, XYDataset dataset) {
-        return createXYStepChart(title, xAxisLabel, yAxisLabel, dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+        return createXYStepChart(new CreateXYStepChartParameter4(new CreateXYStepChartParameter2(title, true), dataset, PlotOrientation.VERTICAL), xAxisLabel, yAxisLabel, true,
+                false);
     }
     
     /**
      * Creates a stepped XY plot with default settings.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject4 TODO
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param orientation  the plot orientation (horizontal or vertical)
-     *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
-     *
      * @return A chart.
      */
-    public static JFreeChart createXYStepChart(String title, String xAxisLabel,
-            String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+    public static JFreeChart createXYStepChart(CreateXYStepChartParameter4 parameterObject4, String xAxisLabel,
+            String yAxisLabel, boolean tooltips, boolean urls) {
 
-        ParamChecks.nullNotPermitted(orientation, "orientation");
+        ParamChecks.nullNotPermitted(parameterObject4.orientation, "orientation");
         DateAxis xAxis = new DateAxis(xAxisLabel);
         NumberAxis yAxis = new NumberAxis(yAxisLabel);
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-        XYToolTipGenerator toolTipGenerator = null;
-        if (tooltips) {
-            toolTipGenerator = new StandardXYToolTipGenerator();
-        }
-
-        XYURLGenerator urlGenerator = null;
-        if (urls) {
-            urlGenerator = new StandardXYURLGenerator();
-        }
-        XYItemRenderer renderer = new XYStepRenderer(toolTipGenerator,
+        XYToolTipGenerator toolTipGenerator = toolTipGenerator(tooltips);
+		XYURLGenerator urlGenerator = urlGenerator(urls);
+		XYItemRenderer renderer = new XYStepRenderer(toolTipGenerator,
                 urlGenerator);
 
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
-        plot.setRenderer(renderer);
-        plot.setOrientation(orientation);
-        plot.setDomainCrosshairVisible(false);
-        plot.setRangeCrosshairVisible(false);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        XYPlot plot = plot(parameterObject4.parameterObject2.title, parameterObject4.dataset, parameterObject4.orientation, parameterObject4.parameterObject2.legend, xAxis, yAxis);
+		plot.setRenderer(renderer);
+        JFreeChart chart = new JFreeChart(parameterObject4.parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject4.parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYURLGenerator urlGenerator(boolean urls) {
+		XYURLGenerator urlGenerator = null;
+		if (urls) {
+			urlGenerator = new StandardXYURLGenerator();
+		}
+		return urlGenerator;
+	}
+
+	private static XYToolTipGenerator toolTipGenerator(boolean tooltips) {
+		XYToolTipGenerator toolTipGenerator = null;
+		if (tooltips) {
+			toolTipGenerator = new StandardXYToolTipGenerator();
+		}
+		return toolTipGenerator;
+	}
+
+	private static XYPlot plot(String title, XYDataset dataset, PlotOrientation orientation, boolean legend,
+			DateAxis xAxis, NumberAxis yAxis) {
+		XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
+		plot.setOrientation(orientation);
+		plot.setDomainCrosshairVisible(false);
+		plot.setRangeCrosshairVisible(false);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a filled stepped XY plot with default settings.

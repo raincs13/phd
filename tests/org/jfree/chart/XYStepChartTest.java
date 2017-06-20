@@ -155,13 +155,10 @@ public class XYStepChartTest {
 
         // create the chart...
         return ChartFactory.createXYStepChart(
-            "Step Chart",  // chart title
+            new CreateXYStepChartParameter4(new CreateXYStepChartParameter2("Step Chart", true), dataset, PlotOrientation.VERTICAL),  // chart title
             "Domain",
             "Range",
-            dataset,         // data
-            PlotOrientation.VERTICAL,
-            true,            // include legend
-            true,            // tooltips
+            true,         // data
             true             // urls
         );
 
