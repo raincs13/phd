@@ -168,8 +168,8 @@ public class AreaChartTest {
              {new Integer(2), new Integer(3)}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-        return ChartFactory.createAreaChart("Area Chart", "Domain", "Range",
-                dataset, PlotOrientation.HORIZONTAL, true, true, true);
+        return ChartFactory.createAreaChart(new CreateAreaChartParameter2("Area Chart", true), "Domain", "Range",
+                dataset, PlotOrientation.HORIZONTAL, true, true);
 
     }
 
