@@ -2387,41 +2387,41 @@ public abstract class ChartFactory {
      * Creates a histogram chart.  This chart is constructed with an
      * {@link XYPlot} using an {@link XYBarRenderer}.  The domain and range
      * axes are {@link NumberAxis} instances.
-     * @param parameterObject2 TODO
+     * @param parameterObject4 TODO
      * @param xAxisLabel  the x axis label (<code>null</code> permitted).
      * @param yAxisLabel  the y axis label (<code>null</code> permitted).
-     * @param dataset  the dataset (<code>null</code> permitted).
-     * @param orientation  the orientation (horizontal or vertical)
-     *                     (<code>null</code> NOT permitted).
      * @param tooltips  display tooltips?
      * @param urls  generate URLs?
-     *
      * @return The chart.
      */
-    public static JFreeChart createHistogram(CreateHistogramParameter2 parameterObject2,
-            String xAxisLabel, String yAxisLabel, IntervalXYDataset dataset,
-            PlotOrientation orientation, boolean tooltips, boolean urls) {
+    public static JFreeChart createHistogram(CreateHistogramParameter4 parameterObject4,
+            String xAxisLabel, String yAxisLabel, boolean tooltips,
+            boolean urls) {
 
-        ParamChecks.nullNotPermitted(orientation, "orientation");
+        ParamChecks.nullNotPermitted(parameterObject4.orientation, "orientation");
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
         ValueAxis yAxis = new NumberAxis(yAxisLabel);
 
-        XYItemRenderer renderer = new XYBarRenderer();
-        if (tooltips) {
-            renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
-        }
-        if (urls) {
-            renderer.setURLGenerator(new StandardXYURLGenerator());
-        }
-
-        XYPlot plot = plot(parameterObject2, dataset, orientation, xAxis, yAxis, renderer);
-		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, parameterObject2.legend);
+        XYItemRenderer renderer = renderer(tooltips, urls);
+		XYPlot plot = plot(parameterObject4.parameterObject2, parameterObject4.dataset, parameterObject4.orientation, xAxis, yAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject4.parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject4.parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYItemRenderer renderer(boolean tooltips, boolean urls) {
+		XYItemRenderer renderer = new XYBarRenderer();
+		if (tooltips) {
+			renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setURLGenerator(new StandardXYURLGenerator());
+		}
+		return renderer;
+	}
 
 	private static XYPlot plot(CreateHistogramParameter2 parameterObject2, IntervalXYDataset dataset,
 			PlotOrientation orientation, NumberAxis xAxis, ValueAxis yAxis, XYItemRenderer renderer) {
