@@ -1542,8 +1542,7 @@ public abstract class ChartFactory {
      * uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link WaterfallBarRenderer} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis (<code>null</code>
@@ -1551,16 +1550,15 @@ public abstract class ChartFactory {
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
      *
      * @return A waterfall chart.
      */
-    public static JFreeChart createWaterfallChart(String title,
+    public static JFreeChart createWaterfallChart(CreateWaterfallChartParameter2 parameterObject2,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
-            boolean legend, boolean tooltips, boolean urls) {
+            boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
@@ -1593,19 +1591,25 @@ public abstract class ChartFactory {
                     new StandardCategoryURLGenerator());
         }
 
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        plot.clearRangeMarkers();
-        Marker baseline = new ValueMarker(0.0);
-        baseline.setPaint(Color.black);
-        plot.addRangeMarker(baseline, Layer.FOREGROUND);
-        plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        CategoryPlot plot = plot(parameterObject2.title, dataset, orientation, parameterObject2.legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
+			CategoryAxis categoryAxis, ValueAxis valueAxis, WaterfallBarRenderer renderer) {
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+		plot.clearRangeMarkers();
+		Marker baseline = new ValueMarker(0.0);
+		baseline.setPaint(Color.black);
+		plot.addRangeMarker(baseline, Layer.FOREGROUND);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+		return plot;
+	}
 
     /**
      * Creates a polar plot for the specified dataset (x-values interpreted as
