@@ -2415,16 +2415,24 @@ public abstract class ChartFactory {
             renderer.setURLGenerator(new StandardXYURLGenerator());
         }
 
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        plot.setOrientation(orientation);
-        plot.setDomainZeroBaselineVisible(true);
-        plot.setRangeZeroBaselineVisible(true);
-        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+        XYPlot plot = plot(parameterObject2, dataset, orientation, xAxis, yAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
                 plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYPlot plot(CreateHistogramParameter2 parameterObject2, IntervalXYDataset dataset,
+			PlotOrientation orientation, NumberAxis xAxis, ValueAxis yAxis, XYItemRenderer renderer) {
+		XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+		plot.setOrientation(orientation);
+		plot.setDomainZeroBaselineVisible(true);
+		plot.setRangeZeroBaselineVisible(true);
+		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT, plot,
+				parameterObject2.legend);
+		return plot;
+	}
 
     /**
      * Creates and returns a default instance of a box and whisker chart
