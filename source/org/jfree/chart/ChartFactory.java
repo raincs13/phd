@@ -2387,23 +2387,20 @@ public abstract class ChartFactory {
      * Creates a histogram chart.  This chart is constructed with an
      * {@link XYPlot} using an {@link XYBarRenderer}.  The domain and range
      * axes are {@link NumberAxis} instances.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param xAxisLabel  the x axis label (<code>null</code> permitted).
      * @param yAxisLabel  the y axis label (<code>null</code> permitted).
      * @param dataset  the dataset (<code>null</code> permitted).
      * @param orientation  the orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
-     * @param legend  create a legend?
      * @param tooltips  display tooltips?
      * @param urls  generate URLs?
      *
      * @return The chart.
      */
-    public static JFreeChart createHistogram(String title,
+    public static JFreeChart createHistogram(CreateHistogramParameter2 parameterObject2,
             String xAxisLabel, String yAxisLabel, IntervalXYDataset dataset,
-            PlotOrientation orientation, boolean legend, boolean tooltips,
-            boolean urls) {
+            PlotOrientation orientation, boolean tooltips, boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
@@ -2422,8 +2419,8 @@ public abstract class ChartFactory {
         plot.setOrientation(orientation);
         plot.setDomainZeroBaselineVisible(true);
         plot.setRangeZeroBaselineVisible(true);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
