@@ -2162,8 +2162,8 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createTimeSeriesChart(String title, 
             String timeAxisLabel, String valueAxisLabel, XYDataset dataset) {
-        return createTimeSeriesChart(title, timeAxisLabel, valueAxisLabel, 
-                dataset, true, true, false);
+        return createTimeSeriesChart(new CreateTimeSeriesChartParameter2(title, timeAxisLabel, true, false), valueAxisLabel, dataset, 
+                true);
     }
     
     /**
@@ -2174,53 +2174,48 @@ public abstract class ChartFactory {
      * <P>
      * A convenient dataset to use with this chart is a
      * {@link org.jfree.data.time.TimeSeriesCollection}.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param timeAxisLabel  a label for the time axis (<code>null</code>
-     *                       permitted).
+     * @param parameterObject2 TODO
      * @param valueAxisLabel  a label for the value axis (<code>null</code>
      *                        permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
      * @param tooltips  configure chart to generate tool tips?
-     * @param urls  configure chart to generate URLs?
      *
      * @return A time series chart.
      */
-    public static JFreeChart createTimeSeriesChart(String title,
-            String timeAxisLabel, String valueAxisLabel, XYDataset dataset,
-            boolean legend, boolean tooltips, boolean urls) {
+    public static JFreeChart createTimeSeriesChart(CreateTimeSeriesChartParameter2 parameterObject2,
+            String valueAxisLabel, XYDataset dataset, boolean tooltips) {
 
-        ValueAxis timeAxis = new DateAxis(timeAxisLabel);
+        ValueAxis timeAxis = new DateAxis(parameterObject2.timeAxisLabel);
         timeAxis.setLowerMargin(0.02);  // reduce the default margins
         timeAxis.setUpperMargin(0.02);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
         valueAxis.setAutoRangeIncludesZero(false);  // override default
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, null);
 
-        XYToolTipGenerator toolTipGenerator = null;
-        if (tooltips) {
-            toolTipGenerator
-                = StandardXYToolTipGenerator.getTimeSeriesInstance();
-        }
+        XYLineAndShapeRenderer renderer = renderer(tooltips, parameterObject2.urls);
+		plot.setRenderer(renderer);
 
-        XYURLGenerator urlGenerator = null;
-        if (urls) {
-            urlGenerator = new StandardXYURLGenerator();
-        }
-
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true,
-                false);
-        renderer.setBaseToolTipGenerator(toolTipGenerator);
-        renderer.setURLGenerator(urlGenerator);
-        plot.setRenderer(renderer);
-
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static XYLineAndShapeRenderer renderer(boolean tooltips, boolean urls) {
+		XYToolTipGenerator toolTipGenerator = null;
+		if (tooltips) {
+			toolTipGenerator = StandardXYToolTipGenerator.getTimeSeriesInstance();
+		}
+		XYURLGenerator urlGenerator = null;
+		if (urls) {
+			urlGenerator = new StandardXYURLGenerator();
+		}
+		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
+		renderer.setBaseToolTipGenerator(toolTipGenerator);
+		renderer.setURLGenerator(urlGenerator);
+		return renderer;
+	}
 
     /**
      * Creates and returns a default instance of a candlesticks chart.

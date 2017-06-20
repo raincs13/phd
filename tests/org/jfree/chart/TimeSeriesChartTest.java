@@ -150,13 +150,11 @@ public class TimeSeriesChartTest {
         series1.add(3.0, 3.0);
         XYDataset dataset = new XYSeriesCollection(series1);
         return ChartFactory.createTimeSeriesChart(
-            "XY Line Chart",  // chart title
-            "Domain",
+            new CreateTimeSeriesChartParameter2("XY Line Chart", "Domain", true, true             // urls
+),  // chart title
             "Range",
-            dataset,         // data
-            true,            // include legend
-            true,            // tooltips
-            true             // urls
+            dataset,
+            true
         );
 
     }

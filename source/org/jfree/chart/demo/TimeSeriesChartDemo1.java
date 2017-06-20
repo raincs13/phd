@@ -48,6 +48,7 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.CreateTimeSeriesChartParameter2;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.DateAxis;
@@ -101,13 +102,11 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
     private static JFreeChart createChart(XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
-            "Legal & General Unit Trust Prices",  // title
-            "Date",             // x-axis label
-            "Price Per Unit",   // y-axis label
-            dataset,            // data
-            true,               // create legend?
-            true,               // generate tooltips?
-            false               // generate URLs?
+            new CreateTimeSeriesChartParameter2("Legal & General Unit Trust Prices", "Date", true, false               // generate URLs?
+),  // title
+            "Price Per Unit",             // x-axis label
+            dataset,   // y-axis label
+            true
         );
 
         chart.setBackgroundPaint(Color.white);
