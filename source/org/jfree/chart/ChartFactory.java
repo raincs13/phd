@@ -788,20 +788,18 @@ public abstract class ChartFactory {
      * Creates a chart that displays multiple pie plots.  The chart object
      * returned by this method uses a {@link MultiplePiePlot} instance as the
      * plot.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param parameterObject2 TODO
      * @param dataset  the dataset (<code>null</code> permitted).
      * @param order  the order that the data is extracted (by row or by column)
      *               (<code>null</code> not permitted).
-     * @param legend  include a legend?
      * @param tooltips  generate tooltips?
      * @param urls  generate URLs?
      *
      * @return A chart.
      */
-    public static JFreeChart createMultiplePieChart3D(String title,
-            CategoryDataset dataset, TableOrder order, boolean legend,
-            boolean tooltips, boolean urls) {
+    public static JFreeChart createMultiplePieChart3D(CreateMultiplePieChart3DParameter2 parameterObject2,
+            CategoryDataset dataset, TableOrder order, boolean tooltips,
+            boolean urls) {
 
         ParamChecks.nullNotPermitted(order, "order");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
@@ -809,14 +807,8 @@ public abstract class ChartFactory {
         plot.setBackgroundPaint(null);
         plot.setOutlineStroke(null);
 
-        JFreeChart pieChart = new JFreeChart(new PiePlot3D(null));
-        TextTitle seriesTitle = new TextTitle("Series Title",
-                new Font("SansSerif", Font.BOLD, 12));
-        seriesTitle.setPosition(RectangleEdge.BOTTOM);
-        pieChart.setTitle(seriesTitle);
-        pieChart.removeLegend();
-        pieChart.setBackgroundPaint(null);
-        plot.setPieChart(pieChart);
+        JFreeChart pieChart = pieChart();
+		plot.setPieChart(pieChart);
 
         if (tooltips) {
             PieToolTipGenerator tooltipGenerator
@@ -831,12 +823,22 @@ public abstract class ChartFactory {
             pp.setURLGenerator(urlGenerator);
         }
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, legend);
+        JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static JFreeChart pieChart() {
+		JFreeChart pieChart = new JFreeChart(new PiePlot3D(null));
+		TextTitle seriesTitle = new TextTitle("Series Title", new Font("SansSerif", Font.BOLD, 12));
+		seriesTitle.setPosition(RectangleEdge.BOTTOM);
+		pieChart.setTitle(seriesTitle);
+		pieChart.removeLegend();
+		pieChart.setBackgroundPaint(null);
+		return pieChart;
+	}
 
     /**
      * Creates a bar chart with a vertical orientation.  The chart object
