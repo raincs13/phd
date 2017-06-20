@@ -1260,17 +1260,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     private Rectangle2D createAlignedRectangle2D(Size2D dimensions,
             Rectangle2D frame, HorizontalAlignment hAlign,
             VerticalAlignment vAlign) {
-        double x = Double.NaN;
-        double y = Double.NaN;
-        if (hAlign == HorizontalAlignment.LEFT) {
-            x = frame.getX();
-        }
-        else if (hAlign == HorizontalAlignment.CENTER) {
-            x = frame.getCenterX() - (dimensions.width / 2.0);
-        }
-        else if (hAlign == HorizontalAlignment.RIGHT) {
-            x = frame.getMaxX() - dimensions.width;
-        }
+        double x = x(dimensions, frame, hAlign);
+		double y = Double.NaN;
         if (vAlign == VerticalAlignment.TOP) {
             y = frame.getY();
         }
@@ -1284,6 +1275,18 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         return new Rectangle2D.Double(x, y, dimensions.width,
                 dimensions.height);
     }
+
+	private double x(Size2D dimensions, Rectangle2D frame, HorizontalAlignment hAlign) {
+		double x = Double.NaN;
+		if (hAlign == HorizontalAlignment.LEFT) {
+			x = frame.getX();
+		} else if (hAlign == HorizontalAlignment.CENTER) {
+			x = frame.getCenterX() - (dimensions.width / 2.0);
+		} else if (hAlign == HorizontalAlignment.RIGHT) {
+			x = frame.getMaxX() - dimensions.width;
+		}
+		return x;
+	}
 
     /**
      * Draws a title.  The title should be drawn at the top, bottom, left or
