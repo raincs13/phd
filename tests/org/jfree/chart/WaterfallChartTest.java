@@ -138,11 +138,10 @@ public class WaterfallChartTest {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createWaterfallChart(
-            new CreateWaterfallChartParameter2("Waterfall Chart", true),
+            new CreateWaterfallChartParameter3(new CreateWaterfallChartParameter2("Waterfall Chart", true), dataset),
             "Domain", "Range",
-            dataset,
             PlotOrientation.HORIZONTAL,
-            true,     // include legend
+            true,
             true
         );
 

@@ -1542,23 +1542,21 @@ public abstract class ChartFactory {
      * uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link WaterfallBarRenderer} as the renderer.
-     * @param parameterObject2 TODO
+     * @param parameterObject3 TODO
      * @param categoryAxisLabel  the label for the category axis
      *                           (<code>null</code> permitted).
      * @param valueAxisLabel  the label for the value axis (<code>null</code>
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
      * @param orientation  the plot orientation (horizontal or vertical)
      *                     (<code>null</code> NOT permitted).
      * @param tooltips  configure chart to generate tool tips?
      * @param urls  configure chart to generate URLs?
-     *
      * @return A waterfall chart.
      */
-    public static JFreeChart createWaterfallChart(CreateWaterfallChartParameter2 parameterObject2,
+    public static JFreeChart createWaterfallChart(CreateWaterfallChartParameter3 parameterObject3,
             String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset, PlotOrientation orientation,
-            boolean tooltips, boolean urls) {
+            PlotOrientation orientation, boolean tooltips,
+            boolean urls) {
 
         ParamChecks.nullNotPermitted(orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
@@ -1566,38 +1564,37 @@ public abstract class ChartFactory {
 
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
-        WaterfallBarRenderer renderer = new WaterfallBarRenderer();
-        if (orientation == PlotOrientation.HORIZONTAL) {
-            ItemLabelPosition position = new ItemLabelPosition(
-                    ItemLabelAnchor.CENTER, TextAnchor.CENTER,
-                    TextAnchor.CENTER, Math.PI / 2.0);
-            renderer.setBasePositiveItemLabelPosition(position);
-            renderer.setBaseNegativeItemLabelPosition(position);
-         }
-        else if (orientation == PlotOrientation.VERTICAL) {
-            ItemLabelPosition position = new ItemLabelPosition(
-                    ItemLabelAnchor.CENTER, TextAnchor.CENTER,
-                    TextAnchor.CENTER, 0.0);
-            renderer.setBasePositiveItemLabelPosition(position);
-            renderer.setBaseNegativeItemLabelPosition(position);
-        }
-        if (tooltips) {
-            StandardCategoryToolTipGenerator generator
-                = new StandardCategoryToolTipGenerator();
-            renderer.setBaseToolTipGenerator(generator);
-        }
-        if (urls) {
-            renderer.setBaseItemURLGenerator(
-                    new StandardCategoryURLGenerator());
-        }
-
-        CategoryPlot plot = plot(parameterObject2.title, dataset, orientation, parameterObject2.legend, categoryAxis, valueAxis, renderer);
-		JFreeChart chart = new JFreeChart(parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
-                plot, parameterObject2.legend);
+        WaterfallBarRenderer renderer = renderer(orientation, tooltips, urls);
+		CategoryPlot plot = plot(parameterObject3.parameterObject2.title, parameterObject3.dataset, orientation, parameterObject3.parameterObject2.legend, categoryAxis, valueAxis, renderer);
+		JFreeChart chart = new JFreeChart(parameterObject3.parameterObject2.title, JFreeChart.DEFAULT_TITLE_FONT,
+                plot, parameterObject3.parameterObject2.legend);
         currentTheme.apply(chart);
         return chart;
 
     }
+
+	private static WaterfallBarRenderer renderer(PlotOrientation orientation, boolean tooltips, boolean urls) {
+		WaterfallBarRenderer renderer = new WaterfallBarRenderer();
+		if (orientation == PlotOrientation.HORIZONTAL) {
+			ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER,
+					TextAnchor.CENTER, Math.PI / 2.0);
+			renderer.setBasePositiveItemLabelPosition(position);
+			renderer.setBaseNegativeItemLabelPosition(position);
+		} else if (orientation == PlotOrientation.VERTICAL) {
+			ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER,
+					TextAnchor.CENTER, 0.0);
+			renderer.setBasePositiveItemLabelPosition(position);
+			renderer.setBaseNegativeItemLabelPosition(position);
+		}
+		if (tooltips) {
+			StandardCategoryToolTipGenerator generator = new StandardCategoryToolTipGenerator();
+			renderer.setBaseToolTipGenerator(generator);
+		}
+		if (urls) {
+			renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
+		}
+		return renderer;
+	}
 
 	private static CategoryPlot plot(String title, CategoryDataset dataset, PlotOrientation orientation, boolean legend,
 			CategoryAxis categoryAxis, ValueAxis valueAxis, WaterfallBarRenderer renderer) {
