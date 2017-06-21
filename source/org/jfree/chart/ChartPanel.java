@@ -1707,17 +1707,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         String command = event.getActionCommand();
 
-        // many of the zoom methods need a screen location - all we have is
-        // the zoomPoint, but it might be null.  Here we grab the x and y
-        // coordinates, or use defaults...
-        double screenX = -1.0;
-        double screenY = -1.0;
-        if (this.zoomPoint != null) {
-            screenX = this.zoomPoint.getX();
-            screenY = this.zoomPoint.getY();
-        }
-
-        if (command.equals(PROPERTIES_COMMAND)) {
+        double screenX = screenX();
+		double screenY = screenY();
+		if (command.equals(PROPERTIES_COMMAND)) {
             doEditChartProperties();
         }
         else if (command.equals(COPY_COMMAND)) {
@@ -1775,6 +1767,22 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
     }
+
+	private double screenY() {
+		double screenY = -1.0;
+		if (this.zoomPoint != null) {
+			screenY = this.zoomPoint.getY();
+		}
+		return screenY;
+	}
+
+	private double screenX() {
+		double screenX = -1.0;
+		if (this.zoomPoint != null) {
+			screenX = this.zoomPoint.getX();
+		}
+		return screenX;
+	}
 
     /**
      * Handles a 'mouse entered' event. This method changes the tooltip delays
