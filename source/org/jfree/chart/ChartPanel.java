@@ -2769,7 +2769,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         
         if (file != null) {
             // use reflection to get the SVG string
-            String svg = generateSVG(getWidth(), getHeight());
+            String svg = generateSVG(new GenerateSVGParameter2(getWidth(), getHeight()));
             BufferedWriter writer = null;
             try {
                 writer = new BufferedWriter(new FileWriter(file));
@@ -2793,13 +2793,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Generates a string containing a rendering of the chart in SVG format.
      * This feature is only supported if the JFreeSVG library is included on 
      * the classpath.
+     * @param parameterObject2 TODO
      * 
      * @return A string containing an SVG element for the current chart, or 
      *     <code>null</code> if there is a problem with the method invocation
      *     by reflection.
      */
-    private String generateSVG(int width, int height) {
-        Graphics2D g2 = createSVGGraphics2D(width, height);
+    private String generateSVG(GenerateSVGParameter2 parameterObject2) {
+        Graphics2D g2 = createSVGGraphics2D(parameterObject2.width, parameterObject2.height);
         if (g2 == null) {
             throw new IllegalStateException("JFreeSVG library is not present.");
         }
@@ -2807,9 +2808,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // the shadow effect is applied via bitmap effects...
         g2.setRenderingHint(JFreeChart.KEY_SUPPRESS_SHADOW_GENERATION, true);
         String svg = null;
-        Rectangle2D drawArea = new Rectangle2D.Double(0, 0, width, height);
-        this.chart.draw(g2, drawArea);
-        try {
+        chart(parameterObject2.width, parameterObject2.height, g2);
+		try {
             Method m = g2.getClass().getMethod("getSVGElement");
             svg = (String) m.invoke(g2);
         } catch (NoSuchMethodException e) {
@@ -2825,6 +2825,11 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
         return svg;
     }
+
+	private void chart(int width, int height, Graphics2D g2) {
+		Rectangle2D drawArea = new Rectangle2D.Double(0, 0, width, height);
+		this.chart.draw(g2, drawArea);
+	}
 
     private Graphics2D createSVGGraphics2D(int w, int h) {
         try {
