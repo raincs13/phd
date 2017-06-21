@@ -1759,7 +1759,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             zoomOutBoth(screenX, screenY);
         }
         else if (command.equals(ZOOM_OUT_DOMAIN_COMMAND)) {
-            zoomOutDomain(screenX, screenY);
+            zoomOutDomain(new ZoomOutDomainParameter2(screenX, screenY));
         }
         else if (command.equals(ZOOM_OUT_RANGE_COMMAND)) {
             zoomOutRange(screenX, screenY);
@@ -2257,7 +2257,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // axes...
         boolean savedNotify = plot.isNotify();
         plot.setNotify(false);
-        zoomOutDomain(x, y);
+        zoomOutDomain(new ZoomOutDomainParameter2(x, y));
         zoomOutRange(x, y);
         plot.setNotify(savedNotify);
     }
@@ -2266,25 +2266,24 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Increases the length of the domain axis, centered about the given
      * coordinate on the screen.  The length of the domain axis is increased
      * by the value of {@link #getZoomOutFactor()}.
-     *
-     * @param x  the x coordinate (in screen coordinates).
-     * @param y  the y-coordinate (in screen coordinates).
+     * @param parameterObject2 TODO
      */
-    public void zoomOutDomain(double x, double y) {
+    public void zoomOutDomain(ZoomOutDomainParameter2 parameterObject2) {
         Plot plot = this.chart.getPlot();
         if (plot instanceof Zoomable) {
-            // here we tweak the notify flag on the plot so that only
-            // one notification happens even though we update multiple
-            // axes...
-            boolean savedNotify = plot.isNotify();
-            plot.setNotify(false);
-            Zoomable z = (Zoomable) plot;
-            z.zoomDomainAxes(this.zoomOutFactor, this.info.getPlotInfo(),
-                    translateScreenToJava2D(new Point((int) x, (int) y)),
-                    this.zoomAroundAnchor);
-            plot.setNotify(savedNotify);
+            Zoomable z = z(parameterObject2.x, parameterObject2.y, plot);
         }
     }
+
+	private Zoomable z(double x, double y, Plot plot) {
+		boolean savedNotify = plot.isNotify();
+		plot.setNotify(false);
+		Zoomable z = (Zoomable) plot;
+		z.zoomDomainAxes(this.zoomOutFactor, this.info.getPlotInfo(),
+				translateScreenToJava2D(new Point((int) x, (int) y)), this.zoomAroundAnchor);
+		plot.setNotify(savedNotify);
+		return z;
+	}
 
     /**
      * Increases the length the range axis, centered about the given
