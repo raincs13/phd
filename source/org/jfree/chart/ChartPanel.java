@@ -1756,7 +1756,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             zoomInRange(screenX, screenY);
         }
         else if (command.equals(ZOOM_OUT_BOTH_COMMAND)) {
-            zoomOutBoth(screenX, screenY);
+            zoomOutBoth(new ZoomOutBothParameter2(screenX, screenY));
         }
         else if (command.equals(ZOOM_OUT_DOMAIN_COMMAND)) {
             zoomOutDomain(screenX, screenY);
@@ -2243,24 +2243,24 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Zooms out on an anchor point (specified in screen coordinate space).
-     *
-     * @param x  the x value (in screen coordinates).
-     * @param y  the y value (in screen coordinates).
+     * @param parameterObject2 TODO
      */
-    public void zoomOutBoth(double x, double y) {
-        Plot plot = this.chart.getPlot();
-        if (plot == null) {
+    public void zoomOutBoth(ZoomOutBothParameter2 parameterObject2) {
+        Plot plot = plot();
+		if (plot == null) {
             return;
         }
-        // here we tweak the notify flag on the plot so that only
-        // one notification happens even though we update multiple
-        // axes...
-        boolean savedNotify = plot.isNotify();
-        plot.setNotify(false);
-        zoomOutDomain(x, y);
-        zoomOutRange(x, y);
-        plot.setNotify(savedNotify);
+        zoomOutDomain(parameterObject2.x, parameterObject2.y);
+        zoomOutRange(parameterObject2.x, parameterObject2.y);
     }
+
+	private Plot plot() {
+		Plot plot = this.chart.getPlot();
+		boolean savedNotify = plot.isNotify();
+		plot.setNotify(false);
+		plot.setNotify(savedNotify);
+		return plot;
+	}
 
     /**
      * Increases the length of the domain axis, centered about the given
