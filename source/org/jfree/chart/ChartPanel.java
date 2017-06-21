@@ -2150,15 +2150,10 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             return;
         }
         Insets insets = getInsets();
-        int x = (int) ((e.getX() - insets.left) / this.scaleX);
-        int y = (int) ((e.getY() - insets.top) / this.scaleY);
 
         ChartEntity entity = null;
         if (this.info != null) {
-            EntityCollection entities = this.info.getEntityCollection();
-            if (entities != null) {
-                entity = entities.getEntity(x, y);
-            }
+            entity = entity(getX(e,insets ), getX(e,insets ), entity);
         }
 
         // we can only generate events if the panel's chart is not null
@@ -2171,6 +2166,22 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
     }
+
+    public int getX(MouseEvent e, Insets insets ){
+    	return (int) ((e.getX() - insets.left) / this.scaleX);
+    }
+    
+    public int getY(MouseEvent e, Insets insets ){
+    	return (int) ((e.getY() - insets.top) / this.scaleY);
+    }
+    
+	private ChartEntity entity(int x, int y, ChartEntity entity) {
+		EntityCollection entities = this.info.getEntityCollection();
+		if (entities != null) {
+			entity = entities.getEntity(x, y);
+		}
+		return entity;
+	}
 
     /**
      * Zooms in on an anchor point (specified in screen coordinate space).
