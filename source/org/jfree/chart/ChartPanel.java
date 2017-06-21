@@ -2204,18 +2204,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public void zoomInDomain(double x, double y) {
         Plot plot = this.chart.getPlot();
         if (plot instanceof Zoomable) {
-            // here we tweak the notify flag on the plot so that only
-            // one notification happens even though we update multiple
-            // axes...
-            boolean savedNotify = plot.isNotify();
-            plot.setNotify(false);
-            Zoomable z = (Zoomable) plot;
-            z.zoomDomainAxes(this.zoomInFactor, this.info.getPlotInfo(),
-                    translateScreenToJava2D(new Point((int) x, (int) y)),
-                    this.zoomAroundAnchor);
-            plot.setNotify(savedNotify);
+            Zoomable z = z(x, y, plot);
         }
     }
+
+	private Zoomable z(double x, double y, Plot plot) {
+		boolean savedNotify = plot.isNotify();
+		plot.setNotify(false);
+		Zoomable z = (Zoomable) plot;
+		z.zoomDomainAxes(this.zoomInFactor, this.info.getPlotInfo(),
+				translateScreenToJava2D(new Point((int) x, (int) y)), this.zoomAroundAnchor);
+		plot.setNotify(savedNotify);
+		return z;
+	}
 
     /**
      * Decreases the length of the range axis, centered about the given
