@@ -1762,7 +1762,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             zoomOutDomain(screenX, screenY);
         }
         else if (command.equals(ZOOM_OUT_RANGE_COMMAND)) {
-            zoomOutRange(screenX, screenY);
+            zoomOutRange(new ZoomOutRangeParameter2(screenX, screenY));
         }
         else if (command.equals(ZOOM_RESET_BOTH_COMMAND)) {
             restoreAutoBounds();
@@ -2258,7 +2258,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         boolean savedNotify = plot.isNotify();
         plot.setNotify(false);
         zoomOutDomain(x, y);
-        zoomOutRange(x, y);
+        zoomOutRange(new ZoomOutRangeParameter2(x, y));
         plot.setNotify(savedNotify);
     }
 
@@ -2290,25 +2290,24 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Increases the length the range axis, centered about the given
      * coordinate on the screen.  The length of the range axis is increased
      * by the value of {@link #getZoomOutFactor()}.
-     *
-     * @param x  the x coordinate (in screen coordinates).
-     * @param y  the y-coordinate (in screen coordinates).
+     * @param parameterObject2 TODO
      */
-    public void zoomOutRange(double x, double y) {
+    public void zoomOutRange(ZoomOutRangeParameter2 parameterObject2) {
         Plot plot = this.chart.getPlot();
         if (plot instanceof Zoomable) {
-            // here we tweak the notify flag on the plot so that only
-            // one notification happens even though we update multiple
-            // axes...
-            boolean savedNotify = plot.isNotify();
-            plot.setNotify(false);
-            Zoomable z = (Zoomable) plot;
+            plot(plot);
+			Zoomable z = (Zoomable) plot;
             z.zoomRangeAxes(this.zoomOutFactor, this.info.getPlotInfo(),
-                    translateScreenToJava2D(new Point((int) x, (int) y)),
+                    translateScreenToJava2D(new Point((int) parameterObject2.x, (int) parameterObject2.y)),
                     this.zoomAroundAnchor);
-            plot.setNotify(savedNotify);
         }
     }
+
+	private void plot(Plot plot) {
+		boolean savedNotify = plot.isNotify();
+		plot.setNotify(false);
+		plot.setNotify(savedNotify);
+	}
 
     /**
      * Zooms in on a selected region.
