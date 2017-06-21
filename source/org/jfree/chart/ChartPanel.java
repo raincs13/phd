@@ -1543,13 +1543,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         Graphics2D g2 = (Graphics2D) g.create();
 
         boolean scale = scale2();
-		// first determine the size of the chart rendering area...
-        Dimension size = getSize();
-        Insets insets = getInsets();
-        Rectangle2D available = new Rectangle2D.Double(insets.left, insets.top,
-                size.getWidth() - insets.left - insets.right,
-                size.getHeight() - insets.top - insets.bottom);
-
+		Rectangle2D available = available();
+		Insets insets = getInsets();
         double drawWidth = available.getWidth();
         double drawHeight = available.getHeight();
         this.scaleX = 1.0;
@@ -1663,6 +1658,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.horizontalTraceLine = null;
 
     }
+
+	private Rectangle2D available() {
+		Dimension size = getSize();
+		Insets insets = getInsets();
+		Rectangle2D available = new Rectangle2D.Double(insets.left, insets.top,
+				size.getWidth() - insets.left - insets.right, size.getHeight() - insets.top - insets.bottom);
+		return available;
+	}
     
     public boolean checkChartBuffer(Rectangle2D available){
     	if ((this.chartBuffer == null)
