@@ -1750,7 +1750,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             zoomInBoth(screenX, screenY);
         }
         else if (command.equals(ZOOM_IN_DOMAIN_COMMAND)) {
-            zoomInDomain(screenX, screenY);
+            zoomInDomain(new ZoomInDomainParameter2(screenX, screenY));
         }
         else if (command.equals(ZOOM_IN_RANGE_COMMAND)) {
             zoomInRange(screenX, screenY);
@@ -2188,7 +2188,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // axes...
         boolean savedNotify = plot.isNotify();
         plot.setNotify(false);
-        zoomInDomain(x, y);
+        zoomInDomain(new ZoomInDomainParameter2(x, y));
         zoomInRange(x, y);
         plot.setNotify(savedNotify);
     }
@@ -2197,14 +2197,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Decreases the length of the domain axis, centered about the given
      * coordinate on the screen.  The length of the domain axis is reduced
      * by the value of {@link #getZoomInFactor()}.
-     *
-     * @param x  the x coordinate (in screen coordinates).
-     * @param y  the y-coordinate (in screen coordinates).
+     * @param parameterObject2 TODO
      */
-    public void zoomInDomain(double x, double y) {
+    public void zoomInDomain(ZoomInDomainParameter2 parameterObject2) {
         Plot plot = this.chart.getPlot();
         if (plot instanceof Zoomable) {
-            Zoomable z = z(x, y, plot);
+            Zoomable z = z(parameterObject2.x, parameterObject2.y, plot);
         }
     }
 
