@@ -2887,7 +2887,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
         
         if (file != null) {
-            writeAsPDF(file, getWidth(), getHeight());
+            writeAsPDF(file, new WriteAsPDFParameter2(getWidth(), getHeight()));
         }
     }
 
@@ -2915,28 +2915,26 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * OrsonPDF (which is non-free software).
      * 
      * @param file  the output file (<code>null</code> not permitted).
-     * @param w  the chart width.
-     * @param h  the chart height.
+     * @param parameterObject2 TODO
      */
-    private void writeAsPDF(File file, int w, int h) {
+    private void writeAsPDF(File file, WriteAsPDFParameter2 parameterObject2) {
         if (!isOrsonPDFAvailable()) {
             throw new IllegalStateException(
                     "OrsonPDF is not present on the classpath.");
         }
         ParamChecks.nullNotPermitted(file, "file");
-        try {
+        chart(parameterObject2.w, parameterObject2.h);
+		try {
             Class pdfDocClass = Class.forName("com.orsonpdf.PDFDocument");
             Object pdfDoc = pdfDocClass.newInstance();
             Method m = pdfDocClass.getMethod("createPage", Rectangle2D.class);
-            Rectangle2D rect = new Rectangle(w, h);
+            Rectangle2D rect = new Rectangle(parameterObject2.w, parameterObject2.h);
             Object page = m.invoke(pdfDoc, rect);
             Method m2 = page.getClass().getMethod("getGraphics2D");
             Graphics2D g2 = (Graphics2D) m2.invoke(page);
             // we suppress shadow generation, because PDF is a vector format and
             // the shadow effect is applied via bitmap effects...
             g2.setRenderingHint(JFreeChart.KEY_SUPPRESS_SHADOW_GENERATION, true);
-            Rectangle2D drawArea = new Rectangle2D.Double(0, 0, w, h);
-            this.chart.draw(g2, drawArea);
             Method m3 = pdfDocClass.getMethod("writeToFile", File.class);
             m3.invoke(pdfDoc, file);
         } catch (ClassNotFoundException ex) {
@@ -2955,6 +2953,35 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             throw new RuntimeException(ex);
         }
     }
+
+	private void chart(int w, int h) {
+		try {
+			Class pdfDocClass = Class.forName("com.orsonpdf.PDFDocument");
+			Object pdfDoc = pdfDocClass.newInstance();
+			Method m = pdfDocClass.getMethod("createPage", Rectangle2D.class);
+			Rectangle2D rect = new Rectangle(w, h);
+			Object page = m.invoke(pdfDoc, rect);
+			Method m2 = page.getClass().getMethod("getGraphics2D");
+			Graphics2D g2 = (Graphics2D) m2.invoke(page);
+			Rectangle2D drawArea = new Rectangle2D.Double(0, 0, w, h);
+			this.chart.draw(g2, drawArea);
+			Method m3 = pdfDocClass.getMethod("writeToFile", File.class);
+		} catch (ClassNotFoundException ex) {
+			throw new RuntimeException(ex);
+		} catch (InstantiationException ex) {
+			throw new RuntimeException(ex);
+		} catch (IllegalAccessException ex) {
+			throw new RuntimeException(ex);
+		} catch (NoSuchMethodException ex) {
+			throw new RuntimeException(ex);
+		} catch (SecurityException ex) {
+			throw new RuntimeException(ex);
+		} catch (IllegalArgumentException ex) {
+			throw new RuntimeException(ex);
+		} catch (InvocationTargetException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
     /**
      * Creates a print job for the chart.
