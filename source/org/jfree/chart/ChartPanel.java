@@ -2149,14 +2149,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (listeners.length == 0) {
             return;
         }
-        Insets insets = getInsets();
-
-        ChartEntity entity = null;
-        if (this.info != null) {
-            entity = entity(getX(e,insets ), getX(e,insets ), entity);
-        }
-
-        // we can only generate events if the panel's chart is not null
+        ChartEntity entity = entity2(e);
+		// we can only generate events if the panel's chart is not null
         // (see bug report 1556951)
         if (this.chart != null) {
             ChartMouseEvent event = new ChartMouseEvent(getChart(), e, entity);
@@ -2166,6 +2160,15 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
     }
+
+	private ChartEntity entity2(MouseEvent e) {
+		Insets insets = getInsets();
+		ChartEntity entity = null;
+		if (this.info != null) {
+			entity = entity(getX(e, insets), getX(e, insets), entity);
+		}
+		return entity;
+	}
 
     public int getX(MouseEvent e, Insets insets ){
     	return (int) ((e.getX() - insets.left) / this.scaleX);
