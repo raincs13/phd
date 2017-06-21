@@ -238,14 +238,7 @@ public class ChartTransferable implements Transferable {
         else if (drawWidth > parameterObject6.maxDrawW) {
             drawWidth = parameterObject6.maxDrawW;
         }
-        if (drawHeight < parameterObject6.minDrawH) {
-            drawHeight = parameterObject6.minDrawH;
-        }
-        else if (drawHeight > parameterObject6.maxDrawH) {
-            drawHeight = parameterObject6.maxDrawH;
-        }
-
-        chart(chart, g2, drawWidth, drawHeight);
+        chart2(chart, parameterObject6, g2, drawWidth, drawHeight);
 		if (scale) {
             AffineTransform st = AffineTransform.getScaleInstance(scaleX,
                     scaleY);
@@ -255,6 +248,16 @@ public class ChartTransferable implements Transferable {
         return image;
 
     }
+
+	private void chart2(JFreeChart chart, CreateBufferedImageParameter6 parameterObject6, Graphics2D g2,
+			double drawWidth, double drawHeight) {
+		if (drawHeight < parameterObject6.minDrawH) {
+			drawHeight = parameterObject6.minDrawH;
+		} else if (drawHeight > parameterObject6.maxDrawH) {
+			drawHeight = parameterObject6.maxDrawH;
+		}
+		chart(chart, g2, drawWidth, drawHeight);
+	}
 
 	private double scaleX(CreateBufferedImageParameter parameterObject, int minDrawW, int maxDrawW) {
 		double drawWidth = parameterObject.w;
