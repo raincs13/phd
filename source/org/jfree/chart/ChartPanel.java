@@ -1542,15 +1542,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
         Graphics2D g2 = (Graphics2D) g.create();
 
-        // first determine the size of the chart rendering area...
+        boolean scale = scale2();
+		// first determine the size of the chart rendering area...
         Dimension size = getSize();
         Insets insets = getInsets();
         Rectangle2D available = new Rectangle2D.Double(insets.left, insets.top,
                 size.getWidth() - insets.left - insets.right,
                 size.getHeight() - insets.top - insets.bottom);
 
-        // work out if scaling is required...
-        boolean scale = false;
         double drawWidth = available.getWidth();
         double drawHeight = available.getHeight();
         this.scaleX = 1.0;
@@ -1559,23 +1558,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (drawWidth < this.minimumDrawWidth) {
             this.scaleX = drawWidth / this.minimumDrawWidth;
             drawWidth = this.minimumDrawWidth;
-            scale = true;
         }
         else if (drawWidth > this.maximumDrawWidth) {
             this.scaleX = drawWidth / this.maximumDrawWidth;
             drawWidth = this.maximumDrawWidth;
-            scale = true;
         }
 
         if (drawHeight < this.minimumDrawHeight) {
             this.scaleY = drawHeight / this.minimumDrawHeight;
             drawHeight = this.minimumDrawHeight;
-            scale = true;
         }
         else if (drawHeight > this.maximumDrawHeight) {
             this.scaleY = drawHeight / this.maximumDrawHeight;
             drawHeight = this.maximumDrawHeight;
-            scale = true;
         }
 
         Rectangle2D chartArea = new Rectangle2D.Double(0.0, 0.0, drawWidth,
@@ -1585,9 +1580,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (this.useBuffer) {
 
             // do we need to resize the buffer?
-            if ((this.chartBuffer == null)
-                    || (this.chartBufferWidth != available.getWidth())
-                    || (this.chartBufferHeight != available.getHeight())) {
+            if (checkChartBuffer( available)) {
                 this.chartBufferWidth = (int) available.getWidth();
                 this.chartBufferHeight = (int) available.getHeight();
                 GraphicsConfiguration gc = g2.getDeviceConfiguration();
@@ -1670,6 +1663,37 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.horizontalTraceLine = null;
 
     }
+    
+    public boolean checkChartBuffer(Rectangle2D available){
+    	if ((this.chartBuffer == null)
+                || (this.chartBufferWidth != available.getWidth())
+                || (this.chartBufferHeight != available.getHeight())) {
+    		return true;
+    	}else{
+    		return false;
+    	}
+    }
+
+	private boolean scale2() {
+		Dimension size = getSize();
+		Insets insets = getInsets();
+		Rectangle2D available = new Rectangle2D.Double(insets.left, insets.top,
+				size.getWidth() - insets.left - insets.right, size.getHeight() - insets.top - insets.bottom);
+		boolean scale = false;
+		double drawWidth = available.getWidth();
+		double drawHeight = available.getHeight();
+		if (drawWidth < this.minimumDrawWidth) {
+			scale = true;
+		} else if (drawWidth > this.maximumDrawWidth) {
+			scale = true;
+		}
+		if (drawHeight < this.minimumDrawHeight) {
+			scale = true;
+		} else if (drawHeight > this.maximumDrawHeight) {
+			scale = true;
+		}
+		return scale;
+	}
 
     /**
      * Receives notification of changes to the chart, and redraws the chart.
