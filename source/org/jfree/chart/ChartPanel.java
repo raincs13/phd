@@ -1747,7 +1747,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             createChartPrintJob();
         }
         else if (command.equals(ZOOM_IN_BOTH_COMMAND)) {
-            zoomInBoth(screenX, screenY);
+            zoomInBoth(new ZoomInBothParameter2(screenX, screenY));
         }
         else if (command.equals(ZOOM_IN_DOMAIN_COMMAND)) {
             zoomInDomain(screenX, screenY);
@@ -2174,24 +2174,24 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Zooms in on an anchor point (specified in screen coordinate space).
-     *
-     * @param x  the x value (in screen coordinates).
-     * @param y  the y value (in screen coordinates).
+     * @param parameterObject2 TODO
      */
-    public void zoomInBoth(double x, double y) {
-        Plot plot = this.chart.getPlot();
-        if (plot == null) {
+    public void zoomInBoth(ZoomInBothParameter2 parameterObject2) {
+        Plot plot = plot();
+		if (plot == null) {
             return;
         }
-        // here we tweak the notify flag on the plot so that only
-        // one notification happens even though we update multiple
-        // axes...
-        boolean savedNotify = plot.isNotify();
-        plot.setNotify(false);
-        zoomInDomain(x, y);
-        zoomInRange(x, y);
-        plot.setNotify(savedNotify);
+        zoomInDomain(parameterObject2.x, parameterObject2.y);
+        zoomInRange(parameterObject2.x, parameterObject2.y);
     }
+
+	private Plot plot() {
+		Plot plot = this.chart.getPlot();
+		boolean savedNotify = plot.isNotify();
+		plot.setNotify(false);
+		plot.setNotify(savedNotify);
+		return plot;
+	}
 
     /**
      * Decreases the length of the domain axis, centered about the given

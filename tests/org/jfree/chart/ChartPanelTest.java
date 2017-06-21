@@ -182,7 +182,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
         ChartPanel panel = new ChartPanel(chart);
         chart.addChangeListener(this);
         this.chartChangeEvents.clear();
-        panel.zoomInBoth(1.0, 2.0);
+        panel.zoomInBoth(new ZoomInBothParameter2(1.0, 2.0));
         assertEquals(1, this.chartChangeEvents.size());
     }
 
