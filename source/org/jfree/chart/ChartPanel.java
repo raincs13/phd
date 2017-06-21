@@ -1999,7 +1999,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     @Override
     public void mouseReleased(MouseEvent e) {
 
-        // if we've been panning, we need to reset now that the mouse is 
+        popup(e);
+		// if we've been panning, we need to reset now that the mouse is 
         // released...
         if (this.panLast != null) {
             this.panLast = null;
@@ -2027,39 +2028,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     restoreAutoBounds();
                 }
                 else {
-                    double x, y, w, h;
-                    Rectangle2D screenDataArea = getScreenDataArea(
-                            (int) this.zoomPoint.getX(),
-                            (int) this.zoomPoint.getY());
-                    double maxX = screenDataArea.getMaxX();
-                    double maxY = screenDataArea.getMaxY();
-                    // for mouseReleased event, (horizontalZoom || verticalZoom)
-                    // will be true, so we can just test for either being false;
-                    // otherwise both are true
-                    if (!vZoom) {
-                        x = this.zoomPoint.getX();
-                        y = screenDataArea.getMinY();
-                        w = Math.min(this.zoomRectangle.getWidth(),
-                                maxX - this.zoomPoint.getX());
-                        h = screenDataArea.getHeight();
-                    }
-                    else if (!hZoom) {
-                        x = screenDataArea.getMinX();
-                        y = this.zoomPoint.getY();
-                        w = screenDataArea.getWidth();
-                        h = Math.min(this.zoomRectangle.getHeight(),
-                                maxY - this.zoomPoint.getY());
-                    }
-                    else {
-                        x = this.zoomPoint.getX();
-                        y = this.zoomPoint.getY();
-                        w = Math.min(this.zoomRectangle.getWidth(),
-                                maxX - this.zoomPoint.getX());
-                        h = Math.min(this.zoomRectangle.getHeight(),
-                                maxY - this.zoomPoint.getY());
-                    }
-                    Rectangle2D zoomArea = new Rectangle2D.Double(x, y, w, h);
-                    zoom(zoomArea);
+                    Rectangle2D zoomArea = zoomArea(hZoom, vZoom);
+					zoom(zoomArea);
                 }
                 this.zoomPoint = null;
                 this.zoomRectangle = null;
@@ -2080,13 +2050,42 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         }
 
-        else if (e.isPopupTrigger()) {
-            if (this.popup != null) {
-                displayPopupMenu(e.getX(), e.getY());
-            }
-        }
-
     }
+
+	private void popup(MouseEvent e) {
+		if (this.panLast != null) {
+		} else if (this.zoomRectangle != null) {
+		} else if (e.isPopupTrigger()) {
+			if (this.popup != null) {
+				displayPopupMenu(e.getX(), e.getY());
+			}
+		}
+	}
+
+	private Rectangle2D zoomArea(boolean hZoom, boolean vZoom) {
+		double x, y, w, h;
+		Rectangle2D screenDataArea = getScreenDataArea((int) this.zoomPoint.getX(), (int) this.zoomPoint.getY());
+		double maxX = screenDataArea.getMaxX();
+		double maxY = screenDataArea.getMaxY();
+		if (!vZoom) {
+			x = this.zoomPoint.getX();
+			y = screenDataArea.getMinY();
+			w = Math.min(this.zoomRectangle.getWidth(), maxX - this.zoomPoint.getX());
+			h = screenDataArea.getHeight();
+		} else if (!hZoom) {
+			x = screenDataArea.getMinX();
+			y = this.zoomPoint.getY();
+			w = screenDataArea.getWidth();
+			h = Math.min(this.zoomRectangle.getHeight(), maxY - this.zoomPoint.getY());
+		} else {
+			x = this.zoomPoint.getX();
+			y = this.zoomPoint.getY();
+			w = Math.min(this.zoomRectangle.getWidth(), maxX - this.zoomPoint.getX());
+			h = Math.min(this.zoomRectangle.getHeight(), maxY - this.zoomPoint.getY());
+		}
+		Rectangle2D zoomArea = new Rectangle2D.Double(x, y, w, h);
+		return zoomArea;
+	}
 
     /**
      * Receives notification of mouse clicks on the panel. These are
