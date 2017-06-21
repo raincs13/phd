@@ -2097,12 +2097,11 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     @Override
     public void mouseClicked(MouseEvent event) {
 
-        ChartEntity entity = entity2(event);
+        ChartMouseEvent chartEvent = chartEvent(event);
 		anchor(event);
 		if (this.chart == null) {
             return;
         }
-        this.chart.setNotify(true);  // force a redraw
         // new entity code...
         Object[] listeners = this.chartMouseListeners.getListeners(
                 ChartMouseListener.class);
@@ -2110,13 +2109,18 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             return;
         }
 
-        ChartMouseEvent chartEvent = new ChartMouseEvent(getChart(), event,
-                entity);
         for (int i = listeners.length - 1; i >= 0; i -= 1) {
             ((ChartMouseListener) listeners[i]).chartMouseClicked(chartEvent);
         }
 
     }
+
+	private ChartMouseEvent chartEvent(MouseEvent event) {
+		ChartEntity entity = entity2(event);
+		this.chart.setNotify(true);
+		ChartMouseEvent chartEvent = new ChartMouseEvent(getChart(), event, entity);
+		return chartEvent;
+	}
 
 	private void anchor(MouseEvent event) {
 		Insets insets = getInsets();
