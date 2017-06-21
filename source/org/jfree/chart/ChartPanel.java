@@ -2097,10 +2097,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     @Override
     public void mouseClicked(MouseEvent event) {
 
-        Insets insets = getInsets();
-
-        this.anchor = new Point2D.Double(getX(event, insets), getY(event, insets));
-        if (this.chart == null) {
+        ChartEntity entity = entity2(event);
+		anchor(event);
+		if (this.chart == null) {
             return;
         }
         this.chart.setNotify(true);  // force a redraw
@@ -2111,10 +2110,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             return;
         }
 
-        ChartEntity entity = null;
-        if (this.info != null) {
-            entity = entity(getX(event, insets), getY(event, insets), entity);
-        }
         ChartMouseEvent chartEvent = new ChartMouseEvent(getChart(), event,
                 entity);
         for (int i = listeners.length - 1; i >= 0; i -= 1) {
@@ -2122,6 +2117,20 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
     }
+
+	private void anchor(MouseEvent event) {
+		Insets insets = getInsets();
+		this.anchor = new Point2D.Double(getX(event, insets), getY(event, insets));
+	}
+
+	private ChartEntity entity2(MouseEvent event) {
+		Insets insets = getInsets();
+		ChartEntity entity = null;
+		if (this.info != null) {
+			entity = entity(getX(event, insets), getY(event, insets), entity);
+		}
+		return entity;
+	}
     
     public int getX(MouseEvent event, Insets insets){
         return (int) ((event.getX() - insets.left) / this.scaleX);
