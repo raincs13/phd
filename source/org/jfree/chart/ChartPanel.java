@@ -2098,10 +2098,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public void mouseClicked(MouseEvent event) {
 
         Insets insets = getInsets();
-        int x = (int) ((event.getX() - insets.left) / this.scaleX);
-        int y = (int) ((event.getY() - insets.top) / this.scaleY);
 
-        this.anchor = new Point2D.Double(x, y);
+        this.anchor = new Point2D.Double(getX(event, insets), getY(event, insets));
         if (this.chart == null) {
             return;
         }
@@ -2115,10 +2113,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         ChartEntity entity = null;
         if (this.info != null) {
-            EntityCollection entities = this.info.getEntityCollection();
-            if (entities != null) {
-                entity = entities.getEntity(x, y);
-            }
+            entity = entity(getX(event, insets), getY(event, insets), entity);
         }
         ChartMouseEvent chartEvent = new ChartMouseEvent(getChart(), event,
                 entity);
@@ -2127,6 +2122,22 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
     }
+    
+    public int getX(MouseEvent event, Insets insets){
+        return (int) ((event.getX() - insets.left) / this.scaleX);
+    }
+    
+    public int getY(MouseEvent event, Insets insets){
+        return (int) ((event.getY() - insets.top) / this.scaleY);
+    }
+
+	private ChartEntity entity(int x, int y, ChartEntity entity) {
+		EntityCollection entities = this.info.getEntityCollection();
+		if (entities != null) {
+			entity = entities.getEntity(x, y);
+		}
+		return entity;
+	}
 
     /**
      * Implementation of the MouseMotionListener's method.
