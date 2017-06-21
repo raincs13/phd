@@ -223,22 +223,14 @@ public class ChartTransferable implements Transferable {
      */
     private BufferedImage createBufferedImage(JFreeChart chart, CreateBufferedImageParameter6 parameterObject6) {
 
-        BufferedImage image = new BufferedImage(parameterObject6.parameterObject.w, parameterObject6.parameterObject.h,
+        chart3(chart, parameterObject6);
+		BufferedImage image = new BufferedImage(parameterObject6.parameterObject.w, parameterObject6.parameterObject.h,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
 
         boolean scale = scale(parameterObject6.parameterObject.w, parameterObject6.parameterObject.h, parameterObject6.minDrawW, parameterObject6.minDrawH, parameterObject6.maxDrawW, parameterObject6.maxDrawH);
 		double scaleX = scaleX(parameterObject6.parameterObject, parameterObject6.minDrawW, parameterObject6.maxDrawW);
-		double drawWidth = parameterObject6.parameterObject.w;
-        double scaleY = scaleY2(parameterObject6.parameterObject, parameterObject6.minDrawH, parameterObject6.maxDrawH);
-		double drawHeight = parameterObject6.parameterObject.h;
-        if (drawWidth < parameterObject6.minDrawW) {
-            drawWidth = parameterObject6.minDrawW;
-        }
-        else if (drawWidth > parameterObject6.maxDrawW) {
-            drawWidth = parameterObject6.maxDrawW;
-        }
-        chart2(chart, parameterObject6, g2, drawWidth, drawHeight);
+		double scaleY = scaleY2(parameterObject6.parameterObject, parameterObject6.minDrawH, parameterObject6.maxDrawH);
 		if (scale) {
             AffineTransform st = AffineTransform.getScaleInstance(scaleX,
                     scaleY);
@@ -248,6 +240,20 @@ public class ChartTransferable implements Transferable {
         return image;
 
     }
+
+	private void chart3(JFreeChart chart, CreateBufferedImageParameter6 parameterObject6) {
+		BufferedImage image = new BufferedImage(parameterObject6.parameterObject.w, parameterObject6.parameterObject.h,
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = image.createGraphics();
+		double drawWidth = parameterObject6.parameterObject.w;
+		double drawHeight = parameterObject6.parameterObject.h;
+		if (drawWidth < parameterObject6.minDrawW) {
+			drawWidth = parameterObject6.minDrawW;
+		} else if (drawWidth > parameterObject6.maxDrawW) {
+			drawWidth = parameterObject6.maxDrawW;
+		}
+		chart2(chart, parameterObject6, g2, drawWidth, drawHeight);
+	}
 
 	private void chart2(JFreeChart chart, CreateBufferedImageParameter6 parameterObject6, Graphics2D g2,
 			double drawWidth, double drawHeight) {
