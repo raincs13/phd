@@ -1473,11 +1473,23 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     public Rectangle2D scale(Rectangle2D rect) {
         Insets insets = getInsets();
-        double x = rect.getX() * getScaleX() + insets.left;
-        double y = rect.getY() * getScaleY() + insets.top;
-        double w = rect.getWidth() * getScaleX();
-        double h = rect.getHeight() * getScaleY();
-        return new Rectangle2D.Double(x, y, w, h);
+        return new Rectangle2D.Double(getX(rect, insets), getY(rect, insets), getW(rect, insets), getH(rect, insets));
+    }
+    
+    public double getX(Rectangle2D rect, Insets insets){
+    	return rect.getX() * getScaleX() + insets.left;
+    }
+    
+    public double getY(Rectangle2D rect, Insets insets){
+    	return rect.getY() * getScaleY() + insets.top;
+    }
+    
+    public double getW(Rectangle2D rect, Insets insets){
+    	return rect.getWidth() * getScaleX();
+    }
+    
+    public double getH(Rectangle2D rect, Insets insets){
+    	return rect.getHeight() * getScaleY();
     }
 
     /**
