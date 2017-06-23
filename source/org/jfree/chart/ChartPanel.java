@@ -2426,12 +2426,25 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public Rectangle2D getScreenDataArea() {
         Rectangle2D dataArea = this.info.getPlotInfo().getDataArea();
         Insets insets = getInsets();
-        double x = dataArea.getX() * this.scaleX + insets.left;
-        double y = dataArea.getY() * this.scaleY + insets.top;
-        double w = dataArea.getWidth() * this.scaleX;
-        double h = dataArea.getHeight() * this.scaleY;
-        return new Rectangle2D.Double(x, y, w, h);
+        return new Rectangle2D.Double(getX(dataArea, insets), getY(dataArea, insets), getW(dataArea, insets), getH(dataArea, insets));
     }
+    
+    public double getX(Rectangle2D dataArea, Insets insets){
+    	return dataArea.getX() * this.scaleX + insets.left;
+    }
+    
+    public double getY(Rectangle2D dataArea, Insets insets){
+    	return dataArea.getY() * this.scaleY + insets.top;
+    }
+    
+    public double getW(Rectangle2D dataArea, Insets insets){
+    	return dataArea.getWidth() * this.scaleX;
+    }
+    
+    public double getH(Rectangle2D dataArea, Insets insets){
+    	return dataArea.getHeight() * this.scaleY;
+    }
+    
 
     /**
      * Returns the data area (the area inside the axes) for the plot or subplot,
