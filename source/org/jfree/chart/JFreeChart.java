@@ -1162,12 +1162,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             info.setChartArea(chartArea);
             entities = info.getEntityCollection();
         }
-        if (entities != null) {
-            entities.add(new JFreeChartEntity((Rectangle2D) chartArea.clone(),
-                    this));
-        }
-
-        // ensure no drawing occurs outside chart area...
+        Rectangle2D nonTitleArea = nonTitleArea(g2, chartArea, entities);
+		// ensure no drawing occurs outside chart area...
         Shape savedClip = g2.getClip();
         g2.clip(chartArea);
 
@@ -1207,30 +1203,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             }
         }
 
-        // draw the title and subtitles...
-        Rectangle2D nonTitleArea = new Rectangle2D.Double();
-        nonTitleArea.setRect(chartArea);
         this.padding.trim(nonTitleArea);
-
-        if (this.title != null && this.title.isVisible()) {
-            EntityCollection e = drawTitle(this.title, g2, nonTitleArea,
-                    (entities != null));
-            if (e != null && entities != null) {
-                entities.addAll(e);
-            }
-        }
-
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title currentTitle = (Title) iterator.next();
-            if (currentTitle.isVisible()) {
-                EntityCollection e = drawTitle(currentTitle, g2, nonTitleArea,
-                        (entities != null));
-                if (e != null && entities != null) {
-                    entities.addAll(e);
-                }
-            }
-        }
 
         PlotRenderingInfo plotInfo = plotInfo(g2, anchor, info, nonTitleArea);
 		g2.setClip(savedClip);
@@ -1238,6 +1211,31 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         notifyListeners(new ChartProgressEvent(this, this,
                 ChartProgressEvent.DRAWING_FINISHED, 100));
     }
+
+	private Rectangle2D nonTitleArea(Graphics2D g2, Rectangle2D chartArea, EntityCollection entities) {
+		if (entities != null) {
+			entities.add(new JFreeChartEntity((Rectangle2D) chartArea.clone(), this));
+		}
+		Rectangle2D nonTitleArea = new Rectangle2D.Double();
+		nonTitleArea.setRect(chartArea);
+		if (this.title != null && this.title.isVisible()) {
+			EntityCollection e = drawTitle(this.title, g2, nonTitleArea, (entities != null));
+			if (e != null && entities != null) {
+				entities.addAll(e);
+			}
+		}
+		Iterator iterator = this.subtitles.iterator();
+		while (iterator.hasNext()) {
+			Title currentTitle = (Title) iterator.next();
+			if (currentTitle.isVisible()) {
+				EntityCollection e = drawTitle(currentTitle, g2, nonTitleArea, (entities != null));
+				if (e != null && entities != null) {
+					entities.addAll(e);
+				}
+			}
+		}
+		return nonTitleArea;
+	}
 
 	private PlotRenderingInfo plotInfo(Graphics2D g2, Point2D anchor, ChartRenderingInfo info,
 			Rectangle2D nonTitleArea) {
