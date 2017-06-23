@@ -1103,8 +1103,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         ParamChecks.nullNotPermitted(chart, "chart");
         TextTitle title = chart.getTitle();
         if (title != null) {
-            title.setFont(this.extraLargeFont);
-            title.setPaint(this.titlePaint);
+            title(title);
         }
 
         int subtitleCount = chart.getSubtitleCount();
@@ -1112,14 +1111,22 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             applyToTitle(chart.getSubtitle(i));
         }
 
-        chart.setBackgroundPaint(this.chartBackgroundPaint);
-
-        // now process the plot if there is one
-        Plot plot = chart.getPlot();
-        if (plot != null) {
-            applyToPlot(plot);
-        }
+        Plot plot = plot(chart);
     }
+
+	private Plot plot(JFreeChart chart) {
+		chart.setBackgroundPaint(this.chartBackgroundPaint);
+		Plot plot = chart.getPlot();
+		if (plot != null) {
+			applyToPlot(plot);
+		}
+		return plot;
+	}
+
+	private void title(TextTitle title) {
+		title.setFont(this.extraLargeFont);
+		title.setPaint(this.titlePaint);
+	}
 
     /**
      * Applies the attributes of this theme to the specified title.
