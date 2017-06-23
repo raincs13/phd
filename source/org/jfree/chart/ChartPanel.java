@@ -1458,9 +1458,15 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     public Point2D translateScreenToJava2D(Point screenPoint) {
         Insets insets = getInsets();
-        double x = (screenPoint.getX() - insets.left) / this.scaleX;
-        double y = (screenPoint.getY() - insets.top) / this.scaleY;
-        return new Point2D.Double(x, y);
+        return new Point2D.Double(getX(screenPoint, insets), getY(screenPoint, insets));
+    }
+    
+    public double getX(Point screenPoint, Insets insets){
+    	return (screenPoint.getX() - insets.left) / this.scaleX;
+    }
+    
+    public double getY(Point screenPoint, Insets insets){
+    	return (screenPoint.getY() - insets.top) / this.scaleY;
     }
 
     /**
