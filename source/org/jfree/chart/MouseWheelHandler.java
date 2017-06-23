@@ -133,27 +133,37 @@ class MouseWheelHandler implements MouseWheelListener, Serializable {
      * @param e  the mouse wheel event.
      */
     private void handleZoomable(Zoomable zoomable, MouseWheelEvent e) {
-        // don't zoom unless the mouse pointer is in the plot's data area
+        zoomable(zoomable, e);
+		// don't zoom unless the mouse pointer is in the plot's data area
         ChartRenderingInfo info = this.chartPanel.getChartRenderingInfo();
         PlotRenderingInfo pinfo = info.getPlotInfo();
         Point2D p = this.chartPanel.translateScreenToJava2D(e.getPoint());
         if (!pinfo.getDataArea().contains(p)) {
             return;
         }
-
-        Plot plot = (Plot) zoomable;
-        // do not notify while zooming each axis
-        boolean notifyState = plot.isNotify();
-        plot.setNotify(false);
-        double zf = zf(e);
-		if (chartPanel.isDomainZoomable()) {
-            zoomable.zoomDomainAxes(zf, pinfo, p, true);
-        }
-        if (chartPanel.isRangeZoomable()) {
-            zoomable.zoomRangeAxes(zf, pinfo, p, true);
-        }
-        plot.setNotify(notifyState);  // this generates the change event too
     }
+
+	private void zoomable(Zoomable zoomable, MouseWheelEvent e) {
+		ChartRenderingInfo info = this.chartPanel.getChartRenderingInfo();
+		PlotRenderingInfo pinfo = info.getPlotInfo();
+		Point2D p = this.chartPanel.translateScreenToJava2D(e.getPoint());
+		Plot plot = plot(zoomable, e, pinfo, p);
+	}
+
+	private Plot plot(Zoomable zoomable, MouseWheelEvent e, PlotRenderingInfo pinfo, Point2D p) {
+		Plot plot = (Plot) zoomable;
+		boolean notifyState = plot.isNotify();
+		plot.setNotify(false);
+		double zf = zf(e);
+		if (chartPanel.isDomainZoomable()) {
+			zoomable.zoomDomainAxes(zf, pinfo, p, true);
+		}
+		if (chartPanel.isRangeZoomable()) {
+			zoomable.zoomRangeAxes(zf, pinfo, p, true);
+		}
+		plot.setNotify(notifyState);
+		return plot;
+	}
 
 	private double zf(MouseWheelEvent e) {
 		int clicks = e.getWheelRotation();
