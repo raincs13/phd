@@ -1537,11 +1537,15 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     protected void applyToPeriodAxis(PeriodAxis axis) {
         PeriodAxisLabelInfo[] info = axis.getLabelInfo();
-        for (int i = 0; i < info.length; i++) {
-            info = info(info, i);
-        }
-        axis.setLabelInfo(info);
+        axis(axis, info);
     }
+
+	private void axis(PeriodAxis axis, PeriodAxisLabelInfo[] info) {
+		for (int i = 0; i < info.length; i++) {
+			info = info(info, i);
+		}
+		axis.setLabelInfo(info);
+	}
 
 	private PeriodAxisLabelInfo[] info(PeriodAxisLabelInfo[] info, int i) {
 		PeriodAxisLabelInfo e = info[i];
