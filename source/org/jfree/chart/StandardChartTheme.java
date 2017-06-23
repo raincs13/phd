@@ -1538,15 +1538,18 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     protected void applyToPeriodAxis(PeriodAxis axis) {
         PeriodAxisLabelInfo[] info = axis.getLabelInfo();
         for (int i = 0; i < info.length; i++) {
-            PeriodAxisLabelInfo e = info[i];
-            PeriodAxisLabelInfo n = new PeriodAxisLabelInfo(e.getPeriodClass(),
-                    e.getDateFormat(), e.getPadding(), this.regularFont,
-                    this.tickLabelPaint, e.getDrawDividers(),
-                    e.getDividerStroke(), e.getDividerPaint());
-            info[i] = n;
+            info = info(info, i);
         }
         axis.setLabelInfo(info);
     }
+
+	private PeriodAxisLabelInfo[] info(PeriodAxisLabelInfo[] info, int i) {
+		PeriodAxisLabelInfo e = info[i];
+		PeriodAxisLabelInfo n = new PeriodAxisLabelInfo(e.getPeriodClass(), e.getDateFormat(), e.getPadding(),
+				this.regularFont, this.tickLabelPaint, e.getDrawDividers(), e.getDividerStroke(), e.getDividerPaint());
+		info[i] = n;
+		return info;
+	}
 
     /**
      * Applies the attributes for this theme to an {@link AbstractRenderer}.
