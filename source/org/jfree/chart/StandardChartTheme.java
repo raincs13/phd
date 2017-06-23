@@ -1414,14 +1414,19 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot
      */
     protected void applyToFastScatterPlot(FastScatterPlot plot) {
-        plot(plot);
-		ValueAxis xAxis = plot.getDomainAxis();
-        if (xAxis != null) {
-            applyToValueAxis(xAxis);
-        }
-        ValueAxis yAxis = yAxis(plot);
+        ValueAxis xAxis = xAxis(plot);
+		ValueAxis yAxis = yAxis(plot);
 
     }
+
+	private ValueAxis xAxis(FastScatterPlot plot) {
+		plot(plot);
+		ValueAxis xAxis = plot.getDomainAxis();
+		if (xAxis != null) {
+			applyToValueAxis(xAxis);
+		}
+		return xAxis;
+	}
 
 	private void plot(FastScatterPlot plot) {
 		plot.setDomainGridlinePaint(this.domainGridlinePaint);
