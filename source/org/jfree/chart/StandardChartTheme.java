@@ -1420,12 +1420,17 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (xAxis != null) {
             applyToValueAxis(xAxis);
         }
-        ValueAxis yAxis = plot.getRangeAxis();
-        if (yAxis != null) {
-            applyToValueAxis(yAxis);
-        }
+        ValueAxis yAxis = yAxis(plot);
 
     }
+
+	private ValueAxis yAxis(FastScatterPlot plot) {
+		ValueAxis yAxis = plot.getRangeAxis();
+		if (yAxis != null) {
+			applyToValueAxis(yAxis);
+		}
+		return yAxis;
+	}
 
     /**
      * Applies the attributes of this theme to a {@link PolarPlot}.  This
