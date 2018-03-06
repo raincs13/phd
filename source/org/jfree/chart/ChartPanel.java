@@ -2338,26 +2338,32 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
             Plot p = this.chart.getPlot();
             if (p instanceof Zoomable) {
-                // here we tweak the notify flag on the plot so that only
-                // one notification happens even though we update multiple
-                // axes...
-                boolean savedNotify = p.isNotify();
-                p.setNotify(false);
-                Zoomable z = (Zoomable) p;
-                if (z.getOrientation() == PlotOrientation.HORIZONTAL) {
-                    z.zoomDomainAxes(vLower, vUpper, plotInfo, selectOrigin);
-                    z.zoomRangeAxes(hLower, hUpper, plotInfo, selectOrigin);
-                }
-                else {
-                    z.zoomDomainAxes(hLower, hUpper, plotInfo, selectOrigin);
-                    z.zoomRangeAxes(vLower, vUpper, plotInfo, selectOrigin);
-                }
-                p.setNotify(savedNotify);
+                Zoomable z = z(selectOrigin, plotInfo, hLower, hUpper, vLower, vUpper, p);
             }
 
         }
 
     }
+
+	private Zoomable z(Point2D selectOrigin, PlotRenderingInfo plotInfo, double hLower, double hUpper, double vLower,
+			double vUpper, Plot p) {
+		p(p);
+		Zoomable z = (Zoomable) p;
+		if (z.getOrientation() == PlotOrientation.HORIZONTAL) {
+			z.zoomDomainAxes(vLower, vUpper, plotInfo, selectOrigin);
+			z.zoomRangeAxes(hLower, hUpper, plotInfo, selectOrigin);
+		} else {
+			z.zoomDomainAxes(hLower, hUpper, plotInfo, selectOrigin);
+			z.zoomRangeAxes(vLower, vUpper, plotInfo, selectOrigin);
+		}
+		return z;
+	}
+
+	private void p(Plot p) {
+		boolean savedNotify = p.isNotify();
+		p.setNotify(false);
+		p.setNotify(savedNotify);
+	}
 
     /**
      * Restores the auto-range calculation on both axes.
